@@ -1,9 +1,12 @@
 <script>
+    import Flex from "./flex.svelte"
     import wsx from "./wsx.mjs"
 
     export let color
     export let card = false
     export let square = false
+    export let layout = Flex
+    export let lprops = {}
 
     $: wind = {
         $color: color,
@@ -15,6 +18,12 @@
 
 <ws-paper use:wsx={wind}>
     <slot name="header" />
-    <slot name="content" />
+    {#if $$slots.content}
+        <slot name="content" />
+    {:else}
+        <svelte:component this={layout} {...lprops}>
+            <slot />
+        </svelte:component>
+    {/if}
     <slot name="footer" />
 </ws-paper>

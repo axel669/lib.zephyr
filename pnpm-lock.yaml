@@ -2,7 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@axel669/rollup-html-input': ^0.1.2
-  '@axel669/windstorm': ^0.1.3
+  '@axel669/windstorm': ^0.1.4
   '@rollup/plugin-node-resolve': ^15.0.2
   '@rollup/plugin-terser': ^0.4.0
   rollup: ^3.20.2
@@ -11,7 +11,7 @@ specifiers:
 
 dependencies:
   '@axel669/rollup-html-input': 0.1.2
-  '@axel669/windstorm': 0.1.3
+  '@axel669/windstorm': 0.1.4
   '@rollup/plugin-node-resolve': 15.0.2_rollup@3.20.2
   '@rollup/plugin-terser': 0.4.0_rollup@3.20.2
   rollup: 3.20.2
@@ -26,8 +26,8 @@ packages:
       node-html-parser: 5.4.2
     dev: false
 
-  /@axel669/windstorm/0.1.3:
-    resolution: {integrity: sha512-nMYqsilZNTOChy1OXDgb8OxIQjCFpIfgIRHpO2CP6aNNuvUTqcjcQjw+TM6k+kzB1WuXViXjV13jfafeCRvyPQ==}
+  /@axel669/windstorm/0.1.4:
+    resolution: {integrity: sha512-GdHDbURtOhhZ9jfPSeiBhF17I6i2XoTJ0x+UxgwRzm12vydC7OjlAvZCk/HlKRiGxuP3npIRamO9wlP4GqGPwg==}
     dev: false
 
   /@jridgewell/gen-mapping/0.3.2:

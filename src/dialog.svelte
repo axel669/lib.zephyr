@@ -1,4 +1,6 @@
 <script>
+    import { fade } from "svelte/transition"
+
     import wsx from "./wsx.mjs"
 
     import Paper from "./paper.svelte"
@@ -10,7 +12,7 @@
     }
 </script>
 <ws-modal ws-x="$show">
-    <ws-paper use:wsx={paper}>
+    <ws-paper use:wsx={paper} transition:fade={{ duration: 200 }}>
         <slot name="header" />
         <slot name="content" />
         <slot name="footer" />
