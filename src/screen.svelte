@@ -16,7 +16,7 @@
     const stack = getContext(ctxStack) ?? 0
     const animation = {
         y: window.innerHeight,
-        duration: 250
+        duration: 350
     }
 
     let props = null
@@ -48,9 +48,9 @@
         <svelte:component this={component} {...props} {close} />
     {/if}
 {:else}
-    <ws-screen use:wsx={wind} use:vars={settings} transition:fly={animation}>
-        <slot name="title" />
-        <slot name="content" />
-        <slot name="footer" />
+    <ws-screen use:wsx={wind} use:vars={settings}>
+        <screen-wrapper ws-x="grid" transition:fly={animation}>
+            <slot />
+        </screen-wrapper>
     </ws-screen>
 {/if}
