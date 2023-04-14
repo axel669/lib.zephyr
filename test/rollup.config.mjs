@@ -21,7 +21,9 @@ export default {
             }
         },
         html(),
-        svelte(),
+        svelte({
+            emitCss: false
+        }),
         resolve(),
         // terser(),
     ]

@@ -6,11 +6,15 @@
         Chip,
         Icon,
         InlineDialog,
+        Input,
         Modal,
         Paper,
         Screen,
         Text,
+        // TextInput,
         Titlebar,
+
+        EntryButton,
 
         Flex,
         Grid,
@@ -21,13 +25,16 @@
 
     import TestDialog from "./comp/test-dialog.svelte"
     import TestScreen from "./comp/test-screen.svelte"
+    import Menu from "./comp/menu.svelte"
 
-    const reverse = {
-        dark: "tron",
-        tron: "dark"
-    }
+    import NewRequest from "./comp/new-request.svelte"
+
+    // const reverse = {
+    //     dark: "tron",
+    //     tron: "dark"
+    // }
     let theme = "tron"
-    const toggle = () => theme = reverse[theme]
+    // const toggle = () => theme = reverse[theme]
 
     let clicks = 0
     const inc = () => clicks += 1
@@ -46,84 +53,28 @@
         )
     }
 
-    const image = "https://freepngimg.com/save/109659-kingdom-hearts-sora-photos-free-transparent-image-hd/801x816"
+    $: console.log(bind)
 </script>
 
+<svelte:head>
+    <title>Svelte-Wind</title>
+</svelte:head>
 <svelte:body use:wsx={{theme, "@app": true}} />
 
 <Screen>
-    <Titlebar slot="title" fill color="warning">
-        <Text title slot="title">Windstorm Svelte</Text>
-    </Titlebar>
-
-    <!-- <Flex slot="content" cross="stretch"> -->
-    <Paper slot="content" lprops={{cross: "stretch"}}>
-        <div ws-x="h[20px]" />
-
-        <Badge text={clicks} color="primary">
-            <Icon name="abacus">Things Clicked</Icon>
-        </Badge>
-
-        <Button on:click={openDialog}>
-            Please Open Dialog
-        </Button>
-        <Button on:click={openSubscreen} color="secondary">
-            Please Open Subscreen
-        </Button>
-        <Paper card>
-            <Flex slot="content">
-                <div>0</div>
-                <div>1</div>
-                <div>2</div>
-                <div>3</div>
+    <Paper square card lprops={{cross: "stretch"}}>
+        <Titlebar slot="header" fill color="primary">
+            <Flex slot="title">
+                <Text title>Svelte Wind</Text>
+                <Text subtitle>Oh god please work for me and look good</Text>
             </Flex>
-            <Titlebar slot="header">
-                <Flex slot="title">
-                    <Text title>Testing</Text>
-                    <Text subtitle>subtitle?</Text>
-                </Flex>
-            </Titlebar>
-        </Paper>
+        </Titlebar>
 
-        <Flex theme="dark">
-            <Screen component={TestScreen} bind:this={bind.subscreen} />
-            <Modal bind:this={bind.dialog} component={TestDialog} />
-            <Button variant="outline" color="primary" on:click={toggle}>
-                Toggle
-            </Button>
-
-            <Avatar text="69" color="secondary" t-sz="18px" />
-            <Avatar {image} />
-
-            <Chip color="accent" click on:click={inc}>
-                Testing?
-            </Chip>
-
-            <InlineDialog let:id>
-                <Button slot="toggle" variant="fill" color="warning" for={id} label>
-                    Dialog?
-                </Button>
-
-                <Flex slot="content">
-                    <Text>Blep</Text>
-                    <Button variant="fill" color="accent" for={id} label>
-                        Close
-                    </Button>
-                </Flex>
-            </InlineDialog>
-        </Flex>
-        <Grid cols={["1fr", "1fr"]} autoRow="50px">
-            <Button variant="outline" color="primary" on:click={toggle}>
-                Toggle
-            </Button>
-
-            <Avatar text="69" color="secondary" t-sz="18px" />
-            <Avatar {image} />
-
-            <Chip color="accent" click on:click={inc}>
-                Testing?
-            </Chip>
-        </Grid>
+        <EntryButton this={Modal} component={TestDialog} on:entry={console.log}>
+            Show Dialog
+        </EntryButton>
+        <EntryButton this={Modal} component={Menu} on:entry={console.log}>
+            Show Menu
+        </EntryButton>
     </Paper>
-    <!-- </Flex> -->
 </Screen>

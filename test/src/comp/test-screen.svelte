@@ -12,16 +12,15 @@
 </script>
 
 <Screen>
-    <Titlebar slot="title" fill color="primary">
-        <Text slot="title" title>Blep</Text>
+    <Paper square>
+        <Titlebar slot="header" fill color="primary">
+            <Text slot="title" title>Blep</Text>
 
-        <Button slot="action" on:click={close} color={false} compact>
-            <Icon name="x" />
-        </Button>
-    </Titlebar>
-
-    <Paper slot="content" square>
-        <Text slot="content">
+            <Button slot="action" on:click={close} color={false} compact>
+                <Icon name="x" />
+            </Button>
+        </Titlebar>
+        <Text>
             Wat
         </Text>
     </Paper>
