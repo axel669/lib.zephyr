@@ -6,8 +6,13 @@
     export let card = false
     export let square = false
     export let layout = Flex
+    export let scrollable = false
     export let lprops = {}
 
+    $: props = {
+        over: scrollable ? "auto" : false,
+        ...lprops,
+    }
     $: wind = {
         $color: color,
         "@outline": card,
@@ -21,7 +26,7 @@
     {#if $$slots.content}
         <slot name="content" />
     {:else}
-        <svelte:component this={layout} {...lprops}>
+        <svelte:component this={layout} {...props}>
             <slot />
         </svelte:component>
     {/if}
