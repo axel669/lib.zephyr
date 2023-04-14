@@ -5,6 +5,10 @@
 
     import Paper from "./paper.svelte"
 
+    export let close
+
+    const cancel = () => close?.()
+
     const slide = (node, options) => ({
         delay: 0,
         duration: 200,
@@ -24,8 +28,9 @@
         ...$$restProps
     }
 </script>
-<ws-modal ws-x="$show">
-    <ws-paper use:wsx={paper} transition:slide>
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<ws-modal ws-x="$show" on:click={cancel}>
+    <ws-paper use:wsx={paper} transition:slide on:click|stopPropagation>
         <slot name="header" />
         <slot name="content" />
         <slot name="footer" />
