@@ -11,8 +11,8 @@
 
     $: wind = {
         "gr-dir": direction,
-        "gr-col": cols?.join(" ") ?? false,
-        "gr-row": rows?.join(" ") ?? false,
+        "gr-col": cols?.join?.(" ") ?? cols ?? false,
+        "gr-row": rows?.join?.(" ") ?? rows ?? false,
         "gr-acol": autoCol,
         "gr-arow": autoRow,
         p: pad,
