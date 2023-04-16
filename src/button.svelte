@@ -19,11 +19,11 @@
 
 {#if label === true}
     <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <label use:wsx={wind} for={_for} on:click>
+    <label use:wsx={wind} for={_for} on:click|stopPropagation>
         <slot />
     </label>
 {:else}
-    <button use:wsx={wind} on:click>
+    <button use:wsx={wind} on:click|stopPropagation>
         <slot />
     </button>
 {/if}
