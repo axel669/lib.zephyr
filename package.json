@@ -13,7 +13,8 @@
   "license": "MIT",
   "dependencies": {
     "@axel669/rollup-html-input": "^0.1.2",
-    "@axel669/windstorm": "^0.1.6",
+    "@axel669/windstorm": "^0.1.7",
+    "@labyrinthos/asuid": "^0.2.0",
     "@rollup/plugin-node-resolve": "^15.0.2",
     "@rollup/plugin-terser": "^0.4.0",
     "rollup": "^3.20.2",
