@@ -1,7 +1,10 @@
 <script>
     import {
-        MenuDrawer,
+        // ActionDrawer,
+        // MenuDrawer,
+        // SelectDrawer,
         Button,
+        Drawer,
         Titlebar,
         Text,
     } from "@lib"
@@ -9,7 +12,7 @@
     export let close
 </script>
 
-<MenuDrawer {close}>
+<Drawer type="select" {close} height="250px">
     <Titlebar slot="header">
         <Text slot="title" title>Menu?</Text>
     </Titlebar>
@@ -19,4 +22,4 @@
             <div>{i}</div>
         {/each}
     </div>
-</MenuDrawer>
+</Drawer>

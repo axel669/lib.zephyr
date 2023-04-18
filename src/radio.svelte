@@ -2,6 +2,7 @@
     import asuid from "@labyrinthos/asuid"
 
     import wsx from "./wsx.mjs"
+    import { handler$ } from "./handler$.mjs"
 
     import Flex from "./flex.svelte"
 
@@ -9,8 +10,10 @@
     export let layout = Flex
     export let value
 
-    let valueIndex = options.findIndex(item => item.value === value)
-    $: value = options[valueIndex]?.value
+    $: valueIndex = options.findIndex(item => item.value === value)
+    const set = handler$(
+        (newValue) => value = newValue
+    )
 
     const name = asuid()
 </script>
@@ -19,7 +22,7 @@
     {#each options as {value, label, ...wind}, index (value)}
         <label use:wsx={{"@toggle": true, ...wind}}>
             <span>{label}</span>
-            <input type="radio" bind:group={valueIndex} value={index} {name} />
+            <input type="radio" on:input={set(value)} {name} checked={index === valueIndex} />
         </label>
     {/each}
 </svelte:component>
