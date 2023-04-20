@@ -1,4 +1,12 @@
 <script>
+    /*md
+    [@] Components/Data Display/Tooltip
+
+    # Tooltip
+
+    Displays a tooltip above (or below) some content when it's hovered.
+    */
+
     import wsx from "./wsx.mjs"
 
     export let text = ""
