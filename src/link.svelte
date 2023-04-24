@@ -4,7 +4,7 @@
 
     # Link
 
-    Themed and customizale <a> tag component.
+    Themed and customizale `<a>` tag component.
 
     ## Base
     [Windstorm Link](https://axel669.github.io/lib.windstorm/#components-link)

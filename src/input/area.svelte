@@ -8,7 +8,7 @@
 
     ## Base
     [Windstorm Labled Control](https://axel669.github.io/lib.windstorm/#components-labeled-control)
-    using a <textarea>
+    using a `<textarea>`
 
     ## Props
     All [windstorm functions](https://axel669.github.io/lib.windstorm/#css-shorthands)

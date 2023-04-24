@@ -21,8 +21,8 @@
         The ID of a dom element that the button is tied to. Only works with
         label buttons.
     - ### label `string`
-        If true, the button will be displayed in the DOM using a <label>
-        element instead of a <button>.
+        If true, the button will be displayed in the DOM using a `<label>`
+        element instead of a `<button>`.
     - ### variant `string`
         Sets the button type to `@<variant>` (ex: "flat" -> `@flat`). Default
         variant is "flat". Currently supports "flat", "fill", "outline".

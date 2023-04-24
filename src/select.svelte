@@ -24,7 +24,7 @@
 
     ## Base
     [Windstorm Labeled Control](https://axel669.github.io/lib.windstorm/#components-labeled control)
-    using a <select>
+    using a `<select>`
 
     ## Props
     All [windstorm functions](https://axel669.github.io/lib.windstorm/#css-shorthands)
