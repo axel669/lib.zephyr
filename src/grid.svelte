@@ -6,6 +6,9 @@
 
     Container that uses grid layout by default with some nice default values.
 
+    ## Base
+    [Windstorm Grid](https://axel669.github.io/lib.windstorm/#components-grid)
+
     ## Props
     All [windstorm functions](https://axel669.github.io/lib.windstorm/#css-shorthands)
     are supported.

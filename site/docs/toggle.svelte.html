@@ -1,0 +1,34 @@
+<h1 id="toggle">Toggle</h1>
+<p>The Toggle component is used to display checkboxes and switches.</p>
+<h2 id="base">Base</h2>
+<p><a href="https://axel669.github.io/lib.windstorm/#components-labeled-toggle">Windstorm Labeled Toggle</a>
+using a checkbox input</p>
+<h2 id="props">Props</h2>
+<p>All <a href="https://axel669.github.io/lib.windstorm/#css-shorthands">windstorm functions</a>
+are supported.</p>
+<ul>
+<li><h3 id="color-string">color <code>string</code></h3>
+  Sets <code>$color</code></li>
+<li><h3 id="checkbox-bool">checkbox <code>bool</code></h3>
+  If true, the toggle is displayed as a checkbox. Default is false
+  (shown as a switch)</li>
+<li><h3 id="checked-bool">checked <code>bool</code></h3>
+  Controls if the toggle is checked or not. Can be bound</li>
+<li><h3 id="group">group</h3>
+  Used for binding, see the Svelte bind:group for details</li>
+<li><h3 id="label-string">label <code>string</code></h3>
+  The text to use for the label</li>
+<li><h3 id="outline-bool">outline <code>bool</code></h3>
+  Sets <code>$outline</code></li>
+<li><h3 id="reverse-bool">reverse <code>bool</code></h3>
+  If true, the input being toggled will be on the left instead of the
+  right. Default is false (label is on the left)</li>
+<li><h3 id="value">value</h3>
+  Only used in conjunction with bind:group, see Svelte docs</li>
+</ul>
+<h2 id="usage">Usage</h2>
+<pre><code class="language-svelte">&lt;Toggle label=&quot;Active&quot; bind:checked /&gt;
+&lt;Toggle label=&quot;Active&quot; checkbox bind:checked /&gt;
+&lt;Toggle label=&quot;Active&quot; checkbox reverse bind:checked /&gt;
+&lt;Toggle label=&quot;Active&quot; checkbox outline color=&quot;danger&quot; bind:checked /&gt;
+</code></pre>

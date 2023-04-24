@@ -18,6 +18,14 @@
         Sets `$subtitle`
     - ### title `bool`
         Sets `$title`
+
+    ## Usage
+    ```svelte
+    <Text>Some text</Text>
+    <Text title>Bigger text</Text>
+    <Text subtitle>Smaller text</Text>
+    <Text block>Text on its own line</Text>
+    ```
     */
 
     import wsx from "./wsx.mjs"
@@ -28,7 +36,7 @@
     export let adorn = false
 
     $: wind = {
-        "$title-text": title,
+        "$title": title,
         "$subtitle": subtitle,
         "$adorn": adorn,
         block,

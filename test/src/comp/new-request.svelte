@@ -6,7 +6,7 @@
         Screen,
         Text,
         Titlebar,
-    } from "@lib"
+    } from "@axel669/svelte-wind"
 
     export let close
 </script>

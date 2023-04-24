@@ -1,0 +1,30 @@
+<h1 id="tabs">Tabs</h1>
+<p>It&#39;s tabs, everyone knows what tabs are at this point.</p>
+<h2 id="base">Base</h2>
+<p><a href="https://axel669.github.io/lib.windstorm/#components-tabs">Windstorm Tabs</a></p>
+<h2 id="props">Props</h2>
+<p>All <a href="https://axel669.github.io/lib.windstorm/#css-shorthands">windstorm functions</a>
+are supported.</p>
+<ul>
+<li><h3 id="color-string">color <code>string</code></h3>
+  Sets <code>$color</code></li>
+<li><h3 id="options-arrayobject">options <code>Array[Object]</code></h3>
+  An array of options where each item is <code>{ label, value }</code>. <code>label</code>
+  should be a string, <code>value</code> can be of any type.</li>
+<li><h3 id="vertical-bool">vertical <code>bool</code></h3>
+  Sets <code>$vert</code></li>
+<li><h3 id="solid-bool">solid <code>bool</code></h3>
+  Sets <code>$solid</code></li>
+<li><h3 id="value-any">value <code>any</code></h3>
+  The value of the currently selected tab. Can be bound to react to
+  changes and set to control which tab is selected.</li>
+</ul>
+<h2 id="usage">Usage</h2>
+<pre><code class="language-js">const options = [
+    { label: &quot;Left&quot;, value: &quot;left&quot; },
+    { label: &quot;Right&quot;, value: 2 },
+]
+</code></pre>
+<pre><code class="language-svelte">&lt;Tab {options} bind:value color=&quot;primary&quot; /&gt;
+&lt;Tab {options} bind:value color=&quot;secondary&quot; solid vertical /&gt;
+</code></pre>

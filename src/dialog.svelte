@@ -43,12 +43,11 @@
 
     import Paper from "./paper.svelte"
 </script>
-<ws-modal ws-x="$show">
-    <wind-wrapper transition:fade={{ duration: 200 }} ws-x="@dialog grid">
-        <Paper {...$$props}>
-            <slot name="header" slot="header" />
-            <slot />
-            <slot name="footer" slot="footer" />
-        </Paper>
-    </wind-wrapper>
-</ws-modal>
+
+<wind-wrapper transition:fade={{ duration: 200 }} ws-x="@dialog grid">
+    <Paper {...$$props}>
+        <slot name="header" slot="header" />
+        <slot />
+        <slot name="footer" slot="footer" />
+    </Paper>
+</wind-wrapper>

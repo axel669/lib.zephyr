@@ -90,11 +90,8 @@
 
     import Paper from "./paper.svelte"
 
-    export let close
     export let height
     export let type = "menu"
-
-    const cancel = () => close?.()
 
     const slide = (node, options) => ({
         delay: 0,
@@ -113,14 +110,12 @@
     }
 </script>
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<ws-modal ws-x="$show" on:click={cancel}>
-    <wind-drawer-container use:wsx={container} on:click|stopPropagation>
-        <wind-transition transition:slide ws-x="grid">
-            <Paper {...$$restProps}>
-                <slot name="header" slot="header" />
-                <slot />
-                <slot name="footer" slot="footer" />
-            </Paper>
-        </wind-transition>
-    </wind-drawer-container>
-</ws-modal>
+<wind-drawer-container use:wsx={container} on:click|stopPropagation>
+    <wind-transition transition:slide ws-x="grid">
+        <Paper {...$$restProps}>
+            <slot name="header" slot="header" />
+            <slot />
+            <slot name="footer" slot="footer" />
+        </Paper>
+    </wind-transition>
+</wind-drawer-container>

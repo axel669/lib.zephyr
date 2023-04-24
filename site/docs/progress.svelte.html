@@ -1,0 +1,26 @@
+<h1 id="progress">Progress</h1>
+<p>Displays progress bar with an optional label.</p>
+<h2 id="base">Base</h2>
+<p><a href="https://axel669.github.io/lib.windstorm/#components-progress-bar">Windstorm Progress Bar</a></p>
+<h2 id="props">Props</h2>
+<p>All <a href="https://axel669.github.io/lib.windstorm/#css-shorthands">windstorm functions</a>
+are supported.</p>
+<ul>
+<li><h3 id="color-string">color <code>string</code></h3>
+  Sets <code>$color</code></li>
+<li><h3 id="label-string">label <code>string</code></h3>
+  The label for the bar</li>
+<li><h3 id="max-number">max <code>number</code></h3>
+  Sets the max value for the progress bar. Default is 1</li>
+<li><h3 id="outline-bool">outline <code>bool</code></h3>
+  Sets <code>@outline</code></li>
+<li><h3 id="row-bool">row <code>bool</code></h3>
+  Sets <code>$row</code></li>
+<li><h3 id="value-number">value <code>number</code></h3>
+  Sets the value of the progress bar. Combined with max to determine how
+  filled the bar is.</li>
+</ul>
+<h2 id="usage">Usage</h2>
+<pre><code class="language-svelte">&lt;Progress color=&quot;primary&quot; value={0.1} /&gt;
+&lt;Progress color=&quot;primary&quot; value={5} max={10} /&gt;
+</code></pre>

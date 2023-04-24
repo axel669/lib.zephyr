@@ -1,0 +1,33 @@
+<h1 id="toast">Toast</h1>
+<p>Displays toast notifications along the edge of the screen.</p>
+<h2 id="props">Props</h2>
+<p>See the Toaster component. The Toast component is wrapper around it that
+also controls the children being shown for convenience.</p>
+<ul>
+<li><h3 id="component">component</h3>
+  The component to use as a wrapper for the messages. Defaults to the
+  ToastMessage component.</li>
+</ul>
+<h2 id="functions">Functions</h2>
+<ul>
+<li><h3 id="showduration-props">show(duration, props)</h3>
+  Shows a toast notification that will disappear after the specified
+  duration (time in milliseconds). The props provided are passed to an
+  instance of the component specified in the props.</li>
+</ul>
+<h2 id="events">Events</h2>
+<ul>
+<li><h3 id="actioninfo">action(info)</h3>
+  Fired when a toast message is clicked. The info argument contains a
+  value property that is provided by the message component, and a copy
+  of the props passed to that instace.<br>  For the default messages, the value will be <code>null</code> if no button was
+  clicked, and <code>true</code> if the action button was clicked. This allows
+  actions to be taken against interactions in the message without having
+  to bind all kinds of events or callbacks.</li>
+</ul>
+<h2 id="usage">Usage</h2>
+<pre><code class="language-js">let toast = null
+const notify = () =&gt; toast.show(5000, { message: &quot;hi&quot; })
+</code></pre>
+<pre><code class="language-svelte">&lt;Toast bind:this={toast} position=&quot;bc&quot; /&gt;
+</code></pre>

@@ -1,38 +1,38 @@
 <script>
     import {
-        // Avatar,
-        // Badge,
+        Avatar,
+        Badge,
         Button,
-        // Chip,
-        // Icon,
-        // InlineDialog,
-        // Input,
-        // Link,
-        // Modal,
-        // Notification,
+        Chip,
+        Icon,
+        InlineDialog,
+        Input,
+        Link,
+        Modal,
+        Notification,
         Paper,
-        // Progress,
-        // Radio,
+        Progress,
+        Radio,
         Screen,
-        // Select,
+        Select,
         Table,
-        // Tabs,
+        Tabs,
         Text,
         Titlebar,
-        // Toaster,
-        // Toggle,
-        // Tooltip,
+        Toaster,
+        Toggle,
+        Tooltip,
 
         DataTable,
-        // EntryButton,
-        // Toast,
+        EntryButton,
+        Toast,
 
         Flex,
-        // Grid,
+        Grid,
 
         wsx,
         handler$,
-    } from "@lib"
+    } from "@axel669/svelte-wind"
 
     import TestDialog from "./comp/test-dialog.svelte"
     import TestScreen from "./comp/test-screen.svelte"
@@ -131,11 +131,37 @@
             </Flex>
         </Titlebar>
 
+        <Button variant="outline" color="accent">
+            Blep
+        </Button>
+
+        <Link color="primary" href="#">
+            Test
+        </Link>
+
+        <EntryButton component={TestScreen} on:entry={console.log}>
+            Test Dialog
+        </EntryButton>
+
+        <EntryButton component={Menu} on:entry={console.log}>
+            Test Menu
+        </EntryButton>
+        <EntryButton component={TestDialog} on:entry={console.log}>
+            Test Dialog
+        </EntryButton>
+
+        <!-- <EntryButton this={Modal} component={TestDialog} on:entry={console.log}>
+            Test Dialog
+        </EntryButton>
+        <EntryButton this={Modal} component={Menu} on:entry={console.log}>
+            Test Menu
+        </EntryButton>
+
         <DataTable {cols} {data} color="warning" pageSize={3} bind:page />
         <Button on:click={() => page = 0}>
             Blep
         </Button>
         <Table {cols} {data} />
-        <Table {cols} {data} color="primary" />
+        <Table {cols} {data} color="primary" /> -->
     </Paper>
 </Screen>

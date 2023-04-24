@@ -3,7 +3,11 @@
     [@] Components/Button
 
     # Button
+
     Basic clickable component for handling user interaction.
+
+    ## Base
+    [Windstorm Button](https://axel669.github.io/lib.windstorm/#components-button)
 
     ## Props
     All [windstorm functions](https://axel669.github.io/lib.windstorm/#css-shorthands)

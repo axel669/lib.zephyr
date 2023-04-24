@@ -1,0 +1,27 @@
+<h1 id="modal">Modal</h1>
+<p>The Modal component is used to control when content should be shown that
+sits over the current content and prevents interaction with the content it
+covers. It is primarily used to show drawers, dialogs, and sub screens.</p>
+<p>The <code>show</code> function will display the component specified inside a ws-modal
+element, and can be awaited for an optional return value. The component
+displayed will be passed any props supplied to <code>show</code> and a <code>close</code> function
+that can be called to hide the component again. <code>close</code> can also be given
+an argument that will be used as the promise value from <code>show</code>.</p>
+<h2 id="props">Props</h2>
+<p>Because the Modal does not render content of its own, it does not support
+any wind functions.</p>
+<ul>
+<li><h3 id="component-component">component <code>Component</code></h3>
+  The component to display when <code>show</code> is called</li>
+</ul>
+<h2 id="functions">Functions</h2>
+<ul>
+<li><h3 id="showprops---promise"><code>show(props?) -&gt; Promise</code></h3>
+  Shows the given component and passes any props provided.</li>
+</ul>
+<h2 id="usage">Usage</h2>
+<pre><code class="language-svelte">&lt;Modal component={CoolDialog} bind:this={dialog} /&gt;
+&lt;Button on:click={() =&gt; dialog.show({ a: 10, b: 12 })}&gt;
+    Open Dialog
+&lt;/Button&gt;
+</code></pre>

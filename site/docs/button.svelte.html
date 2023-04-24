@@ -1,0 +1,42 @@
+<h1 id="button">Button</h1>
+<p>Basic clickable component for handling user interaction.</p>
+<h2 id="base">Base</h2>
+<p><a href="https://axel669.github.io/lib.windstorm/#components-button">Windstorm Button</a></p>
+<h2 id="props">Props</h2>
+<p>All <a href="https://axel669.github.io/lib.windstorm/#css-shorthands">windstorm functions</a>
+are supported.</p>
+<ul>
+<li><h3 id="color-string">color <code>string</code></h3>
+  Sets <code>$color</code></li>
+<li><h3 id="compact-bool">compact <code>bool</code></h3>
+  Sets <code>$compact</code></li>
+<li><h3 id="for-string">for <code>string</code></h3>
+  The ID of a dom element that the button is tied to. Only works with
+  label buttons.</li>
+<li><h3 id="label-string">label <code>string</code></h3>
+  If true, the button will be displayed in the DOM using a <label>
+  element instead of a <button>.</li>
+<li><h3 id="variant-string">variant <code>string</code></h3>
+  Sets the button type to <code>@&lt;variant&gt;</code> (ex: &quot;flat&quot; -&gt; <code>@flat</code>). Default
+  variant is &quot;flat&quot;. Currently supports &quot;flat&quot;, &quot;fill&quot;, &quot;outline&quot;.</li>
+</ul>
+<h2 id="events">Events</h2>
+<ul>
+<li>click</li>
+</ul>
+<h2 id="example">Example</h2>
+<pre><code class="language-svelte">&lt;Button on:click={action}&gt;
+    Flat Button
+&lt;/Button&gt;
+&lt;Button on:click={action} variant=&quot;outline&quot;&gt;
+    Outlined Button
+&lt;/Button&gt;
+&lt;Button on:click={action} variant=&quot;fill&quot; color=&quot;danger&quot;&gt;
+    Filled Button
+&lt;/Button&gt;
+
+&lt;Button label for=&quot;thing&quot;&gt;
+    Toggle
+&lt;/Button&gt;
+&lt;input type=&quot;checkbox&quot; id=&quot;toggle&quot; /&gt;
+</code></pre>

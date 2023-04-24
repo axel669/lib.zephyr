@@ -6,6 +6,9 @@
 
     Displays an image or text in a circular container.
 
+    ## Base
+    [Windstorm Avatar](https://axel669.github.io/lib.windstorm/#components-avatar)
+
     ## Props
     All [windstorm functions](https://axel669.github.io/lib.windstorm/#css-shorthands)
     are supported.

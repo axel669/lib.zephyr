@@ -14,10 +14,10 @@ export default {
     plugins: [
         {
             resolveId(id) {
-                if (id !== "@lib") {
+                if (id !== "@axel669/svelte-wind") {
                     return
                 }
-                return path.resolve("index.mjs")
+                return path.resolve("src/index.mjs")
             }
         },
         html(),

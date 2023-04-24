@@ -7,7 +7,7 @@
         Titlebar,
 
         Flex,
-    } from "@lib"
+    } from "@axel669/svelte-wind"
 
     export let close
 </script>
@@ -22,9 +22,7 @@
         </Text>
     </Titlebar>
 
-    <Flex slot="content">
-        <Text>First line</Text>
-        <Text>Second line</Text>
-        <Text>{Math.random()}</Text>
-    </Flex>
+    <Text>First line</Text>
+    <Text>Second line</Text>
+    <Text>{Math.random()}</Text>
 </Dialog>

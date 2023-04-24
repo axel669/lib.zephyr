@@ -2,5 +2,5 @@
     import {
         Button,
         TextInput,
-    } from "@lib"
+    } from "@axel669/svelte-wind"
 </script>

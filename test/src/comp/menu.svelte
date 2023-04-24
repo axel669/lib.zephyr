@@ -7,14 +7,19 @@
         Drawer,
         Titlebar,
         Text,
-    } from "@lib"
+    } from "@axel669/svelte-wind"
 
     export let close
+
+    // export const cancel = () => close(null)
 </script>
 
-<Drawer type="select" {close} height="250px">
+<Drawer type="menu" height="250px">
     <Titlebar slot="header">
         <Text slot="title" title>Menu?</Text>
+        <Button slot="action" on:click={close}>
+            X
+        </Button>
     </Titlebar>
 
     <div slot="content" ws-x="over[auto]">

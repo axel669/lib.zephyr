@@ -1,0 +1,40 @@
+<h1 id="radio">Radio</h1>
+<p>The radio component displays a list of radio options and provides an
+interface to control which one is selected and react to changes in the
+selected value. It also uses a layout component to decide how the options
+are presented.</p>
+<h2 id="base">Base</h2>
+<p>Each radio item rendered is a
+[Windstorm Labeled Toggle](<a href="https://axel669.github.io/lib.windstorm/#components-labeled">https://axel669.github.io/lib.windstorm/#components-labeled</a> toggle)
+that uses a radio input.</p>
+<h2 id="props">Props</h2>
+<p>All <a href="https://axel669.github.io/lib.windstorm/#css-shorthands">windstorm functions</a>
+are supported.</p>
+<p>Unlike the Paper, the wind functions passed as props to the Radio component
+are passed directly to the layout specified because the Radio does not have
+a container element of its own.</p>
+<ul>
+<li><h3 id="layout-component">layout <code>Component</code></h3>
+  The component to use for layout out the options. Default is Flex.</li>
+<li><h3 id="options-arrayobject">options <code>Array[Object]</code></h3>
+  An array of objects that defines the options to show. Details below.</li>
+<li><h3 id="value-any">value <code>any</code></h3>
+  The value currently selected. Can be bound to react to selections or
+  change the current selection.</li>
+</ul>
+<h2 id="options">Options</h2>
+<p>Each object in the options array supplied should have a <code>value</code> and <code>label</code>
+prop specified. Additionally, any wind functions that should be applied to
+the option can be passed as additional props.</p>
+<p>Labels should be strings, but values can be any type as long as they are
+unique in the list.</p>
+<pre><code class="language-js">const options = [
+    { label: &quot;first&quot;, value: 1 },
+    { label: &quot;second&quot;, value: [] },
+    { label: &quot;third&quot;, value: &quot;3&quot;, $color: &quot;warning&quot; }
+]
+</code></pre>
+<h2 id="usage">Usage</h2>
+<pre><code class="language-svelte">&lt;Radio {options} bind:value /&gt;
+&lt;Radio {options} bind:value={other} layout={Grid} gr-col=&quot;1fr 1fr&quot; /&gt;
+</code></pre>

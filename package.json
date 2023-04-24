@@ -12,8 +12,9 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@axel669/ipsen": "^0.3.1",
     "@axel669/rollup-html-input": "^0.1.2",
-    "@axel669/windstorm": "^0.1.8",
+    "@axel669/windstorm": "^0.1.10",
     "@labyrinthos/asuid": "^0.2.0",
     "@rollup/plugin-node-resolve": "^15.0.2",
     "@rollup/plugin-terser": "^0.4.0",

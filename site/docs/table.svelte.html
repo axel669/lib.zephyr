@@ -1,0 +1,27 @@
+<h1 id="table">Table</h1>
+<p>Displays data using html tables with some nice styling. This version of the
+table is fairly simple and intended for basic data displays. For more
+complex data displays the DataTable should be used.</p>
+<h2 id="base">Base</h2>
+<p><a href="https://axel669.github.io/lib.windstorm/#components-table">Windstorm Table</a></p>
+<h2 id="props">Props</h2>
+<p>All <a href="https://axel669.github.io/lib.windstorm/#css-shorthands">windstorm functions</a>
+are supported.</p>
+<ul>
+<li><h3 id="color-string">color <code>string</code></h3>
+  Sets <code>$color</code></li>
+<li><h3 id="cols-array">cols <code>Array</code></h3>
+  The columns that should be displayed. Should be in the format of
+  <code>{ label, width? }</code></li>
+<li><h3 id="data-arrayarray">data <code>Array[Array]</code></h3>
+  The data to display. The data should be an array where each item is a
+  row, and each item in the row is the value for a column.</li>
+<li><h3 id="cellwsx-function">cellWSX <code>function</code></h3>
+  If given, this function will be called for each cell, and should return
+  an object that will be passed to the <code>wsx</code> action for each <td>
+  generated. The function is passed <code>(cellValue, rowNum, colNum)</code>.</li>
+<li><h3 id="rowwsx-function">rowWSX <code>function</code></h3>
+  If given, this function will be called for each row, and should return
+  an object that will be passed to the <code>wsx</code> action for each <tr>
+  generated. The function is passed <code>(rowValue, rowNum)</code>.</li>
+</ul>

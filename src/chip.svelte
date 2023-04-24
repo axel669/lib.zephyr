@@ -6,6 +6,9 @@
     Shows a small piece of information that is separate from the surrounding
     info and optionally allows interaction.
 
+    ## Base
+    [Windstorm Chip](https://axel669.github.io/lib.windstorm/#components-chip)
+
     ## Props
     All [windstorm functions](https://axel669.github.io/lib.windstorm/#css-shorthands)
     are supported.

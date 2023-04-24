@@ -6,6 +6,9 @@
 
     Container that uses flex layout by default with some nice default values.
 
+    ## Base
+    [Windstorm Flex](https://axel669.github.io/lib.windstorm/#components-flex)
+
     ## Props
     All [windstorm functions](https://axel669.github.io/lib.windstorm/#css-shorthands)
     are supported.

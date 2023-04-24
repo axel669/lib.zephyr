@@ -43,10 +43,11 @@ function, the event is passed to the curried function.
 
 ### Usage
 In the following example, "first" is logged each time the first button is
-clicked, and "second" is logged when the second button is clicked.
+clicked, and "second" is logged when the second button is clicked. In both
+cases the click event is also logged.
 ```js
 const clicked = eventHandler$(
-    (buttonName) => console.log(buttonName)
+    (event, buttonName) => console.log(event, buttonName)
 )
 ```
 ```svelte

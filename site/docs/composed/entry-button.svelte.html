@@ -1,0 +1,31 @@
+<h1 id="entrybutton">EntryButton</h1>
+<p>The EntryButton is a convenient way to display modals and screens over
+content without needing to bind variables have lots of Modal elements in
+addition to the buttons that show them.</p>
+<h2 id="props">Props</h2>
+<ul>
+<li><h3 id="component">component</h3>
+  The component to show when clicked</li>
+<li><h3 id="props-1">props</h3>
+  The props to pass to the component when it is shown</li>
+<li><h3 id="this">this</h3>
+  The wrapper for the component. Default is Modal but any component that
+  has the same interface as Modal will work</li>
+</ul>
+<h2 id="events">Events</h2>
+<ul>
+<li><h3 id="entry">entry</h3>
+  When the component is close the entry event is fired. The detail
+  property of the event will have the value from closing it</li>
+</ul>
+<h2 id="usage">Usage</h2>
+<pre><code class="language-svelte">&lt;EntryButton component={Subscreen} on:entry={console.log}&gt;
+    Open Subscreen
+&lt;/EntryButton&gt;
+&lt;EntryButton component={CoolDialog} on:entry={console.log}&gt;
+    Open Subscreen
+&lt;/EntryButton&gt;
+&lt;EntryButton this={CoolModal} component={CustomThing} on:entry={console.log}&gt;
+    Open Subscreen
+&lt;/EntryButton&gt;
+</code></pre>

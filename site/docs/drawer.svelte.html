@@ -1,0 +1,44 @@
+<h1 id="drawer">Drawer</h1>
+<p>A modal container for creating dialogs. The Dialog component is a modal
+element that uses a Paper element for the layout of content. All extra props
+and slots for the Drawer are passed to the underlying Paper component.</p>
+<p>The Drawer component is used as a wrapper for content and is used in
+conjunction with the Modal component to be controlled on screen.</p>
+<h2 id="props">Props</h2>
+<ul>
+<li><h3 id="close-function">close <code>function</code></h3>
+  If passed, this function will be called when the user clicks in the
+  empty area outside of the drawer contents.</li>
+<li><h3 id="height-string">height <code>string</code></h3>
+  Sets the height of the select drawer, no effect for menu and action
+  drawers which default to full height of the window.</li>
+<li><h3 id="type-string">type <code>string</code></h3>
+  The type of drawer. Default is &quot;menu&quot;<ul>
+<li><h4 id="menu">&quot;menu&quot;</h4>
+  Makes a drawer that slides in on the left side of the screen</li>
+<li><h4 id="action">&quot;action&quot;</h4>
+  Makes a drawer that slides in on the right side of the screen</li>
+<li><h4 id="select">&quot;select&quot;</h4>
+  Makes a drawer that is centered horizontally and slides in from
+  the top of the screen</li>
+</ul>
+</li>
+</ul>
+<h2 id="usage">Usage</h2>
+<p><code>cool-drawer.svelte</code></p>
+<pre><code class="language-svelte">&lt;Drawer&gt;
+    &lt;Titlebar slot=&quot;header&quot;&gt;
+        &lt;Text slot=&quot;title&quot; title&gt;
+            Some Title
+        &lt;/Text&gt;
+    &lt;/Titlebar&gt;
+
+    &lt;span&gt;Content&lt;/span&gt;
+&lt;/Drawer&gt;
+</code></pre>
+<p><code>app.svelte</code></p>
+<pre><code class="language-svelte">&lt;Modal component={CoolDrawer} /&gt;
+&lt;EntryButton this={Modal} component={CoolDrawer}&gt;
+    Open Cool Dialog
+&lt;/EntryButton&gt;
+</code></pre>

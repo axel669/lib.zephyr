@@ -1,4 +1,50 @@
 <script>
+    /*md
+    [@] Components/Input/File
+
+    # Input.File
+
+    A multiline text input component.
+
+    ## Base
+    [Windstorm Labled Control](https://axel669.github.io/lib.windstorm/#components-labeled-control)
+    using an input with type="file"
+
+    ## Props
+    All [windstorm functions](https://axel669.github.io/lib.windstorm/#css-shorthands)
+    are supported.
+
+    - ### color `string`
+        Sets `$color`
+    - ### error `string`
+        Shows an error message under the input
+    - ### flat `bool`
+        Sets `@flat`
+    - ### hint `string`
+        Shows a hint under the label. If no label is provided, the hint will not
+        be shown either
+    - ### label `string`
+        The label for the input
+    - ### validate `function`
+        If given, will check the transformed output against a validation
+        criteria and store the result in `valid`
+    - ### valid `bool`
+        Value that can be bound to as the output of the validation function.
+        Setting has no effect
+    - ### value `string`
+        The value of the textarea, can be bound to
+
+    ## Usage
+    ```js
+    import { Input } from "@axel669/svelte-wind"
+    ```svelte
+    <Input.File bind:value />
+    <Input.File bind:value color="primary" />
+    <Input.File bind:value label="Wat" hint="Blep"/>
+    <Input.File bind:value bind:valid validate={file => file[0].type !== "text"} />
+    ```
+    */
+
     import wsx from "../wsx.mjs"
 
     export let flat = false
