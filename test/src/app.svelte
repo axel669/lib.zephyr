@@ -11,6 +11,7 @@
         Modal,
         Notification,
         Paper,
+        Popover,
         Progress,
         Radio,
         Screen,
@@ -149,6 +150,17 @@
         <EntryButton component={TestDialog} on:entry={console.log}>
             Test Dialog
         </EntryButton>
+
+        <Popover let:show let:hide>
+            <Button on:click={show}>
+                Pls
+            </Button>
+            <div ws-x="inset-x[0px] y[0px] h[100px] bg[teal]" slot="content">
+                <Button on:click={hide}>
+                    Close
+                </Button>
+            </div>
+        </Popover>
 
         <!-- <EntryButton this={Modal} component={TestDialog} on:entry={console.log}>
             Test Dialog

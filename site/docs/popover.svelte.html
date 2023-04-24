@@ -1,0 +1,28 @@
+<h1 id="popover">Popover</h1>
+<p>The Popover component is for displaying content over something without it
+being modal (you can interact with things under it still).</p>
+<h2 id="base">Base</h2>
+<p><a href="https://axel669.github.io/lib.windstorm/#components-popover">Windstorm Popover</a></p>
+<h2 id="props">Props</h2>
+<p>All <a href="https://axel669.github.io/lib.windstorm/#css-shorthands">windstorm functions</a>
+are supported.</p>
+<h2 id="variables">Variables</h2>
+<ul>
+<li>show</li>
+<li>hide
+The Popover exposes 2 variables for use: <code>show</code> and <code>hide</code>. These functions
+are given to the content so that it can control when to display the popover
+content without needing to bind to the parent.</li>
+</ul>
+<h2 id="usage">Usage</h2>
+<pre><code class="language-svelte">&lt;Popover let:show let:hide&gt;
+    &lt;Button on:click={show}&gt;
+        Show
+    &lt;/Button&gt;
+    &lt;div ws-x=&quot;inset-x[0px] y[0px] h[100px] bg[teal]&quot; slot=&quot;content&quot;&gt;
+        &lt;Button on:click={hide}&gt;
+            Hide
+        &lt;/Button&gt;
+    &lt;/div&gt;
+&lt;/Popover&gt;
+</code></pre>

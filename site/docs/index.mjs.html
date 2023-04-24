@@ -18,6 +18,9 @@ the entire lib can imported at once, but I dunno how big that bundle will be.</p
     import * as Wind from &quot;@axel69/svelte-wind&quot;
 &lt;/script&gt;
 
+&lt;!-- the wsx action can be used to setup the ws-x needed for the body --&gt;
+&lt;svelte:body use:wsx={{theme, &quot;@app&quot;: true}} /&gt;
+
 &lt;Button on:click={stuff}&gt;
     I&#39;m a button!
 &lt;/Button&gt;
