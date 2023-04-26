@@ -1,14 +1,14 @@
 
 
-# Svelte Wind
-Svelte Wind is a svelte binding for the
+# Zephyr
+Zephyr is a svelte binding for the
 [Windstorm](https://www.npmjs.com/package/@axel669/windstorm)
 library.
 
 [Docs Here](https://svelte-wind.axel669.net)
 
 ## Installation
-Svelte Wind can be installed through npm (or the variants like yarn, pnpm, etc).
+Zephyr can be installed through npm (or the variants like yarn, pnpm, etc).
 
 ```bash
 npm install @axel669/svelte-wind

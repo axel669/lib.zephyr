@@ -1,5 +1,5 @@
 window.siteConfig = {
-    "title": "Svelte Wind",
+    "title": "Zephyr",
     "defaultTheme": "dark",
     "sidebar": [
         {
@@ -23,15 +23,6 @@ window.siteConfig = {
                     "items": "components-button"
                 },
                 {
-                    "label": "Container",
-                    "items": [
-                        {
-                            "label": "Popover",
-                            "items": "components-container-popover"
-                        }
-                    ]
-                },
-                {
                     "label": "Containers",
                     "items": [
                         {
@@ -53,6 +44,10 @@ window.siteConfig = {
                         {
                             "label": "Paper",
                             "items": "components-containers-paper"
+                        },
+                        {
+                            "label": "Popover",
+                            "items": "components-containers-popover"
                         },
                         {
                             "label": "Screen",
@@ -210,7 +205,7 @@ window.siteConfig = {
         "components-modal": "modal.svelte.html",
         "components-notification": "notification.svelte.html",
         "components-containers-paper": "paper.svelte.html",
-        "components-container-popover": "popover.svelte.html",
+        "components-containers-popover": "popover.svelte.html",
         "components-progress": "progress.svelte.html",
         "components-input-radio": "radio.svelte.html",
         "components-containers-screen": "screen.svelte.html",

@@ -119,7 +119,7 @@
 </script>
 
 <svelte:head>
-    <title>Svelte-Wind</title>
+    <title>Zephyr</title>
 </svelte:head>
 <svelte:body use:wsx={{theme, "@app": true}} />
 
@@ -127,7 +127,7 @@
     <Paper square card lprops={{cross: "stretch"}}>
         <Titlebar slot="header" fill color="primary">
             <Flex slot="title">
-                <Text title>Svelte Wind</Text>
+                <Text title>Zephyr</Text>
                 <Text subtitle>Oh god please work for me and look good</Text>
             </Flex>
         </Titlebar>

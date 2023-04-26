@@ -2650,7 +2650,7 @@ const get_content_slot_context = ctx => ({
 const get_default_slot_changes = dirty => ({});
 const get_default_slot_context = ctx => ({ show: /*show*/ ctx[2] });
 
-// (32:4) {#if visible}
+// (55:4) {#if visible}
 function create_if_block(ctx) {
 	let wind_content;
 	let wind_content_transition;
@@ -2819,12 +2819,7 @@ function instance$8($$self, $$props, $$invalidate) {
 	let $$restProps = compute_rest_props($$props, omit_props_names);
 	let { $$slots: slots = {}, $$scope } = $$props;
 	let visible = false;
-
-	const show = () => {
-		console.log("show");
-		$$invalidate(0, visible = true);
-	};
-
+	const show = () => $$invalidate(0, visible = true);
 	const hide = () => $$invalidate(0, visible = false);
 	const anim = { duration: 200 };
 
@@ -2869,7 +2864,7 @@ const alphabet = "0123456789abcdefghijklmnopqrstuv";
 
 # Event Handlers
 
-Svelte Wind provides a couple of functions to help make event handlers look
+Zephyr provides a couple of functions to help make event handlers look
 nicer and bind arguments easier.
 */
 
@@ -4999,7 +4994,7 @@ function create_default_slot_3(ctx) {
 
 	return {
 		c() {
-			t = text("Svelte Wind");
+			t = text("Zephyr");
 		},
 		m(target, anchor) {
 			insert(target, t, anchor);
@@ -5259,7 +5254,7 @@ function create_fragment(ctx) {
 			t0 = space();
 			t1 = space();
 			create_component(screen.$$.fragment);
-			document.title = "Svelte-Wind";
+			document.title = "Zephyr";
 		},
 		m(target, anchor) {
 			insert(target, t0, anchor);

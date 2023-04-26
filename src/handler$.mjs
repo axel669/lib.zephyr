@@ -3,7 +3,7 @@
 
 # Event Handlers
 
-Svelte Wind provides a couple of functions to help make event handlers look
+Zephyr provides a couple of functions to help make event handlers look
 nicer and bind arguments easier.
 */
 

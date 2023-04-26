@@ -1,6 +1,6 @@
 <script>
     /*md
-    [@] Components/Container/Popover
+    [@] Components/Containers/Popover
 
     # Popover
 

@@ -3,7 +3,7 @@
 // fs.copyFileSync("dist/browser.js", "test/browser.js")
 
 export default {
-    title: "Svelte Wind",
+    title: "Zephyr",
     source: {
         dir: "src",
         readme: "index.mjs",
