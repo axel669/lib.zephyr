@@ -14,6 +14,11 @@
     that can be called to hide the component again. `close` can also be given
     an argument that will be used as the promise value from `show`.
 
+    If a component that a modal displays exports a `cancel` function, then
+    clicking the modal area outside the displayed component will call that
+    `cancel` function, allowing any modal component to decide when/if it is
+    closes in response to that event.
+
     ## Props
     Because the Modal does not render content of its own, it does not support
     any wind functions.
