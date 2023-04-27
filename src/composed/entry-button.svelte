@@ -13,7 +13,8 @@
     - ### component
         The component to show when clicked
     - ### props
-        The props to pass to the component when it is shown
+        The props to pass to the component when it is shown, or a function that
+        generates the props when called
     - ### this
         The wrapper for the component. Default is Modal but any component that
         has the same interface as Modal will work
@@ -53,7 +54,8 @@
     let element = null
     const open = handler$(
         async (props) => {
-            const result = await element.show(props)
+            const elemProps = (typeof props === "function") ? props() : props
+            const result = await element.show(elemProps)
             send("entry", result)
         }
     )
