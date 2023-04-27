@@ -1,6 +1,6 @@
 {
   "name": "@axel669/zephyr",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "",
   "main": "src/index.mjs",
   "type": "module",
@@ -12,10 +12,8 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@axel669/windstorm": "^0.1.10",
-    "@labyrinthos/asuid": "^0.2.0"
-  },
-  "peerDependencies": {
+    "@axel669/windstorm": "0.1.12",
+    "@labyrinthos/asuid": "^0.2.0",
     "svelte": "^3.58.0"
   },
   "devDependencies": {
