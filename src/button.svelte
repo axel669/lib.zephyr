@@ -54,6 +54,7 @@
     export let color = "default"
     export let compact = false
     export let variant = "flat"
+    export let disabled
 
     let _for = ""
     export { _for as for }
@@ -70,11 +71,11 @@
 
 {#if label === true}
     <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <label use:wsx={wind} for={_for} on:click|stopPropagation>
+    <label use:wsx={wind} {disabled} for={_for} on:click|stopPropagation>
         <slot />
     </label>
 {:else}
-    <button use:wsx={wind} on:click|stopPropagation>
+    <button use:wsx={wind} {disabled} on:click|stopPropagation>
         <slot />
     </button>
 {/if}
