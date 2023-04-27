@@ -209,6 +209,12 @@ function set_custom_element_data(node, prop, value) {
 function children(element) {
     return Array.from(element.childNodes);
 }
+function set_data(text, data) {
+    data = '' + data;
+    if (text.data === data)
+        return;
+    text.data = data;
+}
 function custom_event(type, detail, { bubbles = false, cancelable = false } = {}) {
     const e = document.createEvent('CustomEvent');
     e.initCustomEvent(type, bubbles, cancelable, detail);
@@ -792,7 +798,7 @@ class SvelteComponent {
     }
 }
 
-const e=/(?<key>(?<mod>\w+:)?(?<name>[\$\@\&\w\-]+)(\[(?<args>.*?)\])?)/g,r={"(":1,")":-1},t=e=>{const t=e.trim().replace(/__|_/g,(e=>"__"===e?"_":" "));if(""===t)return [];const o=t.split("").reduce(((e,o,l)=>","===o&&0===e.p?(e.args.push(t.substring(e.s,l).trim()),e.s=l,e):(e.p+=r[o]??0,e)),{args:[],p:0,s:0});return [...o.args,t.slice(o.s).trim()]},o=(e,r)=>void 0===r?"":`${e}: ${(e=>!0===e.startsWith("&")?`var(--${e.slice(1)})`:e)(r)}`,l=e=>(r,t)=>[o(e,t)],a=(...e)=>(r,t)=>e.map((e=>o(e,t)));var i=Object.freeze({__proto__:null,cssprop:o,multi:a,simple:l,wsx:e=>Object.entries(e).reduce(((e,[r,t])=>{if(null==t||!1===t)return e;const o=!0===t?r:`${r}[${(e=>e.replace(/( )|(_)/g,((e,r)=>r?"_":"__")))(t)}]`;return e.push(o),e}),[]).join(" ")});const n={area:l("grid-area"),b:l("border"),"b-c":l("border-color"),"b-s":l("border-style"),"b-w":l("border-width"),"b-t":l("border-top"),"b-t-c":l("border-top-color"),"b-t-s":l("border-top-style"),"b-t-w":l("border-top-width"),"b-b":l("border-bottom"),"b-b-c":l("border-bottom-color"),"b-b-s":l("border-bottom-style"),"b-b-w":l("border-bottom-width"),"b-l":l("border-left"),"b-l-c":l("border-left-color"),"b-l-s":l("border-left-style"),"b-l-w":l("border-left-width"),"b-r":l("border-right"),"b-r-c":l("border-right-color"),"b-r-s":l("border-right-style"),"b-r-w":l("border-right-width"),bg:l("background"),"bg-a":l("background-attachment"),"bg-c":l("background-color"),"bg-img":l("background-image"),block:()=>o("display","block"),c:l("color"),col:l("grid-column"),cur:l("cursor"),flex:(e,r="column")=>[o("display","flex"),o("flex-direction",r)],"fl-center":()=>[o("align-items","center"),o("justify-content","center")],"fl-cr-a":l("align-items"),"fl-dir":l("flex-direction"),"fl-wr":l("flex-wrap"),"fl-m-a":l("justify-content"),font:l("font-family"),gap:l("gap"),grid:(e,r="row")=>[o("display","grid"),o("grid-auto-flow",r)],"gr-col":l("grid-template-columns"),"gr-row":l("grid-template-rows"),"gr-acol":l("grid-auto-columns"),"gr-arow":l("grid-auto-rows"),"gr-flow":l("grid-auto-flow"),h:l("height"),"h-max":l("max-height"),"h-min":l("min-height"),hide:()=>[o("display","none")],iblock:()=>[o("display","inline-block")],iflex:(e,r="column")=>[o("display","inline-flex"),o("flex-direction",r)],igrid:(e,r="row")=>[o("display","inline-grid"),o("grid-auto-flow",r)],inset:a("top","left","bottom","right"),"inset-x":a("left","right"),"inset-y":a("top","bottom"),m:l("margin"),"m-b":l("margin-bottom"),"m-l":l("margin-left"),"m-r":l("margin-right"),"m-t":l("margin-top"),over:l("overflow"),"over-x":l("overflow-x"),"over-y":l("overflow-y"),p:l("padding"),"p-b":l("padding-bottom"),"p-l":l("padding-left"),"p-r":l("padding-right"),"p-t":l("padding-top"),"p-x":a("padding-left","padding-right"),"p-y":a("padding-top","padding-bottom"),pos:l("position"),r:l("border-radius"),"r-tl":l("border-top-left-radius"),"r-tr":l("border-top-right-radius"),"r-bl":l("border-bottom-left-radius"),"r-br":l("border-bottom-right-radius"),"r-t":a("border-top-left-radius","border-top-right-radius"),"r-r":a("border-top-right-radius","border-bottom-right-radius"),"r-l":a("border-bottom-left-radius","border-top-left-radius"),"r-b":a("border-bottom-right-radius","border-bottom-left-radius"),row:l("grid-row"),sel:l("user-select"),shdw:l("box-shadow"),"t-a":l("text-align"),"t-br":l("word-break"),"t-deco":l("text-decoration"),"t-lh":l("line-height"),"t-over":l("text-overflow"),"t-sz":l("font-size"),"t-tr":l("text-transform"),"t-wght":l("font-weight"),"t-ws":l("white-space"),theme:()=>[o("color","var(--text-color-normal)"),o("font-family","var(--font)"),o("font-size","var(--text-size-normal)")],tr:l("transform"),w:l("width"),"w-max":l("max-width"),"w-min":l("min-width"),x:l("left"),y:l("top"),"-x":l("right"),"-y":l("bottom"),z:l("z-index"),$color:(e,r)=>[o("--color",`&${r}`),o("--ripple-color",`&${r}-ripple`)],$adorn:()=>[o("display","flex"),o("justify-content","center"),o("align-items","center"),o("padding","2px")],$compact:()=>[o("padding","0px 8px")],$title:()=>[o("font-size","&text-size-title"),o("font-weight","700")],$subtitle:()=>[o("font-size","&text-size-subtitle")],"@flat":()=>[o("border-width","0px"),o("--border-size","0px")],"@outline":()=>[o("border-width","1px"),o("border-color","&color")],"@fill":()=>[o("--ripple-color","var(--ripple-dark) !important"),o("--text-color","&text-color-fill"),o("background-color","&color"),o("color","&text-color-fill")]};var s=[{name:"baseline",style:'@import url(https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500;1,700;1,900&display=swap);@import url(https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.13.0/tabler-icons.min.css);*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}:where([ws-x]){border-style:solid;border-width:0;border-color:var(--text-color-normal)}body,html{padding:0;margin:0;width:100%;height:100%;-webkit-tap-highlight-color:transparent}body[ws-x*="theme["]{background-color:var(--background)}body[ws-x~="@app"]{overflow:hidden;position:fixed;touch-action:pan-x pan-y}'},{name:"avatar",style:"ws-avatar{--color:transparent;--size:36px;display:inline-flex;overflow:hidden;border-radius:500px;align-items:center;justify-content:center;width:var(--size);height:var(--size);background-color:var(--color);color:var(--text-color-fill);vertical-align:text-bottom}ws-avatar>img{width:100%}"},{name:"badge",style:"ws-badge{--color:var(--primary);position:relative;display:inline-grid;overflow:visible}ws-badge::after{position:absolute;content:attr(ws-text);right:-10px;top:0;transform:translateY(-50%);background-color:var(--color);pointer-events:none;border-radius:20px;padding:4px;min-width:20px;height:20px;box-sizing:border-box;text-align:center;font-size:var(--text-size-subtitle);color:var(--text-color-fill);line-height:14px;z-index:5}"},{name:"button",style:':is(label,a):where([ws-x~="@button"]),button:where([ws-x~="@flat"],[ws-x~="@fill"],[ws-x~="@outline"]){--color:var(--text-color-normal);--ripple-color:var(--ripple-normal);border:0 solid var(--color);color:var(--color);font-family:var(--font);background-color:transparent;border-radius:4px;cursor:pointer;padding:8px 16px;display:inline-flex;align-items:center;justify-content:center;overflow:hidden;position:relative;user-select:none}:is(label,a):where([ws-x~="@button"]):where(:not([disabled]))::after,button:where([ws-x~="@flat"],[ws-x~="@fill"],[ws-x~="@outline"]):where(:not([disabled]))::after{content:"";position:absolute;top:0;left:0;bottom:0;right:0;transition:background-color 150ms linear;pointer-events:none}:is(label,a):where([ws-x~="@button"]):where(:not([disabled])):active::after,button:where([ws-x~="@flat"],[ws-x~="@fill"],[ws-x~="@outline"]):where(:not([disabled])):active::after{transition:none;background-color:var(--ripple-color)}:is(label,a):where([ws-x~="@button"]):where([disabled]),button:where([ws-x~="@flat"],[ws-x~="@fill"],[ws-x~="@outline"]):where([disabled]){opacity:.6;background-color:rgba(200,200,200,.4)}'},{name:"chip",style:'ws-chip{display:inline-flex;align-items:center;justify-content:center;border-radius:100px;padding:4px 12px;user-select:none;vertical-align:text-bottom}ws-chip:where([ws-x~="$click"]){cursor:pointer;overflow:hidden;position:relative;user-select:none}ws-chip:where([ws-x~="$click"]):where(:not([disabled]))::after{content:"";position:absolute;top:0;left:0;bottom:0;right:0;transition:background-color 150ms linear;pointer-events:none}ws-chip:where([ws-x~="$click"]):where(:not([disabled])):active::after{transition:none;background-color:var(--ripple-color)}'},{name:"control",style:'label:where([ws-x~="@control"]){--color:var(--default);--border-color:var(--default);position:relative;display:inline-grid;grid-template-areas:"label label label"" start control end""extra extra extra";grid-template-rows:minmax(0,min-content) auto minmax(0,min-content);grid-template-columns:minmax(0,min-content) auto minmax(0,min-content);border:1px solid var(--border-color);border-radius:4px;user-select:none;overflow:hidden}label:where([ws-x~="@control"]):where([ws-error])::after{content:attr(ws-error);grid-row:3;grid-column:span 3;padding:4px;font-size:var(--text-size-info);background-color:var(--danger-ripple)}label:where([ws-x~="@control"]):focus-within{--border-color:var(--color)}label:where([ws-x~="@control"]):focus-within:where([ws-x~="@flat"])>:is(input,select){outline:2px solid var(--ripple-color);outline-offset:-2px}label:where([ws-x~="@control"])>:where(select){--color:var(--text-color-normal);border-width:0;padding:8px;min-height:36px;background-color:transparent;color:var(--color);font:var(--font);font-size:var(--text-size-normal);cursor:pointer;background-color:var(--background-layer);grid-area:control}label:where([ws-x~="@control"])>:where(input,textarea):focus,label:where([ws-x~="@control"])>:where(select):focus{outline:0}label:where([ws-x~="@control"])>:where(select) optgroup,label:where([ws-x~="@control"])>:where(select) option{background-color:var(--background-layer);border-color:var(--background-layer);color:var(--text-color-normal);font-size:var(--text-size-normal);font-family:Arial}label:where([ws-x~="@control"])>:where(input,textarea){border-width:0;background:0 0;color:var(--text-normal-color);font-family:var(--font);min-width:24px;min-height:36px;width:100%;height:100%;grid-area:control;padding:4px;background-color:var(--background-layer)}label:where([ws-x~="@control"])>input[type=file]{position:relative;padding:0}label:where([ws-x~="@control"])>input[type=file]::file-selector-button{font-family:var(--font);height:100%;margin:0 4px 0 0;padding:4px;color:var(--text-normal-color);background-color:var(--background-layer);border-width:0;border-right:1px solid var(--border-color);text-decoration:underline}label:where([ws-x~="@control"])>:where([ws-x~="$text"]){grid-area:label;padding:4px;display:flex;align-items:center;border-bottom:var(--border-size, 1px) solid var(--border-color);border-right:var(--border-size, 1px) solid var(--border-color);color:var(--color);width:min-content;white-space:nowrap;border-bottom-right-radius:4px}label:where([ws-x~="@control"])>:where([ws-x~="$text"]):where([ws-hint])::after{font-size:var(--text-size-subtitle);content:"\\a"attr(ws-hint);color:var(--text-color-secondary);white-space:pre;display:contents}label:where([ws-x~="@control"])>:where([ws-x~="slot[start]"],[slot=start]){grid-area:start}label:where([ws-x~="@control"])>:where([ws-x~="slot[end]"],[slot=end]){grid-area:end}'},{name:"flex",style:"ws-flex{display:flex;flex-direction:column;gap:4px;padding:4px;overflow:hidden}ws-flex>*{flex-shrink:0}"},{name:"grid",style:"ws-grid{display:grid;overflow:hidden;gap:4px;padding:4px;grid-auto-rows:min-content}"},{name:"icon",style:"ws-icon{display:inline-block}ws-icon:where(:not(:empty))::before{margin-right:2px}ws-icon::before{font-family:tabler-icons!important;speak:none;font-style:normal;font-weight:400;font-variant:normal;text-transform:none;line-height:1;display:contents;-webkit-font-smoothing:antialiased}"},{name:"link",style:"a:where([ws-x]){--color:var(--text-color-normal)}a:where([ws-x]),a:where([ws-x]):hover,a:where([ws-x]):visited{color:var(--color)}"},{name:"modal",style:'ws-modal{position:fixed;top:0;left:0;bottom:0;right:0;background-color:rgba(0,0,0,.35);z-index:100;display:none}ws-modal>label:first-child{position:absolute;width:100%;height:100%;cursor:pointer}ws-modal[ws-x~="$show"]{display:block}input[type=checkbox]:not(:checked)+ws-modal{display:none}input[type=checkbox]:checked+ws-modal{display:block}ws-modal>:where(:not(label:first-child)){position:absolute;min-width:15vw}ws-modal>:where(:not(label:first-child)):where([ws-x~="@menu"]){top:0;left:0;height:100%}ws-modal>:where(:not(label:first-child)):where([ws-x~="@action"]){top:0;right:0;height:100%}ws-modal>:where(:not(label:first-child)):where([ws-x~="@select"]){top:0;left:50%;transform:translateX(-50%);max-height:75vh;max-width:min(90vw,720px)}ws-modal>:where(:not(label:first-child)):where([ws-x~="@dialog"]){top:50%;left:50%;transform:translate(-50%,-50%)}'},{name:"notification",style:'ws-notification{--background-color:var(--background-layer);--color:var(--text-color-normal);background-color:var(--background-color);color:var(--color);padding:8px;display:inline-flex;flex-direction:row;justify-content:space-between;align-items:center;border-radius:4px;cursor:pointer;user-select:none;border:1px solid var(--text-color-secondary)}ws-notification[ws-x*="$color"]{background-color:var(--color);color:var(--text-color-fill)}'},{name:"paper",style:'ws-paper{--color:var(--layer-border-color);display:grid;border-radius:4px;box-shadow:0 2px 4px var(--shadow-color);overflow:hidden;grid-template-columns:1fr;grid-template-rows:min-content auto min-content;grid-template-areas:"header""content""footer";background-color:var(--background-layer)}ws-paper::before{content:"";grid-area:header}ws-paper::after{content:"";grid-area:footer}ws-paper>:where([ws-x~="slot[content]"],[slot=content]){grid-area:content}ws-paper>:where([ws-x~="slot[header]"],[slot=header]){grid-area:header;font-size:var(--text-size-header)}ws-paper>:where([ws-x~="slot[footer]"],[slot=footer]){grid-area:footer}'},{name:"popover",style:'ws-popover{display:grid;position:relative}ws-popover:not(:visibile)>:where([ws-x~="slot[content]"],[slot=content]){display:none}ws-popover>:where([ws-x~="slot[content]"],[slot=content]){position:absolute;z-index:25;display:none}ws-popover[ws-x~="$show"]>:where([ws-x~="slot[content]"],[slot=content]){display:block}ws-popover>input:where([type=checkbox]):checked+:where([ws-x~="slot[content]"],[slot=content]){display:block}ws-popover>input:where([type=checkbox]):not(:checked)+:where([ws-x~="slot[content]"],[slot=content]){display:none}'},{name:"progress",style:'label[ws-x~="@progress"]{--color:var(--text-color-normal);--border-size:0px;display:inline-grid;grid-template-columns:1fr;grid-template-rows:min-content auto;border-radius:4px;overflow:hidden;user-select:none}label[ws-x~="@progress"][ws-x~="$row"]{grid-template-columns:min-content auto;grid-template-rows:1fr}label[ws-x~="@progress"]>[ws-x~="$text"]{padding:4px;display:flex;border-bottom:var(--border-size, 1px) solid var(--color);color:var(--color)}label[ws-x~="@progress"]>progress{min-height:20px;height:100%;width:100%;border:0;background-color:var(--background-layer)}label[ws-x~="@progress"]>progress::-moz-progress-bar{background-color:var(--color);border-radius:0}label[ws-x~="@progress"]>progress::-webkit-progress-bar{background-color:var(--background-layer);border-radius:0}label[ws-x~="@progress"]>progress::-webkit-progress-value{background-color:var(--color);border-radius:0}'},{name:"screen",style:'ws-screen{--stack:0;--screen-width:min(720px, 100%);display:grid;width:calc(100% - var(--sub-pixel-offset));height:calc(100% - 1px);overflow:hidden;position:fixed;top:0;left:0;z-index:200;background-color:rgba(0,0,0,.4);grid-template-columns:auto calc(var(--screen-width) - 16px*var(--stack)) auto;grid-template-areas:". content .";padding-top:calc(8px*var(--stack))}ws-screen[ws-x~="@left"]{grid-template-columns:calc(8px*var(--stack)) calc(var(--screen-width) - 16px*var(--stack)) auto}ws-screen>:where(*){grid-area:content;height:100%;overflow:hidden}'},{name:"table",style:"table:where([ws-x]){--border-color:var(--color);border-spacing:0;position:relative}table:where([ws-x]) thead :is(td,th){background-color:var(--color);color:var(--text-color-fill);font-weight:700}table:where([ws-x]) :is(td,th){padding:8px;white-space:nowrap;background-color:var(--background-layer);border-bottom:1px solid var(--color)}table:where([ws-x]) :where(th:first-child){position:sticky;left:0;z-index:10}table:where([ws-x]) :where(td:first-child,th:first-child){border-left:1px solid var(--color)}table:where([ws-x]) :where(td:last-child,th:last-child){border-right:1px solid var(--color)}"},{name:"tabs",style:'ws-tabs{--color:var(--primary);display:flex;flex-direction:row;justify-content:stretch;align-items:stretch;user-select:none;cursor:pointer;gap:2px;padding:2px}ws-tabs[ws-x~="$vert"]{flex-direction:column;justify-content:flex-start}ws-tabs[ws-x~="$vert"]>ws-tab{border-bottom-width:0;border-right-width:2px;flex-grow:0}ws-tabs[ws-x~="@solid"]>ws-tab:where([tab-selected]){color:var(--text-color-fill);background-color:var(--color)}ws-tabs>ws-tab{display:flex;justify-content:center;align-items:center;flex-grow:1;padding:8px;border-color:var(--text-color-secondary);border-width:0 0 2px;border-style:solid}ws-tabs>ws-tab:where([tab-selected]){color:var(--color);border-color:var(--color)}'},{name:"titlebar",style:'ws-titlebar{--text-color:var(--text-color-normal);display:grid;height:48px;grid-template-columns:min-content auto min-content;grid-template-areas:"menu title action";user-select:none}ws-titlebar:where(:not([ws-x~="@fill"])){border-bottom:1px solid var(--color, var(--text-color-normal))}ws-titlebar>:where([ws-x~="slot[title]"],[slot=title]){grid-area:title;display:flex;flex-direction:column;justify-content:center;padding:4px}ws-titlebar>:where([ws-x~="slot[menu]"],[slot=menu]){grid-area:menu;--text-color-normal:var(--text-color)}ws-titlebar>:where([ws-x~="slot[action]"],[slot=action]){grid-area:action;--text-color-normal:var(--text-color)}'},{name:"toaster",style:'ws-toaster{position:fixed;z-index:100;display:inline-flex;flex-direction:column;padding:4px;gap:4px;height:min-content!important}ws-toaster[ws-x~="$tl"]{top:0;left:0}ws-toaster[ws-x~="$tc"]{top:0;left:50%;transform:translateX(-50%)}ws-toaster[ws-x~="$tr"]{top:0;right:0}ws-toaster[ws-x~="$ml"]{top:50%;left:0;transform:translateY(-50%)}ws-toaster[ws-x~="$mr"]{top:50%;right:0;transform:translateY(-50%)}ws-toaster[ws-x~="$bl"]{bottom:0;left:0}ws-toaster[ws-x~="$bc"]{bottom:0;left:50%;transform:translateX(-50%)}ws-toaster[ws-x~="$br"]{bottom:0;right:0}'},{name:"toggle",style:'label[ws-x~="@toggle"]{--color:var(--default);--ripple-color:var(--default-ripple);--border-color:var(--default);cursor:pointer;display:inline-flex;align-items:center;justify-content:space-between;padding:4px;border-radius:4px;border:1px solid var(--border-color);overflow:hidden;position:relative;user-select:none}label[ws-x~="@toggle"]:where(:not([disabled]))::after{content:"";position:absolute;top:0;left:0;bottom:0;right:0;transition:background-color 150ms linear;pointer-events:none}label[ws-x~="@toggle"]:where(:not([disabled])):active::after{transition:none;background-color:var(--ripple-color)}label[ws-x~="@toggle"]:focus-within{--border-color:var(--color)}label[ws-x~="@toggle"]:focus-within:where([ws-x~="@flat"]){outline:2px solid var(--ripple-color);outline-offset:-2px}label[ws-x~="@toggle"]>input{position:relative;min-width:20px;min-height:20px;-webkit-appearance:none;appearance:none;margin:0}label[ws-x~="@toggle"]>input:focus{outline:0}label[ws-x~="@toggle"]>input:checked{color:var(--text-color-invert)}label[ws-x~="@toggle"]>input:checked::after{background-color:var(--color)}label[ws-x~="@toggle"]>input::after{content:"";position:absolute;font-size:18px;font-family:tabler-icons!important;speak:none;font-style:normal;font-weight:400;font-variant:normal;text-transform:none;top:50%;left:50%;width:20px;height:20px;transform:translate(-50%,-50%);display:flex;border:1px solid var(--color);border-radius:4px;align-items:center;justify-content:center;overflow:hidden}label[ws-x~="@toggle"]>input[type=radio]::after{border-radius:50%}label[ws-x~="@toggle"]>input[type=radio]:checked::after{content:""}label[ws-x~="@toggle"]>input[type=checkbox]:checked::after{content:""}label[ws-x~="@toggle"]>input[type=checkbox][ws-x~="$switch"]{position:relative;border:1px solid var(--color);height:24px;width:44px;border-radius:12px}label[ws-x~="@toggle"]>input[type=checkbox][ws-x~="$switch"]::after{content:"";background-color:var(--text-color-secondary);position:absolute;width:18px;height:18px;border-radius:10px;top:2px;left:2px;transform:none;border-width:0;transition:left 100ms linear,color 100ms linear}label[ws-x~="@toggle"]>input[type=checkbox][ws-x~="$switch"]:checked::after{background-color:var(--color);left:22px}'},{name:"tooltip",style:'ws-tooltip{position:relative;display:inline-grid;overflow:visible}ws-tooltip::after{position:absolute;content:attr(ws-text);left:50%;bottom:calc(100% + 2px);transform:translateX(-50%);height:20px;background-color:var(--background-layer);opacity:0;transition:opacity 100ms linear;pointer-events:none;border-radius:4px;border:1px solid var(--text-color-secondary);padding:2px 8px;font-size:var(--text-size-subtitle);width:60%;display:flex;align-items:center;justify-content:center;z-index:5}ws-tooltip:hover::after{opacity:1}ws-tooltip[ws-x~="$bottom"]::after{bottom:unset;top:calc(100% + 2px)}'},{name:"dark",style:'[ws-x~="theme[dark]"]{--font:Roboto;--text-light:white;--text-dark:black;--text-color-normal:var(--text-light);--text-color-secondary:#a0a0a0;--text-color-invert:var(--text-dark);--text-color-fill:var(--text-dark);--text-size-normal:14px;--text-size-title:18px;--text-size-header:16px;--text-size-info:13px;--text-size-subtitle:12px;--text-size-data:10px;--background:#161616;--background-layer:#333333;--layer-border-width:1px;--layer-border-color:#505050;--default:var(--text-color-normal);--default-ripple:var(--ripple-normal);--primary:#00aaff;--primary-ripple:#00aaff60;--secondary:#2fbc2f;--secondary-ripple:#2fbc2f60;--danger:#df5348;--danger-ripple:#df534860;--warning:#ffff00;--warning-ripple:#ffff0060;--accent:#ff4dff;--accent-ripple:#ff4dff60;--button-filled-text-color:var(--text-color-normal);--ripple-dark:#00000060;--ripple-light:#FFFFFF60;--ripple-normal:var(--ripple-light);--ripple-invert:var(--ripple-dark);--shadow-color:rgb(0, 0, 0, 0.25);color-scheme:dark}'},{name:"light",style:'[ws-x~="theme[light]"]{--font:Roboto;--text-light:white;--text-dark:black;--text-color-normal:var(--text-dark);--text-color-secondary:#505050;--text-color-invert:var(--text-light);--text-color-fill:var(--text-light);--text-size-normal:14px;--text-size-title:18px;--text-size-header:16px;--text-size-info:13px;--text-size-subtitle:12px;--text-size-data:10px;--background:#e9e9e9;--background-layer:#ffffff;--layer-border-width:1px;--layer-border-color:#aaaaaa;--default:var(--text-color-normal);--default-ripple:var(--ripple-normal);--primary:#1d62d5;--primary-ripple:#1d62d560;--secondary:#128f12;--secondary-ripple:#128f1260;--danger:#F44336;--danger-ripple:#F4433660;--warning:#db990d;--warning-ripple:#db990d60;--accent:#cf00cf;--accent-ripple:#cf00cf60;--button-filled-text-color:var(--text-color-invert);--ripple-dark:#00000060;--ripple-light:#FFFFFF60;--ripple-normal:var(--ripple-dark);--ripple-invert:var(--ripple-light);--shadow-color:rgb(0, 0, 0, 0.25)}'},{name:"tron",style:'[ws-x~="theme[tron]"]{--font:Orbitron;--text-light:white;--text-dark:black;--text-color-normal:var(--text-light);--text-color-secondary:#a0a0a0;--text-color-invert:var(--text-dark);--text-color-fill:var(--text-dark);--text-size-normal:14px;--text-size-title:18px;--text-size-header:16px;--text-size-info:13px;--text-size-subtitle:12px;--text-size-data:10px;--background:#030303;--background-layer:#04080C;--layer-border-width:1px;--layer-border-color:#00EEEE;--default:var(--text-color-normal);--default-ripple:var(--ripple-normal);--primary:#00aaff;--primary-ripple:#00aaff60;--secondary:#2fbc2f;--secondary-ripple:#2fbc2f60;--danger:#df5348;--danger-ripple:#df534860;--warning:#ffff00;--warning-ripple:#ffff0060;--accent:#ff4dff;--accent-ripple:#ff4dff60;--button-filled-text-color:var(--text-normal);--ripple-dark:#00000060;--ripple-light:#FFFFFF60;--ripple-normal:var(--ripple-light);--ripple-invert:var(--ripple-dark);--shadow-color:rgb(255, 255, 255, 0.25);color-scheme:dark}'}];const d=document.head,c=document.createElement("style"),p=Math.ceil(screen.width*devicePixelRatio*10)%10>=5;s.push({name:"correction",style:`body {--sub-pixel-offset:${p?1:0}px}`});for(const{name:e,style:r}of s){const t=document.createElement("style");t.setAttribute("ws-name",e),t.innerHTML=r,d.appendChild(t);}d.appendChild(c),c.setAttribute("ws-calculated","");const b=c.sheet,x={},w=(e,r)=>[o(`--${e.name.slice(1)}`,r)],h=e=>{if(null===e)return;const r=void 0!==x[e.key],t=void 0===n[e.name]&&!1===e.name.startsWith("&");if(!0===r||!0===t)return;const o=!0===e.name.startsWith("&")?w:n[e.name],l=void 0!==e.mod?`:${e.mod.slice(0,-1)}`:"",a=o(e,...e.args);b.insertRule(`[ws-x][ws-x~="${e.key}"]${l} {\n${a.join(";\n")};\n}`,b.cssRules.length),x[e.key]=b.cssRules[b.cssRules.length-1];},g=r=>{const o=r.getAttribute("ws-x");if(null===o)return;const l=((r,o)=>[...r.matchAll(e)].map((e=>{const{groups:r}=e;return {name:r.name,mod:r.mod,args:t(r.args??""),key:e[0],node:o}})))(o,r);l.forEach(h);},f={childList(e){if(0!==e.addedNodes.length)for(const r of e.addedNodes){(void 0===r.tagName?[]:[r,...r.querySelectorAll("*")]).forEach(g);}},attributes(e){g(e.target);}};new MutationObserver((e=>e.forEach((e=>f[e.type](e))))).observe(document.body,{subtree:!0,attributes:!0,childList:!0,attributeFilter:["ws-x"]});for(const e of document.body.querySelectorAll("*"))g(e);
+const e=/(?<key>(?<mod>\w+:)?(?<name>[\$\@\&\w\-]+)(\[(?<args>.*?)\])?)/g,t={"(":1,")":-1},r=e=>{const r=e.trim().replace(/__|_/g,(e=>"__"===e?"_":" "));if(""===r)return [];const o=r.split("").reduce(((e,o,a)=>","===o&&0===e.p?(e.args.push(r.substring(e.s,a).trim()),e.s=a,e):(e.p+=t[o]??0,e)),{args:[],p:0,s:0});return [...o.args,r.slice(o.s).trim()]},o=(e,t)=>void 0===t?"":`${e}: ${(e=>!0===e.startsWith("&")?`var(--${e.slice(1)})`:e)(t)}`,a=e=>(t,r)=>[o(e,r)],l=(...e)=>(t,r)=>e.map((e=>o(e,r)));var i=Object.freeze({__proto__:null,cssprop:o,multi:l,simple:a,wsx:e=>Object.entries(e).reduce(((e,[t,r])=>{if(null==r||!1===r)return e;const o=!0===r?t:`${t}[${(e=>e.replace(/( )|(_)/g,((e,t)=>t?"_":"__")))(r)}]`;return e.push(o),e}),[]).join(" ")});const n={area:a("grid-area"),b:a("border"),"b-c":a("border-color"),"b-s":a("border-style"),"b-w":a("border-width"),"b-t":a("border-top"),"b-t-c":a("border-top-color"),"b-t-s":a("border-top-style"),"b-t-w":a("border-top-width"),"b-b":a("border-bottom"),"b-b-c":a("border-bottom-color"),"b-b-s":a("border-bottom-style"),"b-b-w":a("border-bottom-width"),"b-l":a("border-left"),"b-l-c":a("border-left-color"),"b-l-s":a("border-left-style"),"b-l-w":a("border-left-width"),"b-r":a("border-right"),"b-r-c":a("border-right-color"),"b-r-s":a("border-right-style"),"b-r-w":a("border-right-width"),bg:a("background"),"bg-a":a("background-attachment"),"bg-c":a("background-color"),"bg-img":a("background-image"),block:()=>o("display","block"),c:a("color"),col:a("grid-column"),cur:a("cursor"),flex:(e,t="column")=>[o("display","flex"),o("flex-direction",t)],"fl-center":()=>[o("align-items","center"),o("justify-content","center")],"fl-cr-a":a("align-items"),"fl-dir":a("flex-direction"),"fl-wr":a("flex-wrap"),"fl-m-a":a("justify-content"),font:a("font-family"),gap:a("gap"),grid:(e,t="row")=>[o("display","grid"),o("grid-auto-flow",t)],"gr-col":a("grid-template-columns"),"gr-row":a("grid-template-rows"),"gr-acol":a("grid-auto-columns"),"gr-arow":a("grid-auto-rows"),"gr-flow":a("grid-auto-flow"),h:a("height"),"h-max":a("max-height"),"h-min":a("min-height"),hide:()=>[o("display","none")],iblock:()=>[o("display","inline-block")],iflex:(e,t="column")=>[o("display","inline-flex"),o("flex-direction",t)],igrid:(e,t="row")=>[o("display","inline-grid"),o("grid-auto-flow",t)],inset:l("top","left","bottom","right"),"inset-x":l("left","right"),"inset-y":l("top","bottom"),m:a("margin"),"m-b":a("margin-bottom"),"m-l":a("margin-left"),"m-r":a("margin-right"),"m-t":a("margin-top"),over:a("overflow"),"over-x":a("overflow-x"),"over-y":a("overflow-y"),p:a("padding"),"p-b":a("padding-bottom"),"p-l":a("padding-left"),"p-r":a("padding-right"),"p-t":a("padding-top"),"p-x":l("padding-left","padding-right"),"p-y":l("padding-top","padding-bottom"),pos:a("position"),r:a("border-radius"),"r-tl":a("border-top-left-radius"),"r-tr":a("border-top-right-radius"),"r-bl":a("border-bottom-left-radius"),"r-br":a("border-bottom-right-radius"),"r-t":l("border-top-left-radius","border-top-right-radius"),"r-r":l("border-top-right-radius","border-bottom-right-radius"),"r-l":l("border-bottom-left-radius","border-top-left-radius"),"r-b":l("border-bottom-right-radius","border-bottom-left-radius"),row:a("grid-row"),sel:a("user-select"),shdw:a("box-shadow"),"t-a":a("text-align"),"t-br":a("word-break"),"t-deco":a("text-decoration"),"t-lh":a("line-height"),"t-over":a("text-overflow"),"t-sz":a("font-size"),"t-tr":a("text-transform"),"t-wght":a("font-weight"),"t-ws":a("white-space"),theme:()=>[o("color","var(--text-color-normal)"),o("font-family","var(--font)"),o("font-size","var(--text-size-normal)")],tr:a("transform"),w:a("width"),"w-max":a("max-width"),"w-min":a("min-width"),x:a("left"),y:a("top"),"-x":a("right"),"-y":a("bottom"),z:a("z-index"),$color:(e,t)=>[o("--color",`&${t}`),o("--ripple-color",`&${t}-ripple`)],$adorn:()=>[o("display","flex"),o("justify-content","center"),o("align-items","center"),o("padding","2px")],$compact:()=>[o("padding","0px 8px")],$title:()=>[o("font-size","&text-size-title"),o("font-weight","700")],$subtitle:()=>[o("font-size","&text-size-subtitle")],"@flat":()=>[o("border-width","0px"),o("--border-size","0px")],"@outline":()=>[o("border-width","1px"),o("border-color","&color")],"@fill":()=>[o("--ripple-color","var(--ripple-dark) !important"),o("--text-color","&text-color-fill"),o("background-color","&color"),o("color","&text-color-fill")]};var s=[{name:"baseline",style:'@import url(https://fonts.googleapis.com/css2?family=Share+Tech+Mono:wght@400;500;600;700;800;900&family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500;1,700;1,900&display=swap);@import url(https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.13.0/tabler-icons.min.css);*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}:where([ws-x]){border-style:solid;border-width:0;border-color:var(--text-color-normal)}body,html{padding:0;margin:0;width:100%;height:100%;-webkit-tap-highlight-color:transparent}body[ws-x*="theme["]{background-color:var(--background)}body[ws-x~="@app"]{overflow:hidden;position:fixed;touch-action:pan-x pan-y}'},{name:"avatar",style:"ws-avatar{--color:transparent;--size:36px;display:inline-flex;overflow:hidden;border-radius:500px;align-items:center;justify-content:center;width:var(--size);height:var(--size);background-color:var(--color);color:var(--text-color-fill);vertical-align:text-bottom}ws-avatar>img{width:100%}"},{name:"badge",style:"ws-badge{--color:var(--primary);position:relative;display:inline-grid;overflow:visible}ws-badge::after{position:absolute;content:attr(ws-text);right:-10px;top:0;transform:translateY(-50%);background-color:var(--color);pointer-events:none;border-radius:20px;padding:4px;min-width:20px;height:20px;box-sizing:border-box;text-align:center;font-size:var(--text-size-subtitle);color:var(--text-color-fill);line-height:14px;z-index:5}"},{name:"button",style:':is(label,a):where([ws-x~="@button"]),button:where([ws-x~="@flat"],[ws-x~="@fill"],[ws-x~="@outline"]){--color:var(--text-color-normal);--ripple-color:var(--ripple-normal);border:0 solid var(--color);color:var(--color);font-family:var(--font);background-color:transparent;border-radius:4px;cursor:pointer;padding:8px 16px;display:inline-flex;align-items:center;justify-content:center;overflow:hidden;position:relative;user-select:none}:is(label,a):where([ws-x~="@button"]):where(:not([disabled]))::after,button:where([ws-x~="@flat"],[ws-x~="@fill"],[ws-x~="@outline"]):where(:not([disabled]))::after{content:"";position:absolute;top:0;left:0;bottom:0;right:0;transition:background-color 150ms linear;pointer-events:none}:is(label,a):where([ws-x~="@button"]):where(:not([disabled])):active::after,button:where([ws-x~="@flat"],[ws-x~="@fill"],[ws-x~="@outline"]):where(:not([disabled])):active::after{transition:none;background-color:var(--ripple-color)}:is(label,a):where([ws-x~="@button"]):where([disabled]),button:where([ws-x~="@flat"],[ws-x~="@fill"],[ws-x~="@outline"]):where([disabled]){opacity:.6;background-color:rgba(200,200,200,.4)}'},{name:"chip",style:'ws-chip{display:inline-flex;align-items:center;justify-content:center;border-radius:100px;padding:4px 12px;user-select:none;vertical-align:text-bottom}ws-chip:where([ws-x~="$click"]){cursor:pointer;overflow:hidden;position:relative;user-select:none}ws-chip:where([ws-x~="$click"]):where(:not([disabled]))::after{content:"";position:absolute;top:0;left:0;bottom:0;right:0;transition:background-color 150ms linear;pointer-events:none}ws-chip:where([ws-x~="$click"]):where(:not([disabled])):active::after{transition:none;background-color:var(--ripple-color)}'},{name:"control",style:'label:where([ws-x~="@control"]){--color:var(--default);--border-color:var(--default);position:relative;display:inline-grid;grid-template-areas:"label label label"" start control end""extra extra extra";grid-template-rows:minmax(0,min-content) auto minmax(0,min-content);grid-template-columns:minmax(0,min-content) auto minmax(0,min-content);border:1px solid var(--border-color);border-radius:4px;user-select:none;overflow:hidden}label:where([ws-x~="@control"]):where([ws-error])::after{content:attr(ws-error);grid-row:3;grid-column:span 3;padding:4px;font-size:var(--text-size-info);background-color:var(--danger-ripple)}label:where([ws-x~="@control"]):focus-within{--border-color:var(--color)}label:where([ws-x~="@control"]):focus-within:where([ws-x~="@flat"])>:is(input,select){outline:2px solid var(--ripple-color);outline-offset:-2px}label:where([ws-x~="@control"]) :is(input,select,textarea):disabled{background-color:var(--disabled-background)}label:where([ws-x~="@control"])>:where(select){--color:var(--text-color-normal);border-width:0;padding:8px;min-height:36px;background-color:transparent;color:var(--color);font:var(--font);font-size:var(--text-size-normal);cursor:pointer;background-color:var(--background-layer);grid-area:control}label:where([ws-x~="@control"])>:where(input,textarea):focus,label:where([ws-x~="@control"])>:where(select):focus{outline:0}label:where([ws-x~="@control"])>:where(select) optgroup,label:where([ws-x~="@control"])>:where(select) option{background-color:var(--background-layer);border-color:var(--background-layer);color:var(--text-color-normal);font-size:var(--text-size-normal);font-family:Arial}label:where([ws-x~="@control"])>:where(input,textarea){border-width:0;background:0 0;color:var(--text-normal-color);font-family:var(--font);min-width:24px;min-height:36px;width:100%;height:100%;grid-area:control;padding:4px;background-color:var(--background-layer)}label:where([ws-x~="@control"])>input[type=file]{position:relative;padding:0}label:where([ws-x~="@control"])>input[type=file]::file-selector-button{font-family:var(--font);height:100%;margin:0 4px 0 0;padding:4px;color:var(--text-normal-color);background-color:var(--background-layer);border-width:0;border-right:1px solid var(--border-color);text-decoration:underline}label:where([ws-x~="@control"])>:where([ws-x~="$text"]){grid-area:label;padding:4px;display:flex;align-items:center;border-bottom:var(--border-size, 1px) solid var(--border-color);border-right:var(--border-size, 1px) solid var(--border-color);color:var(--color);width:min-content;white-space:nowrap;border-bottom-right-radius:4px}label:where([ws-x~="@control"])>:where([ws-x~="$text"]):where([ws-hint])::after{font-size:var(--text-size-subtitle);content:"\\a"attr(ws-hint);color:var(--text-color-secondary);white-space:pre;display:contents}label:where([ws-x~="@control"])>:where([ws-x~="slot[start]"],[slot=start]){grid-area:start}label:where([ws-x~="@control"])>:where([ws-x~="slot[end]"],[slot=end]){grid-area:end}'},{name:"flex",style:"ws-flex{display:flex;flex-direction:column;gap:4px;padding:4px;overflow:hidden}ws-flex>*{flex-shrink:0}"},{name:"grid",style:"ws-grid{display:grid;overflow:hidden;gap:4px;padding:4px;grid-auto-rows:min-content}"},{name:"icon",style:"ws-icon{display:inline-block}ws-icon:where(:not(:empty))::before{margin-right:2px}ws-icon::before{font-family:tabler-icons!important;speak:none;font-style:normal;font-weight:400;font-variant:normal;text-transform:none;line-height:1;display:contents;-webkit-font-smoothing:antialiased}"},{name:"link",style:"a:where([ws-x]){--color:var(--text-color-normal)}a:where([ws-x]),a:where([ws-x]):hover,a:where([ws-x]):visited{color:var(--color)}"},{name:"modal",style:'ws-modal{position:fixed;top:0;left:0;bottom:0;right:0;background-color:rgba(0,0,0,.35);z-index:100;display:none}ws-modal>label:first-child{position:absolute;width:100%;height:100%;cursor:pointer}ws-modal[ws-x~="$show"]{display:block}input[type=checkbox]:not(:checked)+ws-modal{display:none}input[type=checkbox]:checked+ws-modal{display:block}ws-modal>:where(:not(label:first-child)){position:absolute;min-width:15vw}ws-modal>:where(:not(label:first-child)):where([ws-x~="@menu"]){top:0;left:0;height:100%}ws-modal>:where(:not(label:first-child)):where([ws-x~="@action"]){top:0;right:0;height:100%}ws-modal>:where(:not(label:first-child)):where([ws-x~="@select"]){top:0;left:50%;transform:translateX(-50%);max-height:75vh;max-width:min(90vw,720px)}ws-modal>:where(:not(label:first-child)):where([ws-x~="@dialog"]){top:50%;left:50%;transform:translate(-50%,-50%)}'},{name:"notification",style:'ws-notification{--background-color:var(--background-layer);--color:var(--text-color-normal);background-color:var(--background-color);color:var(--color);padding:8px;display:inline-flex;flex-direction:row;justify-content:space-between;align-items:center;border-radius:4px;cursor:pointer;user-select:none;border:1px solid var(--text-color-secondary)}ws-notification[ws-x*="$color"]{background-color:var(--color);color:var(--text-color-fill)}'},{name:"paper",style:'ws-paper{--color:var(--layer-border-color);display:grid;border-radius:4px;box-shadow:0 2px 4px var(--shadow-color);overflow:hidden;grid-template-columns:1fr;grid-template-rows:min-content auto min-content;grid-template-areas:"header""content""footer";background-color:var(--background-layer)}ws-paper::before{content:"";grid-area:header}ws-paper::after{content:"";grid-area:footer;pointer-events:none}ws-paper>:where([ws-x~="slot[content]"],[slot=content]){grid-area:content}ws-paper>:where([ws-x~="slot[header]"],[slot=header]){grid-area:header;font-size:var(--text-size-header)}ws-paper>:where([ws-x~="slot[footer]"],[slot=footer]){grid-area:footer}'},{name:"popover",style:'ws-popover{display:grid;position:relative}ws-popover:not(:visibile)>:where([ws-x~="slot[content]"],[slot=content]){display:none}ws-popover>:where([ws-x~="slot[content]"],[slot=content]){position:absolute;z-index:25;display:none}ws-popover[ws-x~="$show"]>:where([ws-x~="slot[content]"],[slot=content]){display:block}ws-popover>input:where([type=checkbox]):checked+:where([ws-x~="slot[content]"],[slot=content]){display:block}ws-popover>input:where([type=checkbox]):not(:checked)+:where([ws-x~="slot[content]"],[slot=content]){display:none}'},{name:"progress",style:'label[ws-x~="@progress"]{--color:var(--text-color-normal);--border-size:0px;display:inline-grid;grid-template-columns:1fr;grid-template-rows:min-content auto;border-radius:4px;overflow:hidden;user-select:none}label[ws-x~="@progress"][ws-x~="$row"]{grid-template-columns:min-content auto;grid-template-rows:1fr}label[ws-x~="@progress"]>[ws-x~="$text"]{padding:4px;display:flex;border-bottom:var(--border-size, 1px) solid var(--color);color:var(--color)}label[ws-x~="@progress"]>progress{min-height:20px;height:100%;width:100%;border:0;background-color:var(--background-layer)}label[ws-x~="@progress"]>progress::-moz-progress-bar{background-color:var(--color);border-radius:0}label[ws-x~="@progress"]>progress::-webkit-progress-bar{background-color:var(--background-layer);border-radius:0}label[ws-x~="@progress"]>progress::-webkit-progress-value{background-color:var(--color);border-radius:0}'},{name:"screen",style:'ws-screen{--stack:0;--screen-width:min(720px, 100%);display:grid;width:calc(100% - var(--sub-pixel-offset));height:calc(100% - 1px);overflow:hidden;position:fixed;top:0;left:0;z-index:200;background-color:rgba(0,0,0,.4);grid-template-columns:auto calc(var(--screen-width) - 16px*var(--stack)) auto;grid-template-areas:". content .";padding-top:calc(8px*var(--stack))}ws-screen[ws-x~="@left"]{grid-template-columns:calc(8px*var(--stack)) calc(var(--screen-width) - 16px*var(--stack)) auto}ws-screen>:where(*){grid-area:content;height:100%;overflow:hidden}'},{name:"spinner",style:"ws-circle-spinner,ws-hexagon-spinner{--size:100px;--color:var(--primary);--ripple-color:var(--primary-ripple);width:var(--size);height:var(--size);display:inline-block}"},{name:"table",style:"table:where([ws-x]){--border-color:var(--color);border-spacing:0;position:relative}table:where([ws-x]) thead :is(td,th){background-color:var(--color);color:var(--text-color-fill);font-weight:700}table:where([ws-x]) :is(td,th){padding:8px;white-space:nowrap;background-color:var(--background-layer);border-bottom:1px solid var(--color)}table:where([ws-x]) :where(th:first-child){position:sticky;left:0;z-index:10}table:where([ws-x]) :where(td:first-child,th:first-child){border-left:1px solid var(--color)}table:where([ws-x]) :where(td:last-child,th:last-child){border-right:1px solid var(--color)}"},{name:"tabs",style:'ws-tabs{--color:var(--primary);display:flex;flex-direction:row;justify-content:stretch;align-items:stretch;user-select:none;cursor:pointer;gap:2px;padding:2px}ws-tabs[ws-x~="$vert"]{flex-direction:column;justify-content:flex-start}ws-tabs[ws-x~="$vert"]>ws-tab{border-bottom-width:0;border-right-width:2px;flex-grow:0}ws-tabs[ws-x~="@solid"]>ws-tab:where([tab-selected]){color:var(--text-color-fill);background-color:var(--color)}ws-tabs>ws-tab{display:flex;justify-content:center;align-items:center;flex-grow:1;padding:8px;border-color:var(--text-color-secondary);border-width:0 0 2px;border-style:solid}ws-tabs>ws-tab:where([tab-selected]){color:var(--color);border-color:var(--color)}'},{name:"titlebar",style:'ws-titlebar{--text-color:var(--text-color-normal);display:grid;height:48px;grid-template-columns:min-content auto min-content;grid-template-areas:"menu title action";user-select:none}ws-titlebar:where(:not([ws-x~="@fill"])){border-bottom:1px solid var(--color, var(--text-color-normal))}ws-titlebar>:where([ws-x~="slot[title]"],[slot=title]){grid-area:title;display:flex;flex-direction:column;justify-content:center;padding:4px}ws-titlebar>:where([ws-x~="slot[menu]"],[slot=menu]){grid-area:menu;--text-color-normal:var(--text-color)}ws-titlebar>:where([ws-x~="slot[action]"],[slot=action]){grid-area:action;--text-color-normal:var(--text-color)}'},{name:"toaster",style:'ws-toaster{position:fixed;z-index:100;display:inline-flex;flex-direction:column;padding:4px;gap:4px;height:min-content!important}ws-toaster[ws-x~="$tl"]{top:0;left:0}ws-toaster[ws-x~="$tc"]{top:0;left:50%;transform:translateX(-50%)}ws-toaster[ws-x~="$tr"]{top:0;right:0}ws-toaster[ws-x~="$ml"]{top:50%;left:0;transform:translateY(-50%)}ws-toaster[ws-x~="$mr"]{top:50%;right:0;transform:translateY(-50%)}ws-toaster[ws-x~="$bl"]{bottom:0;left:0}ws-toaster[ws-x~="$bc"]{bottom:0;left:50%;transform:translateX(-50%)}ws-toaster[ws-x~="$br"]{bottom:0;right:0}'},{name:"toggle",style:'label[ws-x~="@toggle"]{--color:var(--default);--ripple-color:var(--default-ripple);--border-color:var(--default);cursor:pointer;display:inline-flex;align-items:center;justify-content:space-between;padding:4px;border-radius:4px;border:1px solid var(--border-color);overflow:hidden;position:relative;user-select:none}label[ws-x~="@toggle"]:where(:not([disabled]))::after{content:"";position:absolute;top:0;left:0;bottom:0;right:0;transition:background-color 150ms linear;pointer-events:none}label[ws-x~="@toggle"]:where(:not([disabled])):active::after{transition:none;background-color:var(--ripple-color)}label[ws-x~="@toggle"]:focus-within{--border-color:var(--color)}label[ws-x~="@toggle"]:focus-within:where([ws-x~="@flat"]){outline:2px solid var(--ripple-color);outline-offset:-2px}label[ws-x~="@toggle"]>input{position:relative;min-width:20px;min-height:20px;-webkit-appearance:none;appearance:none;margin:0}label[ws-x~="@toggle"]>input:focus{outline:0}label[ws-x~="@toggle"]>input:disabled{--color:var(--disabled-background)}label[ws-x~="@toggle"]>input:checked{color:var(--text-color-invert)}label[ws-x~="@toggle"]>input:checked::after{background-color:var(--color)}label[ws-x~="@toggle"]>input::after{content:"";position:absolute;font-size:18px;font-family:tabler-icons!important;speak:none;font-style:normal;font-weight:400;font-variant:normal;text-transform:none;top:50%;left:50%;width:20px;height:20px;transform:translate(-50%,-50%);display:flex;border:1px solid var(--color);border-radius:4px;align-items:center;justify-content:center;overflow:hidden}label[ws-x~="@toggle"]>input[type=radio]::after{border-radius:50%}label[ws-x~="@toggle"]>input[type=checkbox]:disabled,label[ws-x~="@toggle"]>input[type=radio]:disabled::after{background-color:var(--disabled-background)}label[ws-x~="@toggle"]>input[type=radio]:checked::after{content:""}label[ws-x~="@toggle"]>input[type=checkbox]:checked::after{content:""}label[ws-x~="@toggle"]>input[type=checkbox][ws-x~="$switch"]{position:relative;border:1px solid var(--color);height:24px;width:44px;border-radius:12px}label[ws-x~="@toggle"]>input[type=checkbox][ws-x~="$switch"]::after{content:"";background-color:var(--text-color-secondary);position:absolute;width:18px;height:18px;border-radius:10px;top:2px;left:2px;transform:none;border-width:0;transition:left 100ms linear,color 100ms linear}label[ws-x~="@toggle"]>input[type=checkbox][ws-x~="$switch"]:checked::after{background-color:var(--color);left:22px}'},{name:"tooltip",style:'ws-tooltip{position:relative;display:inline-grid;overflow:visible}ws-tooltip::after{position:absolute;content:attr(ws-text);left:50%;bottom:calc(100% + 2px);transform:translateX(-50%);height:20px;background-color:var(--background-layer);opacity:0;transition:opacity 100ms linear;pointer-events:none;border-radius:4px;border:1px solid var(--text-color-secondary);padding:2px 8px;font-size:var(--text-size-subtitle);width:60%;display:flex;align-items:center;justify-content:center;z-index:5}ws-tooltip:hover::after{opacity:1}ws-tooltip[ws-x~="$bottom"]::after{bottom:unset;top:calc(100% + 2px)}'},{name:"dark",style:'[ws-x~="theme[dark]"]{--font:Roboto;--text-light:white;--text-dark:black;--text-color-normal:var(--text-light);--text-color-secondary:#a0a0a0;--text-color-invert:var(--text-dark);--text-color-fill:var(--text-dark);--text-size-normal:14px;--text-size-title:18px;--text-size-header:16px;--text-size-info:13px;--text-size-subtitle:12px;--text-size-data:10px;--background:#161616;--background-layer:#333333;--layer-border-width:1px;--layer-border-color:#505050;--default:var(--text-color-normal);--default-ripple:var(--ripple-normal);--primary:#00aaff;--primary-ripple:#00aaff60;--secondary:#2fbc2f;--secondary-ripple:#2fbc2f60;--danger:#df5348;--danger-ripple:#df534860;--warning:#ffff00;--warning-ripple:#ffff0060;--accent:#ff4dff;--accent-ripple:#ff4dff60;--button-filled-text-color:var(--text-color-normal);--ripple-dark:#00000060;--ripple-light:#FFFFFF60;--ripple-normal:var(--ripple-light);--ripple-invert:var(--ripple-dark);--shadow-color:rgb(0, 0, 0, 0.25);--disabled-background:#606060;color-scheme:dark}'},{name:"light",style:'[ws-x~="theme[light]"]{--font:Roboto;--text-light:white;--text-dark:black;--text-color-normal:var(--text-dark);--text-color-secondary:#505050;--text-color-invert:var(--text-light);--text-color-fill:var(--text-light);--text-size-normal:14px;--text-size-title:18px;--text-size-header:16px;--text-size-info:13px;--text-size-subtitle:12px;--text-size-data:10px;--background:#e9e9e9;--background-layer:#ffffff;--layer-border-width:1px;--layer-border-color:#aaaaaa;--default:var(--text-color-normal);--default-ripple:var(--ripple-normal);--primary:#1d62d5;--primary-ripple:#1d62d560;--secondary:#128f12;--secondary-ripple:#128f1260;--danger:#F44336;--danger-ripple:#F4433660;--warning:#db990d;--warning-ripple:#db990d60;--accent:#cf00cf;--accent-ripple:#cf00cf60;--button-filled-text-color:var(--text-color-invert);--ripple-dark:#00000060;--ripple-light:#FFFFFF60;--ripple-normal:var(--ripple-dark);--ripple-invert:var(--ripple-light);--shadow-color:rgb(0, 0, 0, 0.25);--disabled-background:#c7c7c7}'},{name:"tron",style:'[ws-x~="theme[tron]"]{--font:Share Tech Mono;--text-light:white;--text-dark:black;--text-color-normal:var(--text-light);--text-color-secondary:#a0a0a0;--text-color-invert:var(--text-dark);--text-color-fill:var(--text-dark);--text-size-normal:14px;--text-size-title:18px;--text-size-header:16px;--text-size-info:13px;--text-size-subtitle:12px;--text-size-data:10px;--background:#030303;--background-layer:#04080C;--layer-border-width:1px;--layer-border-color:#00EEEE;--default:var(--text-color-normal);--default-ripple:var(--ripple-normal);--primary:#00aaff;--primary-ripple:#00aaff60;--secondary:#2fbc2f;--secondary-ripple:#2fbc2f60;--danger:#df5348;--danger-ripple:#df534860;--warning:#ffff00;--warning-ripple:#ffff0060;--accent:#ff4dff;--accent-ripple:#ff4dff60;--button-filled-text-color:var(--text-normal);--ripple-dark:#00000060;--ripple-light:#FFFFFF60;--ripple-normal:var(--ripple-light);--ripple-invert:var(--ripple-dark);--shadow-color:rgb(255, 255, 255, 0.25);--disabled-background:#606060;color-scheme:dark}'}];const d=document.head,c=document.createElement("style"),p=Math.ceil(screen.width*devicePixelRatio*10)%10>=5;s.push({name:"correction",style:`body {--sub-pixel-offset:${p?1:0}px}`});for(const{name:e,style:t}of s){const r=document.createElement("style");r.setAttribute("ws-name",e),r.innerHTML=t,d.appendChild(r);}d.appendChild(c),c.setAttribute("ws-calculated","");const b=c.sheet,w={},x=(e,t)=>[o(`--${e.name.slice(1)}`,t)],h=e=>{if(null===e)return;const t=void 0!==w[e.key],r=void 0===n[e.name]&&!1===e.name.startsWith("&");if(!0===t||!0===r)return;const o=!0===e.name.startsWith("&")?x:n[e.name],a=void 0!==e.mod?`:${e.mod.slice(0,-1)}`:"",l=o(e,...e.args);b.insertRule(`[ws-x][ws-x~="${e.key}"]${a} {\n${l.join(";\n")};\n}`,b.cssRules.length),w[e.key]=b.cssRules[b.cssRules.length-1];},g=t=>{const o=t.getAttribute("ws-x");if(null===o)return;const a=((t,o)=>[...t.matchAll(e)].map((e=>{const{groups:t}=e;return {name:t.name,mod:t.mod,args:r(t.args??""),key:e[0],node:o}})))(o,t);a.forEach(h);},f=document.createElement("template");f.innerHTML='\n<style>\n@keyframes hi{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}\ncircle{animation-name:hi;animation-iteration-count:infinite;animation-timing-function:linear;transform-origin:50% 50%;}\ncircle:nth-child(1){animation-duration:4s;}\ncircle:nth-child(2){animation-duration:3s;animation-direction:reverse;}\ncircle:nth-child(3){animation-duration:2s;}\n</style>\n<svg style="width:var(--size);height:var(--size)" viewBox="0 0 100 100"><circle stroke="var(--color)" cx="50" cy="50" stroke-width="4" fill="transparent" r="48" stroke-dasharray="0 37.7 75.4 75.4 75.4 75.4"/><circle stroke="var(--ripple-color)" cx="50" cy="50" stroke-width="4" fill="transparent" r="40" stroke-dasharray="0 31.4 62.83 62.83 62.83 62.83"/><circle stroke="var(--color)" cx="50" cy="50" stroke-width="4" fill="transparent" r="32" stroke-dasharray="0 12.57 25.13 25.13 25.13 25.13 25.13 25.13 25.13 25.13"/></svg>',customElements.define("ws-circle-spinner",class extends HTMLElement{constructor(){super();const e=f.content.cloneNode(!0);this.attachShadow({mode:"closed"}).appendChild(e);}});const m=document.createElement("template");m.innerHTML='\n<style>\n@keyframes hi{from{transform:rotateY(0deg)}to{transform:rotateY(360deg)}}\npath{animation-name:hi;animation-iteration-count:infinite;animation-timing-function:linear;transform-origin:50% 50%;}\npath:nth-child(1){animation-duration:3s;}\npath:nth-child(2){animation-duration:2s;animation-direction:reverse;}\npath:nth-child(3){animation-duration:1s;}\n</style><svg style="width: var(--size); height: var(--size);" viewBox="0 0 100 100"><path stroke="var(--color)" stroke-width="4" fill="none" d="M91.57 26v48L50 98 8.43 74V26L50 2l41.57 24Z"/><path stroke="var(--ripple-color)" stroke-width="4" fill="none" d="M81.177 32v36L50 86 18.823 68V32L50 14l31.177 18Z"/><path stroke="var(--color)" stroke-width="4" fill="none" d="M70.785 38v24L50 74 29.215 62V38L50 26l20.785 12Z"/></svg>',customElements.define("ws-hexagon-spinner",class extends HTMLElement{constructor(){super();const e=m.content.cloneNode(!0);this.attachShadow({mode:"closed"}).appendChild(e);}});const u={childList(e){if(0!==e.addedNodes.length)for(const t of e.addedNodes){(void 0===t.tagName?[]:[t,...t.querySelectorAll("*")]).forEach(g);}},attributes(e){g(e.target);}};new MutationObserver((e=>e.forEach((e=>u[e.type](e))))).observe(document.body,{subtree:!0,attributes:!0,childList:!0,attributeFilter:["ws-x"]});for(const e of document.body.querySelectorAll("*"))g(e);
 
 const { wsx } = i;
 
@@ -847,13 +853,14 @@ function create_else_block$1(ctx) {
 	let current;
 	let mounted;
 	let dispose;
-	const default_slot_template = /*#slots*/ ctx[7].default;
-	const default_slot = create_slot(default_slot_template, ctx, /*$$scope*/ ctx[6], null);
+	const default_slot_template = /*#slots*/ ctx[8].default;
+	const default_slot = create_slot(default_slot_template, ctx, /*$$scope*/ ctx[7], null);
 
 	return {
 		c() {
 			button = element("button");
 			if (default_slot) default_slot.c();
+			button.disabled = /*disabled*/ ctx[0];
 		},
 		m(target, anchor) {
 			insert(target, button, anchor);
@@ -866,8 +873,8 @@ function create_else_block$1(ctx) {
 
 			if (!mounted) {
 				dispose = [
-					action_destroyer(wsx_action = wsx$1.call(null, button, /*wind*/ ctx[2])),
-					listen(button, "click", stop_propagation(/*click_handler_1*/ ctx[9]))
+					action_destroyer(wsx_action = wsx$1.call(null, button, /*wind*/ ctx[3])),
+					listen(button, "click", stop_propagation(/*click_handler_1*/ ctx[10]))
 				];
 
 				mounted = true;
@@ -875,21 +882,25 @@ function create_else_block$1(ctx) {
 		},
 		p(ctx, dirty) {
 			if (default_slot) {
-				if (default_slot.p && (!current || dirty & /*$$scope*/ 64)) {
+				if (default_slot.p && (!current || dirty & /*$$scope*/ 128)) {
 					update_slot_base(
 						default_slot,
 						default_slot_template,
 						ctx,
-						/*$$scope*/ ctx[6],
+						/*$$scope*/ ctx[7],
 						!current
-						? get_all_dirty_from_scope(/*$$scope*/ ctx[6])
-						: get_slot_changes(default_slot_template, /*$$scope*/ ctx[6], dirty, null),
+						? get_all_dirty_from_scope(/*$$scope*/ ctx[7])
+						: get_slot_changes(default_slot_template, /*$$scope*/ ctx[7], dirty, null),
 						null
 					);
 				}
 			}
 
-			if (wsx_action && is_function(wsx_action.update) && dirty & /*wind*/ 4) wsx_action.update.call(null, /*wind*/ ctx[2]);
+			if (!current || dirty & /*disabled*/ 1) {
+				button.disabled = /*disabled*/ ctx[0];
+			}
+
+			if (wsx_action && is_function(wsx_action.update) && dirty & /*wind*/ 8) wsx_action.update.call(null, /*wind*/ ctx[3]);
 		},
 		i(local) {
 			if (current) return;
@@ -909,21 +920,22 @@ function create_else_block$1(ctx) {
 	};
 }
 
-// (71:0) {#if label === true}
+// (72:0) {#if label === true}
 function create_if_block$3(ctx) {
 	let label_1;
 	let wsx_action;
 	let current;
 	let mounted;
 	let dispose;
-	const default_slot_template = /*#slots*/ ctx[7].default;
-	const default_slot = create_slot(default_slot_template, ctx, /*$$scope*/ ctx[6], null);
+	const default_slot_template = /*#slots*/ ctx[8].default;
+	const default_slot = create_slot(default_slot_template, ctx, /*$$scope*/ ctx[7], null);
 
 	return {
 		c() {
 			label_1 = element("label");
 			if (default_slot) default_slot.c();
-			attr(label_1, "for", /*_for*/ ctx[0]);
+			attr(label_1, "disabled", /*disabled*/ ctx[0]);
+			attr(label_1, "for", /*_for*/ ctx[1]);
 		},
 		m(target, anchor) {
 			insert(target, label_1, anchor);
@@ -936,8 +948,8 @@ function create_if_block$3(ctx) {
 
 			if (!mounted) {
 				dispose = [
-					action_destroyer(wsx_action = wsx$1.call(null, label_1, /*wind*/ ctx[2])),
-					listen(label_1, "click", stop_propagation(/*click_handler*/ ctx[8]))
+					action_destroyer(wsx_action = wsx$1.call(null, label_1, /*wind*/ ctx[3])),
+					listen(label_1, "click", stop_propagation(/*click_handler*/ ctx[9]))
 				];
 
 				mounted = true;
@@ -945,25 +957,29 @@ function create_if_block$3(ctx) {
 		},
 		p(ctx, dirty) {
 			if (default_slot) {
-				if (default_slot.p && (!current || dirty & /*$$scope*/ 64)) {
+				if (default_slot.p && (!current || dirty & /*$$scope*/ 128)) {
 					update_slot_base(
 						default_slot,
 						default_slot_template,
 						ctx,
-						/*$$scope*/ ctx[6],
+						/*$$scope*/ ctx[7],
 						!current
-						? get_all_dirty_from_scope(/*$$scope*/ ctx[6])
-						: get_slot_changes(default_slot_template, /*$$scope*/ ctx[6], dirty, null),
+						? get_all_dirty_from_scope(/*$$scope*/ ctx[7])
+						: get_slot_changes(default_slot_template, /*$$scope*/ ctx[7], dirty, null),
 						null
 					);
 				}
 			}
 
-			if (!current || dirty & /*_for*/ 1) {
-				attr(label_1, "for", /*_for*/ ctx[0]);
+			if (!current || dirty & /*disabled*/ 1) {
+				attr(label_1, "disabled", /*disabled*/ ctx[0]);
 			}
 
-			if (wsx_action && is_function(wsx_action.update) && dirty & /*wind*/ 4) wsx_action.update.call(null, /*wind*/ ctx[2]);
+			if (!current || dirty & /*_for*/ 2) {
+				attr(label_1, "for", /*_for*/ ctx[1]);
+			}
+
+			if (wsx_action && is_function(wsx_action.update) && dirty & /*wind*/ 8) wsx_action.update.call(null, /*wind*/ ctx[3]);
 		},
 		i(local) {
 			if (current) return;
@@ -983,7 +999,7 @@ function create_if_block$3(ctx) {
 	};
 }
 
-function create_fragment$g(ctx) {
+function create_fragment$l(ctx) {
 	let current_block_type_index;
 	let if_block;
 	let if_block_anchor;
@@ -992,7 +1008,7 @@ function create_fragment$g(ctx) {
 	const if_blocks = [];
 
 	function select_block_type(ctx, dirty) {
-		if (/*label*/ ctx[1] === true) return 0;
+		if (/*label*/ ctx[2] === true) return 0;
 		return 1;
 	}
 
@@ -1052,14 +1068,15 @@ function create_fragment$g(ctx) {
 	};
 }
 
-function instance$g($$self, $$props, $$invalidate) {
+function instance$l($$self, $$props, $$invalidate) {
 	let wind;
-	const omit_props_names = ["color","compact","variant","for","label"];
+	const omit_props_names = ["color","compact","variant","disabled","for","label"];
 	let $$restProps = compute_rest_props($$props, omit_props_names);
 	let { $$slots: slots = {}, $$scope } = $$props;
 	let { color = "default" } = $$props;
 	let { compact = false } = $$props;
 	let { variant = "flat" } = $$props;
+	let { disabled } = $$props;
 	let { for: _for = "" } = $$props;
 	let { label = false } = $$props;
 
@@ -1073,17 +1090,18 @@ function instance$g($$self, $$props, $$invalidate) {
 
 	$$self.$$set = $$new_props => {
 		$$props = assign(assign({}, $$props), exclude_internal_props($$new_props));
-		$$invalidate(10, $$restProps = compute_rest_props($$props, omit_props_names));
-		if ('color' in $$new_props) $$invalidate(3, color = $$new_props.color);
-		if ('compact' in $$new_props) $$invalidate(4, compact = $$new_props.compact);
-		if ('variant' in $$new_props) $$invalidate(5, variant = $$new_props.variant);
-		if ('for' in $$new_props) $$invalidate(0, _for = $$new_props.for);
-		if ('label' in $$new_props) $$invalidate(1, label = $$new_props.label);
-		if ('$$scope' in $$new_props) $$invalidate(6, $$scope = $$new_props.$$scope);
+		$$invalidate(11, $$restProps = compute_rest_props($$props, omit_props_names));
+		if ('color' in $$new_props) $$invalidate(4, color = $$new_props.color);
+		if ('compact' in $$new_props) $$invalidate(5, compact = $$new_props.compact);
+		if ('variant' in $$new_props) $$invalidate(6, variant = $$new_props.variant);
+		if ('disabled' in $$new_props) $$invalidate(0, disabled = $$new_props.disabled);
+		if ('for' in $$new_props) $$invalidate(1, _for = $$new_props.for);
+		if ('label' in $$new_props) $$invalidate(2, label = $$new_props.label);
+		if ('$$scope' in $$new_props) $$invalidate(7, $$scope = $$new_props.$$scope);
 	};
 
 	$$self.$$.update = () => {
-		$$invalidate(2, wind = {
+		$$invalidate(3, wind = {
 			[`@${variant}`]: true,
 			$color: color,
 			$compact: compact,
@@ -1093,6 +1111,7 @@ function instance$g($$self, $$props, $$invalidate) {
 	};
 
 	return [
+		disabled,
 		_for,
 		label,
 		wind,
@@ -1110,12 +1129,13 @@ class Button extends SvelteComponent {
 	constructor(options) {
 		super();
 
-		init(this, options, instance$g, create_fragment$g, safe_not_equal, {
-			color: 3,
-			compact: 4,
-			variant: 5,
-			for: 0,
-			label: 1
+		init(this, options, instance$l, create_fragment$l, safe_not_equal, {
+			color: 4,
+			compact: 5,
+			variant: 6,
+			disabled: 0,
+			for: 1,
+			label: 2
 		});
 	}
 }
@@ -1153,7 +1173,7 @@ function fly(node, { delay = 0, duration = 400, easing = cubicOut, x = 0, y = 0,
 
 /* src\flex.svelte generated by Svelte v3.58.0 */
 
-function create_fragment$f(ctx) {
+function create_fragment$k(ctx) {
 	let ws_flex;
 	let wsx_action;
 	let current;
@@ -1217,7 +1237,7 @@ function create_fragment$f(ctx) {
 	};
 }
 
-function instance$f($$self, $$props, $$invalidate) {
+function instance$k($$self, $$props, $$invalidate) {
 	let wind;
 	const omit_props_names = ["direction","pad","gap","cross","main"];
 	let $$restProps = compute_rest_props($$props, omit_props_names);
@@ -1257,7 +1277,7 @@ class Flex extends SvelteComponent {
 	constructor(options) {
 		super();
 
-		init(this, options, instance$f, create_fragment$f, safe_not_equal, {
+		init(this, options, instance$k, create_fragment$k, safe_not_equal, {
 			direction: 1,
 			pad: 2,
 			gap: 3,
@@ -1285,7 +1305,7 @@ function create_else_block(ctx) {
 
 	function switch_props(ctx) {
 		let switch_instance_props = {
-			$$slots: { default: [create_default_slot$7] },
+			$$slots: { default: [create_default_slot$9] },
 			$$scope: { ctx }
 		};
 
@@ -1408,7 +1428,7 @@ function create_if_block$2(ctx) {
 }
 
 // (109:8) <svelte:component this={layout} {...props} slot="content">
-function create_default_slot$7(ctx) {
+function create_default_slot$9(ctx) {
 	let current;
 	const default_slot_template = /*#slots*/ ctx[9].default;
 	const default_slot = create_slot(default_slot_template, ctx, /*$$scope*/ ctx[10], null);
@@ -1455,7 +1475,7 @@ function create_default_slot$7(ctx) {
 	};
 }
 
-function create_fragment$e(ctx) {
+function create_fragment$j(ctx) {
 	let ws_paper;
 	let t0;
 	let current_block_type_index;
@@ -1594,7 +1614,7 @@ function create_fragment$e(ctx) {
 	};
 }
 
-function instance$e($$self, $$props, $$invalidate) {
+function instance$j($$self, $$props, $$invalidate) {
 	let props;
 	let wind;
 	const omit_props_names = ["color","card","square","layout","scrollable","lprops"];
@@ -1655,7 +1675,7 @@ class Paper extends SvelteComponent {
 	constructor(options) {
 		super();
 
-		init(this, options, instance$e, create_fragment$e, safe_not_equal, {
+		init(this, options, instance$j, create_fragment$j, safe_not_equal, {
 			color: 4,
 			card: 5,
 			square: 6,
@@ -1673,7 +1693,7 @@ const get_footer_slot_changes$1 = dirty => ({});
 const get_footer_slot_context$1 = ctx => ({ slot: "footer" });
 
 // (48:4) <Paper {...$$props}>
-function create_default_slot$6(ctx) {
+function create_default_slot$8(ctx) {
 	let current;
 	const default_slot_template = /*#slots*/ ctx[1].default;
 	const default_slot = create_slot(default_slot_template, ctx, /*$$scope*/ ctx[2], null);
@@ -1721,7 +1741,7 @@ function create_default_slot$6(ctx) {
 }
 
 // (49:8) 
-function create_header_slot$5(ctx) {
+function create_header_slot$7(ctx) {
 	let current;
 	const header_slot_template = /*#slots*/ ctx[1].header;
 	const header_slot = create_slot(header_slot_template, ctx, /*$$scope*/ ctx[2], get_header_slot_context$1);
@@ -1769,7 +1789,7 @@ function create_header_slot$5(ctx) {
 }
 
 // (51:8) 
-function create_footer_slot$1(ctx) {
+function create_footer_slot$3(ctx) {
 	let current;
 	const footer_slot_template = /*#slots*/ ctx[1].footer;
 	const footer_slot = create_slot(footer_slot_template, ctx, /*$$scope*/ ctx[2], get_footer_slot_context$1);
@@ -1816,7 +1836,7 @@ function create_footer_slot$1(ctx) {
 	};
 }
 
-function create_fragment$d(ctx) {
+function create_fragment$i(ctx) {
 	let wind_wrapper;
 	let paper;
 	let wind_wrapper_transition;
@@ -1825,9 +1845,9 @@ function create_fragment$d(ctx) {
 
 	let paper_props = {
 		$$slots: {
-			footer: [create_footer_slot$1],
-			header: [create_header_slot$5],
-			default: [create_default_slot$6]
+			footer: [create_footer_slot$3],
+			header: [create_header_slot$7],
+			default: [create_default_slot$8]
 		},
 		$$scope: { ctx }
 	};
@@ -1886,7 +1906,7 @@ function create_fragment$d(ctx) {
 	};
 }
 
-function instance$d($$self, $$props, $$invalidate) {
+function instance$i($$self, $$props, $$invalidate) {
 	let { $$slots: slots = {}, $$scope } = $$props;
 
 	$$self.$$set = $$new_props => {
@@ -1901,7 +1921,7 @@ function instance$d($$self, $$props, $$invalidate) {
 class Dialog extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$d, create_fragment$d, safe_not_equal, {});
+		init(this, options, instance$i, create_fragment$i, safe_not_equal, {});
 	}
 }
 
@@ -1912,7 +1932,7 @@ const get_footer_slot_changes = dirty => ({});
 const get_footer_slot_context = ctx => ({ slot: "footer" });
 
 // (115:8) <Paper {...$$restProps}>
-function create_default_slot$5(ctx) {
+function create_default_slot$7(ctx) {
 	let current;
 	const default_slot_template = /*#slots*/ ctx[5].default;
 	const default_slot = create_slot(default_slot_template, ctx, /*$$scope*/ ctx[7], null);
@@ -1960,7 +1980,7 @@ function create_default_slot$5(ctx) {
 }
 
 // (116:12) 
-function create_header_slot$4(ctx) {
+function create_header_slot$6(ctx) {
 	let current;
 	const header_slot_template = /*#slots*/ ctx[5].header;
 	const header_slot = create_slot(header_slot_template, ctx, /*$$scope*/ ctx[7], get_header_slot_context);
@@ -2008,7 +2028,7 @@ function create_header_slot$4(ctx) {
 }
 
 // (118:12) 
-function create_footer_slot(ctx) {
+function create_footer_slot$2(ctx) {
 	let current;
 	const footer_slot_template = /*#slots*/ ctx[5].footer;
 	const footer_slot = create_slot(footer_slot_template, ctx, /*$$scope*/ ctx[7], get_footer_slot_context);
@@ -2055,7 +2075,7 @@ function create_footer_slot(ctx) {
 	};
 }
 
-function create_fragment$c(ctx) {
+function create_fragment$h(ctx) {
 	let wind_drawer_container;
 	let wind_transition;
 	let paper;
@@ -2068,9 +2088,9 @@ function create_fragment$c(ctx) {
 
 	let paper_props = {
 		$$slots: {
-			footer: [create_footer_slot],
-			header: [create_header_slot$4],
-			default: [create_default_slot$5]
+			footer: [create_footer_slot$2],
+			header: [create_header_slot$6],
+			default: [create_default_slot$7]
 		},
 		$$scope: { ctx }
 	};
@@ -2169,7 +2189,7 @@ const css = {
         `
 };
 
-function instance$c($$self, $$props, $$invalidate) {
+function instance$h($$self, $$props, $$invalidate) {
 	let container;
 	const omit_props_names = ["height","type"];
 	let $$restProps = compute_rest_props($$props, omit_props_names);
@@ -2206,13 +2226,137 @@ function instance$c($$self, $$props, $$invalidate) {
 class Drawer extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$c, create_fragment$c, safe_not_equal, { height: 3, type: 4 });
+		init(this, options, instance$h, create_fragment$h, safe_not_equal, { height: 3, type: 4 });
+	}
+}
+
+/* src\grid.svelte generated by Svelte v3.58.0 */
+
+function create_fragment$g(ctx) {
+	let ws_grid;
+	let wsx_action;
+	let current;
+	let mounted;
+	let dispose;
+	const default_slot_template = /*#slots*/ ctx[9].default;
+	const default_slot = create_slot(default_slot_template, ctx, /*$$scope*/ ctx[8], null);
+
+	return {
+		c() {
+			ws_grid = element("ws-grid");
+			if (default_slot) default_slot.c();
+		},
+		m(target, anchor) {
+			insert(target, ws_grid, anchor);
+
+			if (default_slot) {
+				default_slot.m(ws_grid, null);
+			}
+
+			current = true;
+
+			if (!mounted) {
+				dispose = action_destroyer(wsx_action = wsx$1.call(null, ws_grid, /*wind*/ ctx[0]));
+				mounted = true;
+			}
+		},
+		p(ctx, [dirty]) {
+			if (default_slot) {
+				if (default_slot.p && (!current || dirty & /*$$scope*/ 256)) {
+					update_slot_base(
+						default_slot,
+						default_slot_template,
+						ctx,
+						/*$$scope*/ ctx[8],
+						!current
+						? get_all_dirty_from_scope(/*$$scope*/ ctx[8])
+						: get_slot_changes(default_slot_template, /*$$scope*/ ctx[8], dirty, null),
+						null
+					);
+				}
+			}
+
+			if (wsx_action && is_function(wsx_action.update) && dirty & /*wind*/ 1) wsx_action.update.call(null, /*wind*/ ctx[0]);
+		},
+		i(local) {
+			if (current) return;
+			transition_in(default_slot, local);
+			current = true;
+		},
+		o(local) {
+			transition_out(default_slot, local);
+			current = false;
+		},
+		d(detaching) {
+			if (detaching) detach(ws_grid);
+			if (default_slot) default_slot.d(detaching);
+			mounted = false;
+			dispose();
+		}
+	};
+}
+
+function instance$g($$self, $$props, $$invalidate) {
+	let wind;
+	const omit_props_names = ["direction","pad","gap","cols","rows","autoCol","autoRow"];
+	let $$restProps = compute_rest_props($$props, omit_props_names);
+	let { $$slots: slots = {}, $$scope } = $$props;
+	let { direction = false } = $$props;
+	let { pad = false } = $$props;
+	let { gap = false } = $$props;
+	let { cols = null } = $$props;
+	let { rows = null } = $$props;
+	let { autoCol = false } = $$props;
+	let { autoRow = false } = $$props;
+
+	$$self.$$set = $$new_props => {
+		$$props = assign(assign({}, $$props), exclude_internal_props($$new_props));
+		$$invalidate(10, $$restProps = compute_rest_props($$props, omit_props_names));
+		if ('direction' in $$new_props) $$invalidate(1, direction = $$new_props.direction);
+		if ('pad' in $$new_props) $$invalidate(2, pad = $$new_props.pad);
+		if ('gap' in $$new_props) $$invalidate(3, gap = $$new_props.gap);
+		if ('cols' in $$new_props) $$invalidate(4, cols = $$new_props.cols);
+		if ('rows' in $$new_props) $$invalidate(5, rows = $$new_props.rows);
+		if ('autoCol' in $$new_props) $$invalidate(6, autoCol = $$new_props.autoCol);
+		if ('autoRow' in $$new_props) $$invalidate(7, autoRow = $$new_props.autoRow);
+		if ('$$scope' in $$new_props) $$invalidate(8, $$scope = $$new_props.$$scope);
+	};
+
+	$$self.$$.update = () => {
+		$$invalidate(0, wind = {
+			"gr-dir": direction,
+			"gr-col": cols?.join?.(" ") ?? cols ?? false,
+			"gr-row": rows?.join?.(" ") ?? rows ?? false,
+			"gr-acol": autoCol,
+			"gr-arow": autoRow,
+			p: pad,
+			gap,
+			...$$restProps
+		});
+	};
+
+	return [wind, direction, pad, gap, cols, rows, autoCol, autoRow, $$scope, slots];
+}
+
+class Grid extends SvelteComponent {
+	constructor(options) {
+		super();
+
+		init(this, options, instance$g, create_fragment$g, safe_not_equal, {
+			direction: 1,
+			pad: 2,
+			gap: 3,
+			cols: 4,
+			rows: 5,
+			autoCol: 6,
+			autoRow: 7
+		});
 	}
 }
 
 /* src\icon.svelte generated by Svelte v3.58.0 */
 
-function create_fragment$b(ctx) {
+function create_fragment$f(ctx) {
 	let ws_icon;
 	let ws_icon_class_value;
 	let wsx_action;
@@ -2282,7 +2426,7 @@ function create_fragment$b(ctx) {
 	};
 }
 
-function instance$b($$self, $$props, $$invalidate) {
+function instance$f($$self, $$props, $$invalidate) {
 	const omit_props_names = ["name"];
 	let $$restProps = compute_rest_props($$props, omit_props_names);
 	let { $$slots: slots = {}, $$scope } = $$props;
@@ -2301,13 +2445,13 @@ function instance$b($$self, $$props, $$invalidate) {
 class Icon extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$b, create_fragment$b, safe_not_equal, { name: 0 });
+		init(this, options, instance$f, create_fragment$f, safe_not_equal, { name: 0 });
 	}
 }
 
 /* src\link.svelte generated by Svelte v3.58.0 */
 
-function create_fragment$a(ctx) {
+function create_fragment$e(ctx) {
 	let a;
 	let wsx_action;
 	let current;
@@ -2386,7 +2530,7 @@ function create_fragment$a(ctx) {
 	};
 }
 
-function instance$a($$self, $$props, $$invalidate) {
+function instance$e($$self, $$props, $$invalidate) {
 	let wind;
 	const omit_props_names = ["button","variant","color","href","rel","target"];
 	let $$restProps = compute_rest_props($$props, omit_props_names);
@@ -2426,7 +2570,7 @@ class Link extends SvelteComponent {
 	constructor(options) {
 		super();
 
-		init(this, options, instance$a, create_fragment$a, safe_not_equal, {
+		init(this, options, instance$e, create_fragment$e, safe_not_equal, {
 			button: 4,
 			variant: 5,
 			color: 6,
@@ -2531,7 +2675,7 @@ function create_if_block$1(ctx) {
 	};
 }
 
-function create_fragment$9(ctx) {
+function create_fragment$d(ctx) {
 	let if_block_anchor;
 	let current;
 	let if_block = /*resolver*/ ctx[2] !== null && create_if_block$1(ctx);
@@ -2586,7 +2730,7 @@ function create_fragment$9(ctx) {
 	};
 }
 
-function instance$9($$self, $$props, $$invalidate) {
+function instance$d($$self, $$props, $$invalidate) {
 	let { component } = $$props;
 	let modalProps = null;
 	let resolver = null;
@@ -2631,7 +2775,7 @@ function instance$9($$self, $$props, $$invalidate) {
 class Modal extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$9, create_fragment$9, safe_not_equal, { component: 0, show: 6 });
+		init(this, options, instance$d, create_fragment$d, safe_not_equal, { component: 0, show: 6 });
 	}
 
 	get show() {
@@ -2717,7 +2861,7 @@ function create_if_block(ctx) {
 	};
 }
 
-function create_fragment$8(ctx) {
+function create_fragment$c(ctx) {
 	let ws_popover;
 	let t;
 	let wsx_action;
@@ -2813,7 +2957,7 @@ function create_fragment$8(ctx) {
 	};
 }
 
-function instance$8($$self, $$props, $$invalidate) {
+function instance$c($$self, $$props, $$invalidate) {
 	let wind;
 	const omit_props_names = [];
 	let $$restProps = compute_rest_props($$props, omit_props_names);
@@ -2839,7 +2983,7 @@ function instance$8($$self, $$props, $$invalidate) {
 class Popover extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$8, create_fragment$8, safe_not_equal, {});
+		init(this, options, instance$c, create_fragment$c, safe_not_equal, {});
 	}
 }
 
@@ -2898,7 +3042,7 @@ const handler$ = (func) =>
 
 /* src\screen.svelte generated by Svelte v3.58.0 */
 
-function create_fragment$7(ctx) {
+function create_fragment$b(ctx) {
 	let ws_screen;
 	let wsx_action;
 	let ws_screen_transition;
@@ -2977,7 +3121,7 @@ function create_fragment$7(ctx) {
 
 const ctxStack = Symbol("stack context");
 
-function instance$7($$self, $$props, $$invalidate) {
+function instance$b($$self, $$props, $$invalidate) {
 	let wind;
 	const omit_props_names = ["width"];
 	let $$restProps = compute_rest_props($$props, omit_props_names);
@@ -3009,13 +3153,13 @@ function instance$7($$self, $$props, $$invalidate) {
 class Screen extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$7, create_fragment$7, safe_not_equal, { width: 2 });
+		init(this, options, instance$b, create_fragment$b, safe_not_equal, { width: 2 });
 	}
 }
 
 /* src\text.svelte generated by Svelte v3.58.0 */
 
-function create_fragment$6(ctx) {
+function create_fragment$a(ctx) {
 	let span;
 	let wsx_action;
 	let current;
@@ -3079,7 +3223,7 @@ function create_fragment$6(ctx) {
 	};
 }
 
-function instance$6($$self, $$props, $$invalidate) {
+function instance$a($$self, $$props, $$invalidate) {
 	let wind;
 	const omit_props_names = ["title","subtitle","block","adorn"];
 	let $$restProps = compute_rest_props($$props, omit_props_names);
@@ -3116,7 +3260,7 @@ class Text extends SvelteComponent {
 	constructor(options) {
 		super();
 
-		init(this, options, instance$6, create_fragment$6, safe_not_equal, {
+		init(this, options, instance$a, create_fragment$a, safe_not_equal, {
 			title: 1,
 			subtitle: 2,
 			block: 3,
@@ -3133,7 +3277,7 @@ const get_title_slot_context = ctx => ({});
 const get_menu_slot_changes = dirty => ({});
 const get_menu_slot_context = ctx => ({});
 
-function create_fragment$5(ctx) {
+function create_fragment$9(ctx) {
 	let ws_titlebar;
 	let t0;
 	let t1;
@@ -3255,7 +3399,7 @@ function create_fragment$5(ctx) {
 	};
 }
 
-function instance$5($$self, $$props, $$invalidate) {
+function instance$9($$self, $$props, $$invalidate) {
 	let wind;
 	const omit_props_names = ["color","fill"];
 	let $$restProps = compute_rest_props($$props, omit_props_names);
@@ -3285,7 +3429,980 @@ function instance$5($$self, $$props, $$invalidate) {
 class Titlebar extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$5, create_fragment$5, safe_not_equal, { color: 1, fill: 2 });
+		init(this, options, instance$9, create_fragment$9, safe_not_equal, { color: 1, fill: 2 });
+	}
+}
+
+/* src\circle-spinner.svelte generated by Svelte v3.58.0 */
+
+function create_fragment$8(ctx) {
+	let ws_circle_spinner;
+	let wsx_action;
+	let mounted;
+	let dispose;
+
+	return {
+		c() {
+			ws_circle_spinner = element("ws-circle-spinner");
+		},
+		m(target, anchor) {
+			insert(target, ws_circle_spinner, anchor);
+
+			if (!mounted) {
+				dispose = action_destroyer(wsx_action = wsx$1.call(null, ws_circle_spinner, /*wind*/ ctx[0]));
+				mounted = true;
+			}
+		},
+		p(ctx, [dirty]) {
+			if (wsx_action && is_function(wsx_action.update) && dirty & /*wind*/ 1) wsx_action.update.call(null, /*wind*/ ctx[0]);
+		},
+		i: noop,
+		o: noop,
+		d(detaching) {
+			if (detaching) detach(ws_circle_spinner);
+			mounted = false;
+			dispose();
+		}
+	};
+}
+
+function instance$8($$self, $$props, $$invalidate) {
+	let wind;
+	let { size = "100px" } = $$props;
+	let { color = "primary" } = $$props;
+
+	$$self.$$set = $$props => {
+		if ('size' in $$props) $$invalidate(1, size = $$props.size);
+		if ('color' in $$props) $$invalidate(2, color = $$props.color);
+	};
+
+	$$self.$$.update = () => {
+		if ($$self.$$.dirty & /*size, color*/ 6) {
+			$$invalidate(0, wind = { "&size": size, $color: color });
+		}
+	};
+
+	return [wind, size, color];
+}
+
+class Circle_spinner extends SvelteComponent {
+	constructor(options) {
+		super();
+		init(this, options, instance$8, create_fragment$8, safe_not_equal, { size: 1, color: 2 });
+	}
+}
+
+/* src\hexagon-spinner.svelte generated by Svelte v3.58.0 */
+
+function create_fragment$7(ctx) {
+	let ws_hexagon_spinner;
+	let wsx_action;
+	let mounted;
+	let dispose;
+
+	return {
+		c() {
+			ws_hexagon_spinner = element("ws-hexagon-spinner");
+		},
+		m(target, anchor) {
+			insert(target, ws_hexagon_spinner, anchor);
+
+			if (!mounted) {
+				dispose = action_destroyer(wsx_action = wsx$1.call(null, ws_hexagon_spinner, /*wind*/ ctx[0]));
+				mounted = true;
+			}
+		},
+		p(ctx, [dirty]) {
+			if (wsx_action && is_function(wsx_action.update) && dirty & /*wind*/ 1) wsx_action.update.call(null, /*wind*/ ctx[0]);
+		},
+		i: noop,
+		o: noop,
+		d(detaching) {
+			if (detaching) detach(ws_hexagon_spinner);
+			mounted = false;
+			dispose();
+		}
+	};
+}
+
+function instance$7($$self, $$props, $$invalidate) {
+	let wind;
+	let { size = "100px" } = $$props;
+	let { color = "primary" } = $$props;
+
+	$$self.$$set = $$props => {
+		if ('size' in $$props) $$invalidate(1, size = $$props.size);
+		if ('color' in $$props) $$invalidate(2, color = $$props.color);
+	};
+
+	$$self.$$.update = () => {
+		if ($$self.$$.dirty & /*size, color*/ 6) {
+			$$invalidate(0, wind = { "&size": size, $color: color });
+		}
+	};
+
+	return [wind, size, color];
+}
+
+class Hexagon_spinner extends SvelteComponent {
+	constructor(options) {
+		super();
+		init(this, options, instance$7, create_fragment$7, safe_not_equal, { size: 1, color: 2 });
+	}
+}
+
+/* src\dialogs\alert.svelte generated by Svelte v3.58.0 */
+
+function create_default_slot_4$4(ctx) {
+	let t;
+
+	return {
+		c() {
+			t = text(/*message*/ ctx[3]);
+		},
+		m(target, anchor) {
+			insert(target, t, anchor);
+		},
+		p(ctx, dirty) {
+			if (dirty & /*message*/ 8) set_data(t, /*message*/ ctx[3]);
+		},
+		d(detaching) {
+			if (detaching) detach(t);
+		}
+	};
+}
+
+// (16:0) <Dialog card {color}>
+function create_default_slot_3$4(ctx) {
+	let text_1;
+	let current;
+
+	text_1 = new Text({
+			props: {
+				$$slots: { default: [create_default_slot_4$4] },
+				$$scope: { ctx }
+			}
+		});
+
+	return {
+		c() {
+			create_component(text_1.$$.fragment);
+		},
+		m(target, anchor) {
+			mount_component(text_1, target, anchor);
+			current = true;
+		},
+		p(ctx, dirty) {
+			const text_1_changes = {};
+
+			if (dirty & /*$$scope, message*/ 72) {
+				text_1_changes.$$scope = { dirty, ctx };
+			}
+
+			text_1.$set(text_1_changes);
+		},
+		i(local) {
+			if (current) return;
+			transition_in(text_1.$$.fragment, local);
+			current = true;
+		},
+		o(local) {
+			transition_out(text_1.$$.fragment, local);
+			current = false;
+		},
+		d(detaching) {
+			destroy_component(text_1, detaching);
+		}
+	};
+}
+
+// (19:12) <Icon name={icon}>
+function create_default_slot_2$4(ctx) {
+	let t;
+
+	return {
+		c() {
+			t = text(/*title*/ ctx[1]);
+		},
+		m(target, anchor) {
+			insert(target, t, anchor);
+		},
+		p(ctx, dirty) {
+			if (dirty & /*title*/ 2) set_data(t, /*title*/ ctx[1]);
+		},
+		d(detaching) {
+			if (detaching) detach(t);
+		}
+	};
+}
+
+// (18:8) <Text title slot="title">
+function create_default_slot_1$5(ctx) {
+	let icon_1;
+	let current;
+
+	icon_1 = new Icon({
+			props: {
+				name: /*icon*/ ctx[2],
+				$$slots: { default: [create_default_slot_2$4] },
+				$$scope: { ctx }
+			}
+		});
+
+	return {
+		c() {
+			create_component(icon_1.$$.fragment);
+		},
+		m(target, anchor) {
+			mount_component(icon_1, target, anchor);
+			current = true;
+		},
+		p(ctx, dirty) {
+			const icon_1_changes = {};
+			if (dirty & /*icon*/ 4) icon_1_changes.name = /*icon*/ ctx[2];
+
+			if (dirty & /*$$scope, title*/ 66) {
+				icon_1_changes.$$scope = { dirty, ctx };
+			}
+
+			icon_1.$set(icon_1_changes);
+		},
+		i(local) {
+			if (current) return;
+			transition_in(icon_1.$$.fragment, local);
+			current = true;
+		},
+		o(local) {
+			transition_out(icon_1.$$.fragment, local);
+			current = false;
+		},
+		d(detaching) {
+			destroy_component(icon_1, detaching);
+		}
+	};
+}
+
+// (18:8) 
+function create_title_slot$5(ctx) {
+	let text_1;
+	let current;
+
+	text_1 = new Text({
+			props: {
+				title: true,
+				slot: "title",
+				$$slots: { default: [create_default_slot_1$5] },
+				$$scope: { ctx }
+			}
+		});
+
+	return {
+		c() {
+			create_component(text_1.$$.fragment);
+		},
+		m(target, anchor) {
+			mount_component(text_1, target, anchor);
+			current = true;
+		},
+		p(ctx, dirty) {
+			const text_1_changes = {};
+
+			if (dirty & /*$$scope, icon, title*/ 70) {
+				text_1_changes.$$scope = { dirty, ctx };
+			}
+
+			text_1.$set(text_1_changes);
+		},
+		i(local) {
+			if (current) return;
+			transition_in(text_1.$$.fragment, local);
+			current = true;
+		},
+		o(local) {
+			transition_out(text_1.$$.fragment, local);
+			current = false;
+		},
+		d(detaching) {
+			destroy_component(text_1, detaching);
+		}
+	};
+}
+
+// (17:4) 
+function create_header_slot$5(ctx) {
+	let titlebar;
+	let current;
+
+	titlebar = new Titlebar({
+			props: {
+				slot: "header",
+				color: /*color*/ ctx[5],
+				$$slots: { title: [create_title_slot$5] },
+				$$scope: { ctx }
+			}
+		});
+
+	return {
+		c() {
+			create_component(titlebar.$$.fragment);
+		},
+		m(target, anchor) {
+			mount_component(titlebar, target, anchor);
+			current = true;
+		},
+		p(ctx, dirty) {
+			const titlebar_changes = {};
+			if (dirty & /*color*/ 32) titlebar_changes.color = /*color*/ ctx[5];
+
+			if (dirty & /*$$scope, icon, title*/ 70) {
+				titlebar_changes.$$scope = { dirty, ctx };
+			}
+
+			titlebar.$set(titlebar_changes);
+		},
+		i(local) {
+			if (current) return;
+			transition_in(titlebar.$$.fragment, local);
+			current = true;
+		},
+		o(local) {
+			transition_out(titlebar.$$.fragment, local);
+			current = false;
+		},
+		d(detaching) {
+			destroy_component(titlebar, detaching);
+		}
+	};
+}
+
+// (29:4) <Button slot="footer" on:click={close} {color}>
+function create_default_slot$6(ctx) {
+	let t;
+
+	return {
+		c() {
+			t = text(/*okText*/ ctx[4]);
+		},
+		m(target, anchor) {
+			insert(target, t, anchor);
+		},
+		p(ctx, dirty) {
+			if (dirty & /*okText*/ 16) set_data(t, /*okText*/ ctx[4]);
+		},
+		d(detaching) {
+			if (detaching) detach(t);
+		}
+	};
+}
+
+// (29:4) 
+function create_footer_slot$1(ctx) {
+	let button;
+	let current;
+
+	button = new Button({
+			props: {
+				slot: "footer",
+				color: /*color*/ ctx[5],
+				$$slots: { default: [create_default_slot$6] },
+				$$scope: { ctx }
+			}
+		});
+
+	button.$on("click", function () {
+		if (is_function(/*close*/ ctx[0])) /*close*/ ctx[0].apply(this, arguments);
+	});
+
+	return {
+		c() {
+			create_component(button.$$.fragment);
+		},
+		m(target, anchor) {
+			mount_component(button, target, anchor);
+			current = true;
+		},
+		p(new_ctx, dirty) {
+			ctx = new_ctx;
+			const button_changes = {};
+			if (dirty & /*color*/ 32) button_changes.color = /*color*/ ctx[5];
+
+			if (dirty & /*$$scope, okText*/ 80) {
+				button_changes.$$scope = { dirty, ctx };
+			}
+
+			button.$set(button_changes);
+		},
+		i(local) {
+			if (current) return;
+			transition_in(button.$$.fragment, local);
+			current = true;
+		},
+		o(local) {
+			transition_out(button.$$.fragment, local);
+			current = false;
+		},
+		d(detaching) {
+			destroy_component(button, detaching);
+		}
+	};
+}
+
+function create_fragment$6(ctx) {
+	let dialog;
+	let current;
+
+	dialog = new Dialog({
+			props: {
+				card: true,
+				color: /*color*/ ctx[5],
+				$$slots: {
+					footer: [create_footer_slot$1],
+					header: [create_header_slot$5],
+					default: [create_default_slot_3$4]
+				},
+				$$scope: { ctx }
+			}
+		});
+
+	return {
+		c() {
+			create_component(dialog.$$.fragment);
+		},
+		m(target, anchor) {
+			mount_component(dialog, target, anchor);
+			current = true;
+		},
+		p(ctx, [dirty]) {
+			const dialog_changes = {};
+			if (dirty & /*color*/ 32) dialog_changes.color = /*color*/ ctx[5];
+
+			if (dirty & /*$$scope, color, close, okText, icon, title, message*/ 127) {
+				dialog_changes.$$scope = { dirty, ctx };
+			}
+
+			dialog.$set(dialog_changes);
+		},
+		i(local) {
+			if (current) return;
+			transition_in(dialog.$$.fragment, local);
+			current = true;
+		},
+		o(local) {
+			transition_out(dialog.$$.fragment, local);
+			current = false;
+		},
+		d(detaching) {
+			destroy_component(dialog, detaching);
+		}
+	};
+}
+
+function instance$6($$self, $$props, $$invalidate) {
+	let { close } = $$props;
+	let { title = "Alert" } = $$props;
+	let { icon } = $$props;
+	let { message } = $$props;
+	let { okText = "OK" } = $$props;
+	let { color = "primary" } = $$props;
+
+	$$self.$$set = $$props => {
+		if ('close' in $$props) $$invalidate(0, close = $$props.close);
+		if ('title' in $$props) $$invalidate(1, title = $$props.title);
+		if ('icon' in $$props) $$invalidate(2, icon = $$props.icon);
+		if ('message' in $$props) $$invalidate(3, message = $$props.message);
+		if ('okText' in $$props) $$invalidate(4, okText = $$props.okText);
+		if ('color' in $$props) $$invalidate(5, color = $$props.color);
+	};
+
+	return [close, title, icon, message, okText, color];
+}
+
+class Alert extends SvelteComponent {
+	constructor(options) {
+		super();
+
+		init(this, options, instance$6, create_fragment$6, safe_not_equal, {
+			close: 0,
+			title: 1,
+			icon: 2,
+			message: 3,
+			okText: 4,
+			color: 5
+		});
+	}
+}
+
+/* src\dialogs\confirm.svelte generated by Svelte v3.58.0 */
+
+function create_default_slot_6$2(ctx) {
+	let t;
+
+	return {
+		c() {
+			t = text(/*message*/ ctx[2]);
+		},
+		m(target, anchor) {
+			insert(target, t, anchor);
+		},
+		p(ctx, dirty) {
+			if (dirty & /*message*/ 4) set_data(t, /*message*/ ctx[2]);
+		},
+		d(detaching) {
+			if (detaching) detach(t);
+		}
+	};
+}
+
+// (22:0) <Dialog card {color}>
+function create_default_slot_5$2(ctx) {
+	let text_1;
+	let current;
+
+	text_1 = new Text({
+			props: {
+				$$slots: { default: [create_default_slot_6$2] },
+				$$scope: { ctx }
+			}
+		});
+
+	return {
+		c() {
+			create_component(text_1.$$.fragment);
+		},
+		m(target, anchor) {
+			mount_component(text_1, target, anchor);
+			current = true;
+		},
+		p(ctx, dirty) {
+			const text_1_changes = {};
+
+			if (dirty & /*$$scope, message*/ 260) {
+				text_1_changes.$$scope = { dirty, ctx };
+			}
+
+			text_1.$set(text_1_changes);
+		},
+		i(local) {
+			if (current) return;
+			transition_in(text_1.$$.fragment, local);
+			current = true;
+		},
+		o(local) {
+			transition_out(text_1.$$.fragment, local);
+			current = false;
+		},
+		d(detaching) {
+			destroy_component(text_1, detaching);
+		}
+	};
+}
+
+// (25:12) <Icon name={icon}>
+function create_default_slot_4$3(ctx) {
+	let t;
+
+	return {
+		c() {
+			t = text(/*title*/ ctx[0]);
+		},
+		m(target, anchor) {
+			insert(target, t, anchor);
+		},
+		p(ctx, dirty) {
+			if (dirty & /*title*/ 1) set_data(t, /*title*/ ctx[0]);
+		},
+		d(detaching) {
+			if (detaching) detach(t);
+		}
+	};
+}
+
+// (24:8) <Text title slot="title">
+function create_default_slot_3$3(ctx) {
+	let icon_1;
+	let current;
+
+	icon_1 = new Icon({
+			props: {
+				name: /*icon*/ ctx[1],
+				$$slots: { default: [create_default_slot_4$3] },
+				$$scope: { ctx }
+			}
+		});
+
+	return {
+		c() {
+			create_component(icon_1.$$.fragment);
+		},
+		m(target, anchor) {
+			mount_component(icon_1, target, anchor);
+			current = true;
+		},
+		p(ctx, dirty) {
+			const icon_1_changes = {};
+			if (dirty & /*icon*/ 2) icon_1_changes.name = /*icon*/ ctx[1];
+
+			if (dirty & /*$$scope, title*/ 257) {
+				icon_1_changes.$$scope = { dirty, ctx };
+			}
+
+			icon_1.$set(icon_1_changes);
+		},
+		i(local) {
+			if (current) return;
+			transition_in(icon_1.$$.fragment, local);
+			current = true;
+		},
+		o(local) {
+			transition_out(icon_1.$$.fragment, local);
+			current = false;
+		},
+		d(detaching) {
+			destroy_component(icon_1, detaching);
+		}
+	};
+}
+
+// (24:8) 
+function create_title_slot$4(ctx) {
+	let text_1;
+	let current;
+
+	text_1 = new Text({
+			props: {
+				title: true,
+				slot: "title",
+				$$slots: { default: [create_default_slot_3$3] },
+				$$scope: { ctx }
+			}
+		});
+
+	return {
+		c() {
+			create_component(text_1.$$.fragment);
+		},
+		m(target, anchor) {
+			mount_component(text_1, target, anchor);
+			current = true;
+		},
+		p(ctx, dirty) {
+			const text_1_changes = {};
+
+			if (dirty & /*$$scope, icon, title*/ 259) {
+				text_1_changes.$$scope = { dirty, ctx };
+			}
+
+			text_1.$set(text_1_changes);
+		},
+		i(local) {
+			if (current) return;
+			transition_in(text_1.$$.fragment, local);
+			current = true;
+		},
+		o(local) {
+			transition_out(text_1.$$.fragment, local);
+			current = false;
+		},
+		d(detaching) {
+			destroy_component(text_1, detaching);
+		}
+	};
+}
+
+// (23:4) 
+function create_header_slot$4(ctx) {
+	let titlebar;
+	let current;
+
+	titlebar = new Titlebar({
+			props: {
+				slot: "header",
+				color: /*color*/ ctx[5],
+				$$slots: { title: [create_title_slot$4] },
+				$$scope: { ctx }
+			}
+		});
+
+	return {
+		c() {
+			create_component(titlebar.$$.fragment);
+		},
+		m(target, anchor) {
+			mount_component(titlebar, target, anchor);
+			current = true;
+		},
+		p(ctx, dirty) {
+			const titlebar_changes = {};
+			if (dirty & /*color*/ 32) titlebar_changes.color = /*color*/ ctx[5];
+
+			if (dirty & /*$$scope, icon, title*/ 259) {
+				titlebar_changes.$$scope = { dirty, ctx };
+			}
+
+			titlebar.$set(titlebar_changes);
+		},
+		i(local) {
+			if (current) return;
+			transition_in(titlebar.$$.fragment, local);
+			current = true;
+		},
+		o(local) {
+			transition_out(titlebar.$$.fragment, local);
+			current = false;
+		},
+		d(detaching) {
+			destroy_component(titlebar, detaching);
+		}
+	};
+}
+
+// (36:8) <Button on:click={cls(false)} color="danger">
+function create_default_slot_2$3(ctx) {
+	let t;
+
+	return {
+		c() {
+			t = text(/*cancelText*/ ctx[4]);
+		},
+		m(target, anchor) {
+			insert(target, t, anchor);
+		},
+		p(ctx, dirty) {
+			if (dirty & /*cancelText*/ 16) set_data(t, /*cancelText*/ ctx[4]);
+		},
+		d(detaching) {
+			if (detaching) detach(t);
+		}
+	};
+}
+
+// (39:8) <Button on:click={cls(true)} color="secondary">
+function create_default_slot_1$4(ctx) {
+	let t;
+
+	return {
+		c() {
+			t = text(/*okText*/ ctx[3]);
+		},
+		m(target, anchor) {
+			insert(target, t, anchor);
+		},
+		p(ctx, dirty) {
+			if (dirty & /*okText*/ 8) set_data(t, /*okText*/ ctx[3]);
+		},
+		d(detaching) {
+			if (detaching) detach(t);
+		}
+	};
+}
+
+// (35:4) <Grid cols="1fr 1fr" slot="footer" pad="0px">
+function create_default_slot$5(ctx) {
+	let button0;
+	let t;
+	let button1;
+	let current;
+
+	button0 = new Button({
+			props: {
+				color: "danger",
+				$$slots: { default: [create_default_slot_2$3] },
+				$$scope: { ctx }
+			}
+		});
+
+	button0.$on("click", /*cls*/ ctx[6](false));
+
+	button1 = new Button({
+			props: {
+				color: "secondary",
+				$$slots: { default: [create_default_slot_1$4] },
+				$$scope: { ctx }
+			}
+		});
+
+	button1.$on("click", /*cls*/ ctx[6](true));
+
+	return {
+		c() {
+			create_component(button0.$$.fragment);
+			t = space();
+			create_component(button1.$$.fragment);
+		},
+		m(target, anchor) {
+			mount_component(button0, target, anchor);
+			insert(target, t, anchor);
+			mount_component(button1, target, anchor);
+			current = true;
+		},
+		p(ctx, dirty) {
+			const button0_changes = {};
+
+			if (dirty & /*$$scope, cancelText*/ 272) {
+				button0_changes.$$scope = { dirty, ctx };
+			}
+
+			button0.$set(button0_changes);
+			const button1_changes = {};
+
+			if (dirty & /*$$scope, okText*/ 264) {
+				button1_changes.$$scope = { dirty, ctx };
+			}
+
+			button1.$set(button1_changes);
+		},
+		i(local) {
+			if (current) return;
+			transition_in(button0.$$.fragment, local);
+			transition_in(button1.$$.fragment, local);
+			current = true;
+		},
+		o(local) {
+			transition_out(button0.$$.fragment, local);
+			transition_out(button1.$$.fragment, local);
+			current = false;
+		},
+		d(detaching) {
+			destroy_component(button0, detaching);
+			if (detaching) detach(t);
+			destroy_component(button1, detaching);
+		}
+	};
+}
+
+// (35:4) 
+function create_footer_slot(ctx) {
+	let grid;
+	let current;
+
+	grid = new Grid({
+			props: {
+				cols: "1fr 1fr",
+				slot: "footer",
+				pad: "0px",
+				$$slots: { default: [create_default_slot$5] },
+				$$scope: { ctx }
+			}
+		});
+
+	return {
+		c() {
+			create_component(grid.$$.fragment);
+		},
+		m(target, anchor) {
+			mount_component(grid, target, anchor);
+			current = true;
+		},
+		p(ctx, dirty) {
+			const grid_changes = {};
+
+			if (dirty & /*$$scope, okText, cancelText*/ 280) {
+				grid_changes.$$scope = { dirty, ctx };
+			}
+
+			grid.$set(grid_changes);
+		},
+		i(local) {
+			if (current) return;
+			transition_in(grid.$$.fragment, local);
+			current = true;
+		},
+		o(local) {
+			transition_out(grid.$$.fragment, local);
+			current = false;
+		},
+		d(detaching) {
+			destroy_component(grid, detaching);
+		}
+	};
+}
+
+function create_fragment$5(ctx) {
+	let dialog;
+	let current;
+
+	dialog = new Dialog({
+			props: {
+				card: true,
+				color: /*color*/ ctx[5],
+				$$slots: {
+					footer: [create_footer_slot],
+					header: [create_header_slot$4],
+					default: [create_default_slot_5$2]
+				},
+				$$scope: { ctx }
+			}
+		});
+
+	return {
+		c() {
+			create_component(dialog.$$.fragment);
+		},
+		m(target, anchor) {
+			mount_component(dialog, target, anchor);
+			current = true;
+		},
+		p(ctx, [dirty]) {
+			const dialog_changes = {};
+			if (dirty & /*color*/ 32) dialog_changes.color = /*color*/ ctx[5];
+
+			if (dirty & /*$$scope, okText, cancelText, color, icon, title, message*/ 319) {
+				dialog_changes.$$scope = { dirty, ctx };
+			}
+
+			dialog.$set(dialog_changes);
+		},
+		i(local) {
+			if (current) return;
+			transition_in(dialog.$$.fragment, local);
+			current = true;
+		},
+		o(local) {
+			transition_out(dialog.$$.fragment, local);
+			current = false;
+		},
+		d(detaching) {
+			destroy_component(dialog, detaching);
+		}
+	};
+}
+
+function instance$5($$self, $$props, $$invalidate) {
+	let { close } = $$props;
+	let { title = "Confirm" } = $$props;
+	let { icon } = $$props;
+	let { message } = $$props;
+	let { okText = "OK" } = $$props;
+	let { cancelText = "Cancel" } = $$props;
+	let { color = "primary" } = $$props;
+	const cls = handler$(close);
+
+	$$self.$$set = $$props => {
+		if ('close' in $$props) $$invalidate(7, close = $$props.close);
+		if ('title' in $$props) $$invalidate(0, title = $$props.title);
+		if ('icon' in $$props) $$invalidate(1, icon = $$props.icon);
+		if ('message' in $$props) $$invalidate(2, message = $$props.message);
+		if ('okText' in $$props) $$invalidate(3, okText = $$props.okText);
+		if ('cancelText' in $$props) $$invalidate(4, cancelText = $$props.cancelText);
+		if ('color' in $$props) $$invalidate(5, color = $$props.color);
+	};
+
+	return [title, icon, message, okText, cancelText, color, cls, close];
+}
+
+class Confirm extends SvelteComponent {
+	constructor(options) {
+		super();
+
+		init(this, options, instance$5, create_fragment$5, safe_not_equal, {
+			close: 7,
+			title: 0,
+			icon: 1,
+			message: 2,
+			okText: 3,
+			cancelText: 4,
+			color: 5
+		});
 	}
 }
 
@@ -3459,7 +4576,8 @@ function instance$4($$self, $$props, $$invalidate) {
 	let element = null;
 
 	const open = handler$(async props => {
-		const result = await element.show(props);
+		const elemProps = typeof props === "function" ? props() : props;
+		const result = await element.show(elemProps);
 		send("entry", result);
 	});
 
@@ -3501,7 +4619,7 @@ class Entry_button extends SvelteComponent {
 
 /* test\src\comp\test-dialog.svelte generated by Svelte v3.58.0 */
 
-function create_default_slot_5$1(ctx) {
+function create_default_slot_6$1(ctx) {
 	let t;
 
 	return {
@@ -3517,8 +4635,8 @@ function create_default_slot_5$1(ctx) {
 	};
 }
 
-// (26:4) <Text>
-function create_default_slot_4$2(ctx) {
+// (28:4) <Text>
+function create_default_slot_5$1(ctx) {
 	let t;
 
 	return {
@@ -3534,8 +4652,8 @@ function create_default_slot_4$2(ctx) {
 	};
 }
 
-// (27:4) <Text>
-function create_default_slot_3$2(ctx) {
+// (29:4) <Text>
+function create_default_slot_4$2(ctx) {
 	let t_value = Math.random() + "";
 	let t;
 
@@ -3553,30 +4671,59 @@ function create_default_slot_3$2(ctx) {
 	};
 }
 
-// (15:0) <Dialog>
+// (30:4) <Text>
+function create_default_slot_3$2(ctx) {
+	let t;
+
+	return {
+		c() {
+			t = text(/*message*/ ctx[1]);
+		},
+		m(target, anchor) {
+			insert(target, t, anchor);
+		},
+		p(ctx, dirty) {
+			if (dirty & /*message*/ 2) set_data(t, /*message*/ ctx[1]);
+		},
+		d(detaching) {
+			if (detaching) detach(t);
+		}
+	};
+}
+
+// (17:0) <Dialog>
 function create_default_slot_2$2(ctx) {
 	let text0;
 	let t0;
 	let text1;
 	let t1;
 	let text2;
+	let t2;
+	let text3;
 	let current;
 
 	text0 = new Text({
 			props: {
-				$$slots: { default: [create_default_slot_5$1] },
+				$$slots: { default: [create_default_slot_6$1] },
 				$$scope: { ctx }
 			}
 		});
 
 	text1 = new Text({
 			props: {
-				$$slots: { default: [create_default_slot_4$2] },
+				$$slots: { default: [create_default_slot_5$1] },
 				$$scope: { ctx }
 			}
 		});
 
 	text2 = new Text({
+			props: {
+				$$slots: { default: [create_default_slot_4$2] },
+				$$scope: { ctx }
+			}
+		});
+
+	text3 = new Text({
 			props: {
 				$$slots: { default: [create_default_slot_3$2] },
 				$$scope: { ctx }
@@ -3590,6 +4737,8 @@ function create_default_slot_2$2(ctx) {
 			create_component(text1.$$.fragment);
 			t1 = space();
 			create_component(text2.$$.fragment);
+			t2 = space();
+			create_component(text3.$$.fragment);
 		},
 		m(target, anchor) {
 			mount_component(text0, target, anchor);
@@ -3597,42 +4746,53 @@ function create_default_slot_2$2(ctx) {
 			mount_component(text1, target, anchor);
 			insert(target, t1, anchor);
 			mount_component(text2, target, anchor);
+			insert(target, t2, anchor);
+			mount_component(text3, target, anchor);
 			current = true;
 		},
 		p(ctx, dirty) {
 			const text0_changes = {};
 
-			if (dirty & /*$$scope*/ 2) {
+			if (dirty & /*$$scope*/ 8) {
 				text0_changes.$$scope = { dirty, ctx };
 			}
 
 			text0.$set(text0_changes);
 			const text1_changes = {};
 
-			if (dirty & /*$$scope*/ 2) {
+			if (dirty & /*$$scope*/ 8) {
 				text1_changes.$$scope = { dirty, ctx };
 			}
 
 			text1.$set(text1_changes);
 			const text2_changes = {};
 
-			if (dirty & /*$$scope*/ 2) {
+			if (dirty & /*$$scope*/ 8) {
 				text2_changes.$$scope = { dirty, ctx };
 			}
 
 			text2.$set(text2_changes);
+			const text3_changes = {};
+
+			if (dirty & /*$$scope, message*/ 10) {
+				text3_changes.$$scope = { dirty, ctx };
+			}
+
+			text3.$set(text3_changes);
 		},
 		i(local) {
 			if (current) return;
 			transition_in(text0.$$.fragment, local);
 			transition_in(text1.$$.fragment, local);
 			transition_in(text2.$$.fragment, local);
+			transition_in(text3.$$.fragment, local);
 			current = true;
 		},
 		o(local) {
 			transition_out(text0.$$.fragment, local);
 			transition_out(text1.$$.fragment, local);
 			transition_out(text2.$$.fragment, local);
+			transition_out(text3.$$.fragment, local);
 			current = false;
 		},
 		d(detaching) {
@@ -3641,11 +4801,13 @@ function create_default_slot_2$2(ctx) {
 			destroy_component(text1, detaching);
 			if (detaching) detach(t1);
 			destroy_component(text2, detaching);
+			if (detaching) detach(t2);
+			destroy_component(text3, detaching);
 		}
 	};
 }
 
-// (17:8) <Button slot="action" compact on:click={close}>
+// (19:8) <Button slot="action" compact on:click={close}>
 function create_default_slot_1$3(ctx) {
 	let icon;
 	let current;
@@ -3675,7 +4837,7 @@ function create_default_slot_1$3(ctx) {
 	};
 }
 
-// (17:8) 
+// (19:8) 
 function create_action_slot$2(ctx) {
 	let button;
 	let current;
@@ -3705,7 +4867,7 @@ function create_action_slot$2(ctx) {
 			ctx = new_ctx;
 			const button_changes = {};
 
-			if (dirty & /*$$scope*/ 2) {
+			if (dirty & /*$$scope*/ 8) {
 				button_changes.$$scope = { dirty, ctx };
 			}
 
@@ -3726,7 +4888,7 @@ function create_action_slot$2(ctx) {
 	};
 }
 
-// (20:8) <Text title slot="title">
+// (22:8) <Text title slot="title">
 function create_default_slot$3(ctx) {
 	let t;
 
@@ -3743,7 +4905,7 @@ function create_default_slot$3(ctx) {
 	};
 }
 
-// (20:8) 
+// (22:8) 
 function create_title_slot$3(ctx) {
 	let text_1;
 	let current;
@@ -3768,7 +4930,7 @@ function create_title_slot$3(ctx) {
 		p(ctx, dirty) {
 			const text_1_changes = {};
 
-			if (dirty & /*$$scope*/ 2) {
+			if (dirty & /*$$scope*/ 8) {
 				text_1_changes.$$scope = { dirty, ctx };
 			}
 
@@ -3789,7 +4951,7 @@ function create_title_slot$3(ctx) {
 	};
 }
 
-// (16:4) 
+// (18:4) 
 function create_header_slot$3(ctx) {
 	let titlebar;
 	let current;
@@ -3816,7 +4978,7 @@ function create_header_slot$3(ctx) {
 		p(ctx, dirty) {
 			const titlebar_changes = {};
 
-			if (dirty & /*$$scope, close*/ 3) {
+			if (dirty & /*$$scope, close*/ 9) {
 				titlebar_changes.$$scope = { dirty, ctx };
 			}
 
@@ -3862,7 +5024,7 @@ function create_fragment$3(ctx) {
 		p(ctx, [dirty]) {
 			const dialog_changes = {};
 
-			if (dirty & /*$$scope, close*/ 3) {
+			if (dirty & /*$$scope, close, message*/ 11) {
 				dialog_changes.$$scope = { dirty, ctx };
 			}
 
@@ -3885,18 +5047,25 @@ function create_fragment$3(ctx) {
 
 function instance$3($$self, $$props, $$invalidate) {
 	let { close } = $$props;
+	let { message } = $$props;
+	const cancel = () => close(null);
 
 	$$self.$$set = $$props => {
 		if ('close' in $$props) $$invalidate(0, close = $$props.close);
+		if ('message' in $$props) $$invalidate(1, message = $$props.message);
 	};
 
-	return [close];
+	return [close, message, cancel];
 }
 
 class Test_dialog extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$3, create_fragment$3, safe_not_equal, { close: 0 });
+		init(this, options, instance$3, create_fragment$3, safe_not_equal, { close: 0, message: 1, cancel: 2 });
+	}
+
+	get cancel() {
+		return this.$$.ctx[2];
 	}
 }
 
@@ -4578,7 +5747,7 @@ class Menu extends SvelteComponent {
 
 /* test\src\app.svelte generated by Svelte v3.58.0 */
 
-function create_default_slot_12(ctx) {
+function create_default_slot_14(ctx) {
 	let t;
 
 	return {
@@ -4594,8 +5763,8 @@ function create_default_slot_12(ctx) {
 	};
 }
 
-// (139:8) <Link color="primary" href="#">
-function create_default_slot_11(ctx) {
+// (149:8) <Link color="primary" href="#">
+function create_default_slot_13(ctx) {
 	let t;
 
 	return {
@@ -4611,7 +5780,41 @@ function create_default_slot_11(ctx) {
 	};
 }
 
-// (143:8) <EntryButton component={TestScreen} on:entry={console.log}>
+// (153:8) <EntryButton component={TestScreen} on:entry={console.log}>
+function create_default_slot_12(ctx) {
+	let t;
+
+	return {
+		c() {
+			t = text("Test Dialog");
+		},
+		m(target, anchor) {
+			insert(target, t, anchor);
+		},
+		d(detaching) {
+			if (detaching) detach(t);
+		}
+	};
+}
+
+// (157:8) <EntryButton component={Menu} on:entry={console.log}>
+function create_default_slot_11(ctx) {
+	let t;
+
+	return {
+		c() {
+			t = text("Test Menu");
+		},
+		m(target, anchor) {
+			insert(target, t, anchor);
+		},
+		d(detaching) {
+			if (detaching) detach(t);
+		}
+	};
+}
+
+// (161:8) <EntryButton component={TestDialog} on:entry={console.log} props={testDialog}>
 function create_default_slot_10(ctx) {
 	let t;
 
@@ -4628,13 +5831,13 @@ function create_default_slot_10(ctx) {
 	};
 }
 
-// (147:8) <EntryButton component={Menu} on:entry={console.log}>
+// (165:8) <EntryButton component={Alert} props={{ message: "Hi", color: "primary" }} color="secondary">
 function create_default_slot_9(ctx) {
 	let t;
 
 	return {
 		c() {
-			t = text("Test Menu");
+			t = text("Alert");
 		},
 		m(target, anchor) {
 			insert(target, t, anchor);
@@ -4645,13 +5848,13 @@ function create_default_slot_9(ctx) {
 	};
 }
 
-// (150:8) <EntryButton component={TestDialog} on:entry={console.log}>
+// (168:8) <EntryButton          component={Confirm}          props={{ message: "Hi", color: "accent" }}          color="warning"          on:entry={e => console.log(e.detail)}          >
 function create_default_slot_8(ctx) {
 	let t;
 
 	return {
 		c() {
-			t = text("Test Dialog");
+			t = text("Confirm");
 		},
 		m(target, anchor) {
 			insert(target, t, anchor);
@@ -4662,7 +5865,7 @@ function create_default_slot_8(ctx) {
 	};
 }
 
-// (155:12) <Button on:click={show}>
+// (178:12) <Button on:click={show}>
 function create_default_slot_7(ctx) {
 	let t;
 
@@ -4679,7 +5882,7 @@ function create_default_slot_7(ctx) {
 	};
 }
 
-// (154:8) <Popover let:show let:hide>
+// (177:8) <Popover let:show let:hide>
 function create_default_slot_6(ctx) {
 	let button;
 	let current;
@@ -4692,7 +5895,7 @@ function create_default_slot_6(ctx) {
 		});
 
 	button.$on("click", function () {
-		if (is_function(/*show*/ ctx[14])) /*show*/ ctx[14].apply(this, arguments);
+		if (is_function(/*show*/ ctx[16])) /*show*/ ctx[16].apply(this, arguments);
 	});
 
 	return {
@@ -4707,7 +5910,7 @@ function create_default_slot_6(ctx) {
 			ctx = new_ctx;
 			const button_changes = {};
 
-			if (dirty & /*$$scope*/ 65536) {
+			if (dirty & /*$$scope*/ 262144) {
 				button_changes.$$scope = { dirty, ctx };
 			}
 
@@ -4728,7 +5931,7 @@ function create_default_slot_6(ctx) {
 	};
 }
 
-// (159:16) <Button on:click={hide}>
+// (182:16) <Button on:click={hide}>
 function create_default_slot_5(ctx) {
 	let t;
 
@@ -4745,7 +5948,7 @@ function create_default_slot_5(ctx) {
 	};
 }
 
-// (158:12) 
+// (181:12) 
 function create_content_slot(ctx) {
 	let div;
 	let button;
@@ -4759,7 +5962,7 @@ function create_content_slot(ctx) {
 		});
 
 	button.$on("click", function () {
-		if (is_function(/*hide*/ ctx[15])) /*hide*/ ctx[15].apply(this, arguments);
+		if (is_function(/*hide*/ ctx[17])) /*hide*/ ctx[17].apply(this, arguments);
 	});
 
 	return {
@@ -4778,7 +5981,7 @@ function create_content_slot(ctx) {
 			ctx = new_ctx;
 			const button_changes = {};
 
-			if (dirty & /*$$scope*/ 65536) {
+			if (dirty & /*$$scope*/ 262144) {
 				button_changes.$$scope = { dirty, ctx };
 			}
 
@@ -4800,7 +6003,7 @@ function create_content_slot(ctx) {
 	};
 }
 
-// (127:4) <Paper square card lprops={{cross: "stretch"}}>
+// (137:4) <Paper square card lprops={{cross: "stretch"}}>
 function create_default_slot_4(ctx) {
 	let button;
 	let t0;
@@ -4812,14 +6015,22 @@ function create_default_slot_4(ctx) {
 	let t3;
 	let entrybutton2;
 	let t4;
+	let entrybutton3;
+	let t5;
+	let entrybutton4;
+	let t6;
 	let popover;
+	let t7;
+	let circlespinner;
+	let t8;
+	let hexagonspinner;
 	let current;
 
 	button = new Button({
 			props: {
 				variant: "outline",
 				color: "accent",
-				$$slots: { default: [create_default_slot_12] },
+				$$slots: { default: [create_default_slot_14] },
 				$$scope: { ctx }
 			}
 		});
@@ -4828,7 +6039,7 @@ function create_default_slot_4(ctx) {
 			props: {
 				color: "primary",
 				href: "#",
-				$$slots: { default: [create_default_slot_11] },
+				$$slots: { default: [create_default_slot_13] },
 				$$scope: { ctx }
 			}
 		});
@@ -4836,7 +6047,7 @@ function create_default_slot_4(ctx) {
 	entrybutton0 = new Entry_button({
 			props: {
 				component: Test_screen,
-				$$slots: { default: [create_default_slot_10] },
+				$$slots: { default: [create_default_slot_12] },
 				$$scope: { ctx }
 			}
 		});
@@ -4846,7 +6057,7 @@ function create_default_slot_4(ctx) {
 	entrybutton1 = new Entry_button({
 			props: {
 				component: Menu,
-				$$slots: { default: [create_default_slot_9] },
+				$$slots: { default: [create_default_slot_11] },
 				$$scope: { ctx }
 			}
 		});
@@ -4856,30 +6067,56 @@ function create_default_slot_4(ctx) {
 	entrybutton2 = new Entry_button({
 			props: {
 				component: Test_dialog,
-				$$slots: { default: [create_default_slot_8] },
+				props: /*testDialog*/ ctx[0],
+				$$slots: { default: [create_default_slot_10] },
 				$$scope: { ctx }
 			}
 		});
 
 	entrybutton2.$on("entry", console.log);
 
+	entrybutton3 = new Entry_button({
+			props: {
+				component: Alert,
+				props: { message: "Hi", color: "primary" },
+				color: "secondary",
+				$$slots: { default: [create_default_slot_9] },
+				$$scope: { ctx }
+			}
+		});
+
+	entrybutton4 = new Entry_button({
+			props: {
+				component: Confirm,
+				props: { message: "Hi", color: "accent" },
+				color: "warning",
+				$$slots: { default: [create_default_slot_8] },
+				$$scope: { ctx }
+			}
+		});
+
+	entrybutton4.$on("entry", /*entry_handler*/ ctx[1]);
+
 	popover = new Popover({
 			props: {
 				$$slots: {
 					content: [
 						create_content_slot,
-						({ show, hide }) => ({ 14: show, 15: hide }),
-						({ show, hide }) => (show ? 16384 : 0) | (hide ? 32768 : 0)
+						({ show, hide }) => ({ 16: show, 17: hide }),
+						({ show, hide }) => (show ? 65536 : 0) | (hide ? 131072 : 0)
 					],
 					default: [
 						create_default_slot_6,
-						({ show, hide }) => ({ 14: show, 15: hide }),
-						({ show, hide }) => (show ? 16384 : 0) | (hide ? 32768 : 0)
+						({ show, hide }) => ({ 16: show, 17: hide }),
+						({ show, hide }) => (show ? 65536 : 0) | (hide ? 131072 : 0)
 					]
 				},
 				$$scope: { ctx }
 			}
 		});
+
+	circlespinner = new Circle_spinner({});
+	hexagonspinner = new Hexagon_spinner({});
 
 	return {
 		c() {
@@ -4893,7 +6130,15 @@ function create_default_slot_4(ctx) {
 			t3 = space();
 			create_component(entrybutton2.$$.fragment);
 			t4 = space();
+			create_component(entrybutton3.$$.fragment);
+			t5 = space();
+			create_component(entrybutton4.$$.fragment);
+			t6 = space();
 			create_component(popover.$$.fragment);
+			t7 = space();
+			create_component(circlespinner.$$.fragment);
+			t8 = space();
+			create_component(hexagonspinner.$$.fragment);
 		},
 		m(target, anchor) {
 			mount_component(button, target, anchor);
@@ -4906,48 +6151,70 @@ function create_default_slot_4(ctx) {
 			insert(target, t3, anchor);
 			mount_component(entrybutton2, target, anchor);
 			insert(target, t4, anchor);
+			mount_component(entrybutton3, target, anchor);
+			insert(target, t5, anchor);
+			mount_component(entrybutton4, target, anchor);
+			insert(target, t6, anchor);
 			mount_component(popover, target, anchor);
+			insert(target, t7, anchor);
+			mount_component(circlespinner, target, anchor);
+			insert(target, t8, anchor);
+			mount_component(hexagonspinner, target, anchor);
 			current = true;
 		},
 		p(ctx, dirty) {
 			const button_changes = {};
 
-			if (dirty & /*$$scope*/ 65536) {
+			if (dirty & /*$$scope*/ 262144) {
 				button_changes.$$scope = { dirty, ctx };
 			}
 
 			button.$set(button_changes);
 			const link_changes = {};
 
-			if (dirty & /*$$scope*/ 65536) {
+			if (dirty & /*$$scope*/ 262144) {
 				link_changes.$$scope = { dirty, ctx };
 			}
 
 			link.$set(link_changes);
 			const entrybutton0_changes = {};
 
-			if (dirty & /*$$scope*/ 65536) {
+			if (dirty & /*$$scope*/ 262144) {
 				entrybutton0_changes.$$scope = { dirty, ctx };
 			}
 
 			entrybutton0.$set(entrybutton0_changes);
 			const entrybutton1_changes = {};
 
-			if (dirty & /*$$scope*/ 65536) {
+			if (dirty & /*$$scope*/ 262144) {
 				entrybutton1_changes.$$scope = { dirty, ctx };
 			}
 
 			entrybutton1.$set(entrybutton1_changes);
 			const entrybutton2_changes = {};
 
-			if (dirty & /*$$scope*/ 65536) {
+			if (dirty & /*$$scope*/ 262144) {
 				entrybutton2_changes.$$scope = { dirty, ctx };
 			}
 
 			entrybutton2.$set(entrybutton2_changes);
+			const entrybutton3_changes = {};
+
+			if (dirty & /*$$scope*/ 262144) {
+				entrybutton3_changes.$$scope = { dirty, ctx };
+			}
+
+			entrybutton3.$set(entrybutton3_changes);
+			const entrybutton4_changes = {};
+
+			if (dirty & /*$$scope*/ 262144) {
+				entrybutton4_changes.$$scope = { dirty, ctx };
+			}
+
+			entrybutton4.$set(entrybutton4_changes);
 			const popover_changes = {};
 
-			if (dirty & /*$$scope, hide, show*/ 114688) {
+			if (dirty & /*$$scope, hide, show*/ 458752) {
 				popover_changes.$$scope = { dirty, ctx };
 			}
 
@@ -4960,7 +6227,11 @@ function create_default_slot_4(ctx) {
 			transition_in(entrybutton0.$$.fragment, local);
 			transition_in(entrybutton1.$$.fragment, local);
 			transition_in(entrybutton2.$$.fragment, local);
+			transition_in(entrybutton3.$$.fragment, local);
+			transition_in(entrybutton4.$$.fragment, local);
 			transition_in(popover.$$.fragment, local);
+			transition_in(circlespinner.$$.fragment, local);
+			transition_in(hexagonspinner.$$.fragment, local);
 			current = true;
 		},
 		o(local) {
@@ -4969,7 +6240,11 @@ function create_default_slot_4(ctx) {
 			transition_out(entrybutton0.$$.fragment, local);
 			transition_out(entrybutton1.$$.fragment, local);
 			transition_out(entrybutton2.$$.fragment, local);
+			transition_out(entrybutton3.$$.fragment, local);
+			transition_out(entrybutton4.$$.fragment, local);
 			transition_out(popover.$$.fragment, local);
+			transition_out(circlespinner.$$.fragment, local);
+			transition_out(hexagonspinner.$$.fragment, local);
 			current = false;
 		},
 		d(detaching) {
@@ -4983,12 +6258,20 @@ function create_default_slot_4(ctx) {
 			if (detaching) detach(t3);
 			destroy_component(entrybutton2, detaching);
 			if (detaching) detach(t4);
+			destroy_component(entrybutton3, detaching);
+			if (detaching) detach(t5);
+			destroy_component(entrybutton4, detaching);
+			if (detaching) detach(t6);
 			destroy_component(popover, detaching);
+			if (detaching) detach(t7);
+			destroy_component(circlespinner, detaching);
+			if (detaching) detach(t8);
+			destroy_component(hexagonspinner, detaching);
 		}
 	};
 }
 
-// (130:16) <Text title>
+// (140:16) <Text title>
 function create_default_slot_3(ctx) {
 	let t;
 
@@ -5005,7 +6288,7 @@ function create_default_slot_3(ctx) {
 	};
 }
 
-// (131:16) <Text subtitle>
+// (141:16) <Text subtitle>
 function create_default_slot_2(ctx) {
 	let t;
 
@@ -5022,7 +6305,7 @@ function create_default_slot_2(ctx) {
 	};
 }
 
-// (129:12) <Flex slot="title">
+// (139:12) <Flex slot="title">
 function create_default_slot_1(ctx) {
 	let text0;
 	let t;
@@ -5060,14 +6343,14 @@ function create_default_slot_1(ctx) {
 		p(ctx, dirty) {
 			const text0_changes = {};
 
-			if (dirty & /*$$scope*/ 65536) {
+			if (dirty & /*$$scope*/ 262144) {
 				text0_changes.$$scope = { dirty, ctx };
 			}
 
 			text0.$set(text0_changes);
 			const text1_changes = {};
 
-			if (dirty & /*$$scope*/ 65536) {
+			if (dirty & /*$$scope*/ 262144) {
 				text1_changes.$$scope = { dirty, ctx };
 			}
 
@@ -5092,7 +6375,7 @@ function create_default_slot_1(ctx) {
 	};
 }
 
-// (129:12) 
+// (139:12) 
 function create_title_slot(ctx) {
 	let flex;
 	let current;
@@ -5116,7 +6399,7 @@ function create_title_slot(ctx) {
 		p(ctx, dirty) {
 			const flex_changes = {};
 
-			if (dirty & /*$$scope*/ 65536) {
+			if (dirty & /*$$scope*/ 262144) {
 				flex_changes.$$scope = { dirty, ctx };
 			}
 
@@ -5137,7 +6420,7 @@ function create_title_slot(ctx) {
 	};
 }
 
-// (128:8) 
+// (138:8) 
 function create_header_slot(ctx) {
 	let titlebar;
 	let current;
@@ -5163,7 +6446,7 @@ function create_header_slot(ctx) {
 		p(ctx, dirty) {
 			const titlebar_changes = {};
 
-			if (dirty & /*$$scope*/ 65536) {
+			if (dirty & /*$$scope*/ 262144) {
 				titlebar_changes.$$scope = { dirty, ctx };
 			}
 
@@ -5184,7 +6467,7 @@ function create_header_slot(ctx) {
 	};
 }
 
-// (126:0) <Screen>
+// (136:0) <Screen>
 function create_default_slot(ctx) {
 	let paper;
 	let current;
@@ -5213,7 +6496,7 @@ function create_default_slot(ctx) {
 		p(ctx, dirty) {
 			const paper_changes = {};
 
-			if (dirty & /*$$scope*/ 65536) {
+			if (dirty & /*$$scope*/ 262144) {
 				paper_changes.$$scope = { dirty, ctx };
 			}
 
@@ -5270,7 +6553,7 @@ function create_fragment(ctx) {
 		p(ctx, [dirty]) {
 			const screen_changes = {};
 
-			if (dirty & /*$$scope*/ 65536) {
+			if (dirty & /*$$scope*/ 262144) {
 				screen_changes.$$scope = { dirty, ctx };
 			}
 
@@ -5326,10 +6609,12 @@ function instance($$self) {
 		Array.from({ length: 4 }, (_, i) => `Sq ${i ** 2}`),
 		Array.from({ length: 4 }, (_, i) => `Sub ${i - 2}`)
 	];
+	const testDialog = () => ({ message: Math.random().toString(16) });
+	const entry_handler = e => console.log(e.detail);
 	console.log(bind);
 	console.log(tab);
 	console.log("page:", page);
-	return [];
+	return [testDialog, entry_handler];
 }
 
 class App extends SvelteComponent {

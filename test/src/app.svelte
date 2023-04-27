@@ -24,9 +24,15 @@
         Toggle,
         Tooltip,
 
+        CircleSpinner,
+        HexagonSpinner,
+
         DataTable,
         EntryButton,
         Toast,
+
+        Alert,
+        Confirm,
 
         Flex,
         Grid,
@@ -116,6 +122,10 @@
     ]
     let page = 0
     $: console.log("page:", page)
+
+    const testDialog = () => ({
+        message: Math.random().toString(16)
+    })
 </script>
 
 <svelte:head>
@@ -147,8 +157,21 @@
         <EntryButton component={Menu} on:entry={console.log}>
             Test Menu
         </EntryButton>
-        <EntryButton component={TestDialog} on:entry={console.log}>
+
+        <EntryButton component={TestDialog} on:entry={console.log} props={testDialog}>
             Test Dialog
+        </EntryButton>
+
+        <EntryButton component={Alert} props={{ message: "Hi", color: "primary" }} color="secondary">
+            Alert
+        </EntryButton>
+        <EntryButton
+        component={Confirm}
+        props={{ message: "Hi", color: "accent" }}
+        color="warning"
+        on:entry={e => console.log(e.detail)}
+        >
+            Confirm
         </EntryButton>
 
         <Popover let:show let:hide>
@@ -161,6 +184,9 @@
                 </Button>
             </div>
         </Popover>
+
+        <CircleSpinner />
+        <HexagonSpinner />
 
         <!-- <EntryButton this={Modal} component={TestDialog} on:entry={console.log}>
             Test Dialog

@@ -10,6 +10,8 @@
     } from "@axel669/svelte-wind"
 
     export let close
+    export let message
+    export const cancel = () => close(null)
 </script>
 
 <Dialog>
@@ -25,4 +27,5 @@
     <Text>First line</Text>
     <Text>Second line</Text>
     <Text>{Math.random()}</Text>
+    <Text>{message}</Text>
 </Dialog>
