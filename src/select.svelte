@@ -82,6 +82,7 @@
     export let color = "default"
     export let outline = false
     export let label = null
+    export let disabled = false
 
     const update = (evt) => value = options[evt.target.value].value
 
@@ -101,7 +102,7 @@
     {#if label}
         <span ws-x="$text">{label}</span>
     {/if}
-    <select value={indexValue} on:input={update}>
+    <select value={indexValue} on:input={update} {disabled}>
         {#each grouped as item, index}
             {#if Array.isArray(item) === false}
                 <option value={item.pos}>
