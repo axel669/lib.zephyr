@@ -64,6 +64,7 @@
     export let color = "default"
     export let error = null
     export let hint = null
+    export let disabled
 
     export let value = ""
 
@@ -90,7 +91,7 @@
     {#if label}
         <span ws-x="$text" ws-hint={hint}>{label}</span>
     {/if}
-    <textarea {...$$restProps} bind:value on:focus on:blur bind:this={area} />
+    <textarea {disabled} {...$$restProps} bind:value on:focus on:blur bind:this={area} />
 
     <slot name="start" />
     <slot name="end" />

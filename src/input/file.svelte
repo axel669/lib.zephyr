@@ -52,6 +52,7 @@
     export let color = "default"
     export let error = null
     export let hint = null
+    export let disabled
 
     export let value
 
@@ -74,7 +75,7 @@
     {#if label}
         <span ws-x="$text" ws-hint={hint}>{label}</span>
     {/if}
-    <input {...$$restProps} type="file" on:input={handler} />
+    <input {disabled} {...$$restProps} type="file" on:input={handler} />
 
     <slot name="start" />
     <slot name="end" />

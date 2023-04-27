@@ -63,6 +63,7 @@
     export let color = "default"
     export let error = null
     export let hint = null
+    export let disabled
 
     export let value = ""
 
@@ -90,6 +91,7 @@
         <span ws-x="$text" ws-hint={hint}>{label}</span>
     {/if}
     <input {...$$restProps}
+    {disabled}
     type="search"
     bind:value
     on:focus

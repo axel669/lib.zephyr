@@ -63,6 +63,7 @@
     export let color = "default"
     export let error = null
     export let hint = null
+    export let disabled
 
     export let value = ""
 
@@ -88,6 +89,7 @@
     {/if}
     <input {...$$restProps}
     type="password"
+    {disabled}
     bind:value
     on:focus
     on:blur
