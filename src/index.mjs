@@ -72,6 +72,12 @@ export { default as Toaster } from "./toaster.svelte"
 export { default as Toggle } from "./toggle.svelte"
 export { default as Tooltip } from "./tooltip.svelte"
 
+export { default as CircleSpinner } from "./circle-spinner.svelte"
+export { default as HexagonSpinner } from "./hexagon-spinner.svelte"
+
+export { default as Alert } from "./dialogs/alert.svelte"
+export { default as Confirm } from "./dialogs/confirm.svelte"
+
 export { default as DataTable } from "./composed/data-table.svelte"
 export { default as EntryButton } from "./composed/entry-button.svelte"
 export { default as Toast } from "./composed/toast.svelte"
