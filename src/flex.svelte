@@ -20,9 +20,9 @@
     - ### gap `string`
         Sets `gap`
     - ### cross `string`
-        Sets `fl-cr-a`
+        Sets `fl-cr-a`, default is `"stretch"`
     - ### main `string`
-        Sets `fl-m-a`
+        Sets `fl-m-a`, default is `"start"`
 
     ## Usage
     ```svelte
@@ -39,7 +39,7 @@
     export let direction = false
     export let pad = false
     export let gap = false
-    export let cross = "start"
+    export let cross = "stretch"
     export let main = "start"
 
     $: wind = {
