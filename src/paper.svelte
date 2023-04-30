@@ -27,8 +27,10 @@
         Sets the layout the card will use to display content. Default is Flex.
     - ### scrollable `bool`
         Sets `over[auto]` on the layout component
-    - ### lprops `Object`
-        An object with props to pass to the layout component
+    - ### l-*
+        Any prop that is prefixed with `l-` will be passed to the layout
+        component, with the remaining props acting as the normal wind functions
+        on the paper itself
 
     ## Slots
     - ### header
@@ -57,7 +59,7 @@
         <div>Content 2</div>
         <div>Content 3</div>
     </Paper>
-    <Paper>
+    <Paper l-pad="0px" m="4px">
         <Titlebar slot="header">
             <Text slot="title" title>
                 Some Screen
@@ -86,18 +88,29 @@
     export let card = false
     export let square = false
     export let layout = Flex
-    export let scrollable = false
-    export let lprops = {}
+    export let scrollable = true
 
-    $: props = {
+    $: props = Object.entries($$restProps).reduce(
+        (p, [key, value]) => {
+            const [target, name] =
+                (key.startsWith("l-") === true)
+                ? [ p.layout, key.slice(2) ]
+                : [ p.paper, key ]
+            target[name] = value
+            return p
+        },
+        { layout: {}, paper: {} }
+    )
+
+    $: layoutProps = {
         over: scrollable ? "auto" : false,
-        ...lprops,
+        ...props.layout,
     }
     $: wind = {
         $color: color,
         "@outline": card,
         r: square && "0px",
-        ...$$restProps
+        ...props.paper,
     }
 </script>
 
@@ -106,7 +119,7 @@
     {#if $$slots.content}
         <slot name="content" slot="content" />
     {:else}
-        <svelte:component this={layout} {...props} slot="content">
+        <svelte:component this={layout} {...layoutProps} slot="content">
             <slot />
         </svelte:component>
     {/if}
