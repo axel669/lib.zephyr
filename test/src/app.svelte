@@ -134,7 +134,7 @@
 <svelte:body use:wsx={{theme, "@app": true}} />
 
 <Screen>
-    <Paper square card lprops={{cross: "stretch"}}>
+    <Paper square card l-pad="12px">
         <Titlebar slot="header" fill color="primary">
             <Flex slot="title">
                 <Text title>Zephyr</Text>
