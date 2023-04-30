@@ -20,8 +20,10 @@ are supported.</p>
   Sets the layout the card will use to display content. Default is Flex.</li>
 <li><h3 id="scrollable-bool">scrollable <code>bool</code></h3>
   Sets <code>over[auto]</code> on the layout component</li>
-<li><h3 id="lprops-object">lprops <code>Object</code></h3>
-  An object with props to pass to the layout component</li>
+<li><h3 id="l-">l-*</h3>
+  Any prop that is prefixed with <code>l-</code> will be passed to the layout
+  component, with the remaining props acting as the normal wind functions
+  on the paper itself</li>
 </ul>
 <h2 id="slots">Slots</h2>
 <ul>
@@ -50,7 +52,7 @@ are supported.</p>
     &lt;div&gt;Content 2&lt;/div&gt;
     &lt;div&gt;Content 3&lt;/div&gt;
 &lt;/Paper&gt;
-&lt;Paper&gt;
+&lt;Paper l-pad=&quot;0px&quot; m=&quot;4px&quot;&gt;
     &lt;Titlebar slot=&quot;header&quot;&gt;
         &lt;Text slot=&quot;title&quot; title&gt;
             Some Screen
