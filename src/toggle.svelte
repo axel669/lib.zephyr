@@ -25,8 +25,8 @@
         Used for binding, see the Svelte bind:group for details
     - ### label `string`
         The text to use for the label
-    - ### outline `bool`
-        Sets `$outline`
+    - ### flat `bool`
+        Sets `@flat`
     - ### reverse `bool`
         If true, the input being toggled will be on the left instead of the
         right. Default is false (label is on the left)
@@ -38,7 +38,7 @@
     <Toggle label="Active" bind:checked />
     <Toggle label="Active" checkbox bind:checked />
     <Toggle label="Active" checkbox reverse bind:checked />
-    <Toggle label="Active" checkbox outline color="danger" bind:checked />
+    <Toggle label="Active" checkbox flat color="danger" bind:checked />
     ```
     */
 
@@ -47,7 +47,7 @@
     export let label = ""
     export let color = "default"
     export let checked = false
-    export let outline = false
+    export let flat = false
     export let value
     export let group = []
     export let checkbox = false
@@ -55,7 +55,7 @@
 
     $: container = {
         "@toggle": true,
-        "@outline": outline,
+        "@flat": flat,
         $color: color,
         ...$$restProps,
     }
@@ -81,7 +81,11 @@
 
 <label use:wsx={container}>
     {#if reverse !== true}
-        <span>{label}</span>
+        {#if $$slots.default}
+            <slot />
+        {:else}
+            <span>{label}</span>
+        {/if}
     {/if}
     <input type="checkbox" bind:checked use:wsx={input} />
     {#if reverse === true}
