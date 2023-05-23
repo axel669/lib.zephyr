@@ -70,7 +70,8 @@
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <ws-tabs use:wsx={wind}>
     {#each options as tab, i}
-        <ws-tab tab-selected={index === i || null} on:click={set(tab.value)}>
+        <ws-tab use:wsx={{"$tab-selected": index === i}}
+        on:click={set(tab.value)}>
             {tab.label}
         </ws-tab>
     {/each}
