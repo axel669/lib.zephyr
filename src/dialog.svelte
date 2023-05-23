@@ -44,7 +44,8 @@
     import Paper from "./paper.svelte"
 </script>
 
-<wind-wrapper transition:fade={{ duration: 200 }} ws-x="@dialog grid">
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<wind-wrapper transition:fade={{ duration: 200 }} ws-x="@dialog grid" on:click|stopPropagation>
     <Paper {...$$props}>
         <slot name="header" slot="header" />
         <slot />
