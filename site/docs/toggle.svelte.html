@@ -18,8 +18,8 @@ are supported.</p>
   Used for binding, see the Svelte bind:group for details</li>
 <li><h3 id="label-string">label <code>string</code></h3>
   The text to use for the label</li>
-<li><h3 id="outline-bool">outline <code>bool</code></h3>
-  Sets <code>$outline</code></li>
+<li><h3 id="flat-bool">flat <code>bool</code></h3>
+  Sets <code>@flat</code></li>
 <li><h3 id="reverse-bool">reverse <code>bool</code></h3>
   If true, the input being toggled will be on the left instead of the
   right. Default is false (label is on the left)</li>
@@ -30,5 +30,5 @@ are supported.</p>
 <pre><code class="language-svelte">&lt;Toggle label=&quot;Active&quot; bind:checked /&gt;
 &lt;Toggle label=&quot;Active&quot; checkbox bind:checked /&gt;
 &lt;Toggle label=&quot;Active&quot; checkbox reverse bind:checked /&gt;
-&lt;Toggle label=&quot;Active&quot; checkbox outline color=&quot;danger&quot; bind:checked /&gt;
+&lt;Toggle label=&quot;Active&quot; checkbox flat color=&quot;danger&quot; bind:checked /&gt;
 </code></pre>

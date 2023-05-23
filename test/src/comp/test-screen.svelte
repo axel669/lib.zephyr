@@ -16,7 +16,7 @@
         <Titlebar slot="header" fill color="primary">
             <Text slot="title" title>Blep</Text>
 
-            <Button slot="action" on:click={close} color={false} compact>
+            <Button slot="action" on:click={close} compact>
                 <Icon name="x" />
             </Button>
         </Titlebar>

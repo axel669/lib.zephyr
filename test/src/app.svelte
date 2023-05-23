@@ -4,6 +4,7 @@
         Badge,
         Button,
         Chip,
+        Details,
         Icon,
         InlineDialog,
         Input,
@@ -126,6 +127,9 @@
     const testDialog = () => ({
         message: Math.random().toString(16)
     })
+
+    let open = false
+    $: console.log("open", open)
 </script>
 
 <svelte:head>
@@ -142,7 +146,34 @@
             </Flex>
         </Titlebar>
 
-        <Button variant="outline" color="accent">
+        <div>
+            <Chip color="primary">Blep</Chip>
+            <Chip color="primary" fill>Blep</Chip>
+        </div>
+
+        <Toggle>
+            Wat
+        </Toggle>
+        <Toggle label="test" flat />
+
+        <Details label="Wat">
+            Test
+        </Details>
+        <Details label="Wat" outline>
+            Test
+        </Details>
+        <Details label="Wat" color="primary" bind:open>
+            Test
+        </Details>
+        <Details>
+            <Icon name="menu" slot="label">Something</Icon>
+            Test
+        </Details>
+
+        <Button outline color="accent">
+            Blep
+        </Button>
+        <Button outline>
             Blep
         </Button>
 

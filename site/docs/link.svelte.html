@@ -17,15 +17,15 @@ are supported.</p>
   Sets the rel attribute.</li>
 <li><h3 id="target-string">target <code>string</code></h3>
   Sets the target attribute</li>
-<li><h3 id="variant-string">variant <code>string</code></h3>
-  Sets the link-button type to <code>@&lt;variant&gt;</code> (ex: &quot;flat&quot; -&gt; <code>@flat</code>).
-  Default variant is &quot;flat&quot;. Currently supports &quot;flat&quot;, &quot;fill&quot;, &quot;outline&quot;.</li>
+<li><h3 id="fill--outline-bool">fill / outline <code>bool</code></h3>
+  Sets the link-button type to @fill if fill is true, @outline if outline
+  is true, or @flat if neither is true.</li>
 </ul>
 <h2 id="usage">Usage</h2>
 <pre><code class="language-svelte">&lt;Link color=&quot;primary&quot; href=&quot;test&quot; target=&quot;_blank&quot;&gt;
     Test
 &lt;/Link&gt;
-&lt;Link color=&quot;primary&quot; href=&quot;logout&quot; button variant=&quot;outline&quot;&gt;
+&lt;Link color=&quot;primary&quot; href=&quot;logout&quot; button outline&gt;
     Logout
 &lt;/Link&gt;
 </code></pre>

@@ -374,6 +374,9 @@ function schedule_update() {
 function add_render_callback(fn) {
     render_callbacks.push(fn);
 }
+function add_flush_callback(fn) {
+    flush_callbacks.push(fn);
+}
 // flush() calls callbacks in this order:
 // 1. All beforeUpdate callbacks, in order: parents before children
 // 2. All bind:this callbacks, in reverse order: children before parents.
@@ -662,6 +665,14 @@ function get_spread_update(levels, updates) {
 function get_spread_object(spread_props) {
     return typeof spread_props === 'object' && spread_props !== null ? spread_props : {};
 }
+
+function bind(component, name, callback) {
+    const index = component.$$.props[name];
+    if (index !== undefined) {
+        component.$$.bound[index] = callback;
+        callback(component.$$.ctx[index]);
+    }
+}
 function create_component(block) {
     block && block.c();
 }
@@ -798,9 +809,9 @@ class SvelteComponent {
     }
 }
 
-const e=/(?<key>(?<mod>\w+:)?(?<name>[\$\@\&\w\-]+)(\[(?<args>.*?)\])?)/g,t={"(":1,")":-1},r=e=>{const r=e.trim().replace(/__|_/g,(e=>"__"===e?"_":" "));if(""===r)return [];const o=r.split("").reduce(((e,o,a)=>","===o&&0===e.p?(e.args.push(r.substring(e.s,a).trim()),e.s=a,e):(e.p+=t[o]??0,e)),{args:[],p:0,s:0});return [...o.args,r.slice(o.s).trim()]},o=(e,t)=>void 0===t?"":`${e}: ${(e=>!0===e.startsWith("&")?`var(--${e.slice(1)})`:e)(t)}`,a=e=>(t,r)=>[o(e,r)],l=(...e)=>(t,r)=>e.map((e=>o(e,r)));var i=Object.freeze({__proto__:null,cssprop:o,multi:l,simple:a,wsx:e=>Object.entries(e).reduce(((e,[t,r])=>{if(null==r||!1===r)return e;const o=!0===r?t:`${t}[${(e=>e.replace(/( )|(_)/g,((e,t)=>t?"_":"__")))(r)}]`;return e.push(o),e}),[]).join(" ")});const n={area:a("grid-area"),b:a("border"),"b-c":a("border-color"),"b-s":a("border-style"),"b-w":a("border-width"),"b-t":a("border-top"),"b-t-c":a("border-top-color"),"b-t-s":a("border-top-style"),"b-t-w":a("border-top-width"),"b-b":a("border-bottom"),"b-b-c":a("border-bottom-color"),"b-b-s":a("border-bottom-style"),"b-b-w":a("border-bottom-width"),"b-l":a("border-left"),"b-l-c":a("border-left-color"),"b-l-s":a("border-left-style"),"b-l-w":a("border-left-width"),"b-r":a("border-right"),"b-r-c":a("border-right-color"),"b-r-s":a("border-right-style"),"b-r-w":a("border-right-width"),bg:a("background"),"bg-a":a("background-attachment"),"bg-c":a("background-color"),"bg-img":a("background-image"),block:()=>o("display","block"),c:a("color"),col:a("grid-column"),cur:a("cursor"),flex:(e,t="column")=>[o("display","flex"),o("flex-direction",t)],"fl-center":()=>[o("align-items","center"),o("justify-content","center")],"fl-cr-a":a("align-items"),"fl-dir":a("flex-direction"),"fl-wr":a("flex-wrap"),"fl-m-a":a("justify-content"),font:a("font-family"),gap:a("gap"),grid:(e,t="row")=>[o("display","grid"),o("grid-auto-flow",t)],"gr-col":a("grid-template-columns"),"gr-row":a("grid-template-rows"),"gr-acol":a("grid-auto-columns"),"gr-arow":a("grid-auto-rows"),"gr-flow":a("grid-auto-flow"),h:a("height"),"h-max":a("max-height"),"h-min":a("min-height"),hide:()=>[o("display","none")],iblock:()=>[o("display","inline-block")],iflex:(e,t="column")=>[o("display","inline-flex"),o("flex-direction",t)],igrid:(e,t="row")=>[o("display","inline-grid"),o("grid-auto-flow",t)],inset:l("top","left","bottom","right"),"inset-x":l("left","right"),"inset-y":l("top","bottom"),m:a("margin"),"m-b":a("margin-bottom"),"m-l":a("margin-left"),"m-r":a("margin-right"),"m-t":a("margin-top"),over:a("overflow"),"over-x":a("overflow-x"),"over-y":a("overflow-y"),p:a("padding"),"p-b":a("padding-bottom"),"p-l":a("padding-left"),"p-r":a("padding-right"),"p-t":a("padding-top"),"p-x":l("padding-left","padding-right"),"p-y":l("padding-top","padding-bottom"),pos:a("position"),r:a("border-radius"),"r-tl":a("border-top-left-radius"),"r-tr":a("border-top-right-radius"),"r-bl":a("border-bottom-left-radius"),"r-br":a("border-bottom-right-radius"),"r-t":l("border-top-left-radius","border-top-right-radius"),"r-r":l("border-top-right-radius","border-bottom-right-radius"),"r-l":l("border-bottom-left-radius","border-top-left-radius"),"r-b":l("border-bottom-right-radius","border-bottom-left-radius"),row:a("grid-row"),sel:a("user-select"),shdw:a("box-shadow"),"t-a":a("text-align"),"t-br":a("word-break"),"t-deco":a("text-decoration"),"t-lh":a("line-height"),"t-over":a("text-overflow"),"t-sz":a("font-size"),"t-tr":a("text-transform"),"t-wght":a("font-weight"),"t-ws":a("white-space"),theme:()=>[o("color","var(--text-color-normal)"),o("font-family","var(--font)"),o("font-size","var(--text-size-normal)")],tr:a("transform"),w:a("width"),"w-max":a("max-width"),"w-min":a("min-width"),x:a("left"),y:a("top"),"-x":a("right"),"-y":a("bottom"),z:a("z-index"),$color:(e,t)=>[o("--color",`&${t}`),o("--ripple-color",`&${t}-ripple`)],$adorn:()=>[o("display","flex"),o("justify-content","center"),o("align-items","center"),o("padding","2px")],$compact:()=>[o("padding","0px 8px")],$title:()=>[o("font-size","&text-size-title"),o("font-weight","700")],$subtitle:()=>[o("font-size","&text-size-subtitle")],"@flat":()=>[o("border-width","0px"),o("--border-size","0px")],"@outline":()=>[o("border-width","1px"),o("border-color","&color")],"@fill":()=>[o("--ripple-color","var(--ripple-dark) !important"),o("--text-color","&text-color-fill"),o("background-color","&color"),o("color","&text-color-fill")]};var s=[{name:"baseline",style:'@import url(https://fonts.googleapis.com/css2?family=Share+Tech+Mono:wght@400;500;600;700;800;900&family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500;1,700;1,900&display=swap);@import url(https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.13.0/tabler-icons.min.css);*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}:where([ws-x]){border-style:solid;border-width:0;border-color:var(--text-color-normal)}body,html{padding:0;margin:0;width:100%;height:100%;-webkit-tap-highlight-color:transparent}body[ws-x*="theme["]{background-color:var(--background)}body[ws-x~="@app"]{overflow:hidden;position:fixed;touch-action:pan-x pan-y}'},{name:"avatar",style:"ws-avatar{--color:transparent;--size:36px;display:inline-flex;overflow:hidden;border-radius:500px;align-items:center;justify-content:center;width:var(--size);height:var(--size);background-color:var(--color);color:var(--text-color-fill);vertical-align:text-bottom}ws-avatar>img{width:100%}"},{name:"badge",style:"ws-badge{--color:var(--primary);position:relative;display:inline-grid;overflow:visible}ws-badge::after{position:absolute;content:attr(ws-text);right:-10px;top:0;transform:translateY(-50%);background-color:var(--color);pointer-events:none;border-radius:20px;padding:4px;min-width:20px;height:20px;box-sizing:border-box;text-align:center;font-size:var(--text-size-subtitle);color:var(--text-color-fill);line-height:14px;z-index:5}"},{name:"button",style:':is(label,a):where([ws-x~="@button"]),button:where([ws-x~="@flat"],[ws-x~="@fill"],[ws-x~="@outline"]){--color:var(--text-color-normal);--ripple-color:var(--ripple-normal);border:0 solid var(--color);color:var(--color);font-family:var(--font);background-color:transparent;border-radius:4px;cursor:pointer;padding:8px 16px;display:inline-flex;align-items:center;justify-content:center;overflow:hidden;position:relative;user-select:none}:is(label,a):where([ws-x~="@button"]):where(:not([disabled]))::after,button:where([ws-x~="@flat"],[ws-x~="@fill"],[ws-x~="@outline"]):where(:not([disabled]))::after{content:"";position:absolute;top:0;left:0;bottom:0;right:0;transition:background-color 150ms linear;pointer-events:none}:is(label,a):where([ws-x~="@button"]):where(:not([disabled])):active::after,button:where([ws-x~="@flat"],[ws-x~="@fill"],[ws-x~="@outline"]):where(:not([disabled])):active::after{transition:none;background-color:var(--ripple-color)}:is(label,a):where([ws-x~="@button"]):where([disabled]),button:where([ws-x~="@flat"],[ws-x~="@fill"],[ws-x~="@outline"]):where([disabled]){opacity:.6;background-color:rgba(200,200,200,.4)}'},{name:"chip",style:'ws-chip{display:inline-flex;align-items:center;justify-content:center;border-radius:100px;padding:4px 12px;user-select:none;vertical-align:text-bottom}ws-chip:where([ws-x~="$click"]){cursor:pointer;overflow:hidden;position:relative;user-select:none}ws-chip:where([ws-x~="$click"]):where(:not([disabled]))::after{content:"";position:absolute;top:0;left:0;bottom:0;right:0;transition:background-color 150ms linear;pointer-events:none}ws-chip:where([ws-x~="$click"]):where(:not([disabled])):active::after{transition:none;background-color:var(--ripple-color)}'},{name:"control",style:'label:where([ws-x~="@control"]){--color:var(--default);--border-color:var(--default);position:relative;display:inline-grid;grid-template-areas:"label label label"" start control end""extra extra extra";grid-template-rows:minmax(0,min-content) auto minmax(0,min-content);grid-template-columns:minmax(0,min-content) auto minmax(0,min-content);border:1px solid var(--border-color);border-radius:4px;user-select:none;overflow:hidden}label:where([ws-x~="@control"]):where([ws-error])::after{content:attr(ws-error);grid-row:3;grid-column:span 3;padding:4px;font-size:var(--text-size-info);background-color:var(--danger-ripple)}label:where([ws-x~="@control"]):focus-within{--border-color:var(--color)}label:where([ws-x~="@control"]):focus-within:where([ws-x~="@flat"])>:is(input,select){outline:2px solid var(--ripple-color);outline-offset:-2px}label:where([ws-x~="@control"]) :is(input,select,textarea):disabled{background-color:var(--disabled-background)}label:where([ws-x~="@control"])>:where(select){--color:var(--text-color-normal);border-width:0;padding:8px;min-height:36px;background-color:transparent;color:var(--color);font:var(--font);font-size:var(--text-size-normal);cursor:pointer;background-color:var(--background-layer);grid-area:control}label:where([ws-x~="@control"])>:where(input,textarea):focus,label:where([ws-x~="@control"])>:where(select):focus{outline:0}label:where([ws-x~="@control"])>:where(select) optgroup,label:where([ws-x~="@control"])>:where(select) option{background-color:var(--background-layer);border-color:var(--background-layer);color:var(--text-color-normal);font-size:var(--text-size-normal);font-family:Arial}label:where([ws-x~="@control"])>:where(input,textarea){border-width:0;background:0 0;color:var(--text-normal-color);font-family:var(--font);min-width:24px;min-height:36px;width:100%;height:100%;grid-area:control;padding:4px;background-color:var(--background-layer)}label:where([ws-x~="@control"])>input[type=file]{position:relative;padding:0}label:where([ws-x~="@control"])>input[type=file]::file-selector-button{font-family:var(--font);height:100%;margin:0 4px 0 0;padding:4px;color:var(--text-normal-color);background-color:var(--background-layer);border-width:0;border-right:1px solid var(--border-color);text-decoration:underline}label:where([ws-x~="@control"])>:where([ws-x~="$text"]){grid-area:label;padding:4px;display:flex;flex-direction:column;align-items:start;border-bottom:var(--border-size, 1px) solid var(--border-color);border-right:var(--border-size, 1px) solid var(--border-color);color:var(--color);width:min-content;white-space:nowrap;border-bottom-right-radius:4px}label:where([ws-x~="@control"])>:where([ws-x~="$text"]):where([ws-hint])::after{font-size:var(--text-size-subtitle);content:attr(ws-hint);color:var(--text-color-secondary)}label:where([ws-x~="@control"])>:where([ws-x~="slot[start]"],[slot=start]){grid-area:start}label:where([ws-x~="@control"])>:where([ws-x~="slot[end]"],[slot=end]){grid-area:end}'},{name:"flex",style:"ws-flex{display:flex;flex-direction:column;gap:4px;padding:4px;overflow:hidden}ws-flex>*{flex-shrink:0}"},{name:"grid",style:"ws-grid{display:grid;overflow:hidden;gap:4px;padding:4px;grid-auto-rows:min-content}"},{name:"icon",style:"ws-icon{display:inline-block}ws-icon:where(:not(:empty))::before{margin-right:2px}ws-icon::before{font-family:tabler-icons!important;speak:none;font-style:normal;font-weight:400;font-variant:normal;text-transform:none;line-height:1;display:contents;-webkit-font-smoothing:antialiased}"},{name:"link",style:"a:where([ws-x]){--color:var(--text-color-normal)}a:where([ws-x]),a:where([ws-x]):hover,a:where([ws-x]):visited{color:var(--color)}"},{name:"modal",style:'ws-modal{position:fixed;top:0;left:0;bottom:0;right:0;background-color:rgba(0,0,0,.35);z-index:100;display:none}ws-modal>label:first-child{position:absolute;width:100%;height:100%;cursor:pointer}ws-modal[ws-x~="$show"]{display:block}input[type=checkbox]:not(:checked)+ws-modal{display:none}input[type=checkbox]:checked+ws-modal{display:block}ws-modal>:where(:not(label:first-child)){position:absolute;min-width:15vw}ws-modal>:where(:not(label:first-child)):where([ws-x~="@menu"]){top:0;left:0;height:100%}ws-modal>:where(:not(label:first-child)):where([ws-x~="@action"]){top:0;right:0;height:100%}ws-modal>:where(:not(label:first-child)):where([ws-x~="@select"]){top:0;left:50%;transform:translateX(-50%);max-height:75vh;max-width:min(90vw,720px)}ws-modal>:where(:not(label:first-child)):where([ws-x~="@dialog"]){top:50%;left:50%;transform:translate(-50%,-50%)}'},{name:"notification",style:'ws-notification{--background-color:var(--background-layer);--color:var(--text-color-normal);background-color:var(--background-color);color:var(--color);padding:8px;display:inline-flex;flex-direction:row;justify-content:space-between;align-items:center;border-radius:4px;cursor:pointer;user-select:none;border:1px solid var(--text-color-secondary)}ws-notification[ws-x*="$color"]{background-color:var(--color);color:var(--text-color-fill)}'},{name:"paper",style:'ws-paper{--color:var(--layer-border-color);display:grid;border-radius:4px;box-shadow:0 2px 4px var(--shadow-color);overflow:hidden;grid-template-columns:1fr;grid-template-rows:min-content auto min-content;grid-template-areas:"header""content""footer";background-color:var(--background-layer)}ws-paper::before{content:"";grid-area:header}ws-paper::after{content:"";grid-area:footer;pointer-events:none}ws-paper>:where([ws-x~="slot[content]"],[slot=content]){grid-area:content}ws-paper>:where([ws-x~="slot[header]"],[slot=header]){grid-area:header;font-size:var(--text-size-header)}ws-paper>:where([ws-x~="slot[footer]"],[slot=footer]){grid-area:footer}'},{name:"popover",style:'ws-popover{display:grid;position:relative}ws-popover:not(:visibile)>:where([ws-x~="slot[content]"],[slot=content]){display:none}ws-popover>:where([ws-x~="slot[content]"],[slot=content]){position:absolute;z-index:25;display:none}ws-popover[ws-x~="$show"]>:where([ws-x~="slot[content]"],[slot=content]){display:block}ws-popover>input:where([type=checkbox]):checked+:where([ws-x~="slot[content]"],[slot=content]){display:block}ws-popover>input:where([type=checkbox]):not(:checked)+:where([ws-x~="slot[content]"],[slot=content]){display:none}'},{name:"progress",style:'label[ws-x~="@progress"]{--color:var(--text-color-normal);--border-size:0px;display:inline-grid;grid-template-columns:1fr;grid-template-rows:min-content auto;border-radius:4px;overflow:hidden;user-select:none}label[ws-x~="@progress"][ws-x~="$row"]{grid-template-columns:min-content auto;grid-template-rows:1fr}label[ws-x~="@progress"]>[ws-x~="$text"]{padding:4px;display:flex;border-bottom:var(--border-size, 1px) solid var(--color);color:var(--color)}label[ws-x~="@progress"]>progress{min-height:20px;height:100%;width:100%;border:0;background-color:var(--background-layer)}label[ws-x~="@progress"]>progress::-moz-progress-bar{background-color:var(--color);border-radius:0}label[ws-x~="@progress"]>progress::-webkit-progress-bar{background-color:var(--background-layer);border-radius:0}label[ws-x~="@progress"]>progress::-webkit-progress-value{background-color:var(--color);border-radius:0}'},{name:"screen",style:'ws-screen{--stack:0;--screen-width:min(720px, 100%);display:grid;width:calc(100% - var(--sub-pixel-offset));height:calc(100% - 1px);overflow:hidden;position:fixed;top:0;left:0;z-index:200;background-color:rgba(0,0,0,.4);grid-template-columns:auto calc(var(--screen-width) - 16px*var(--stack)) auto;grid-template-areas:". content .";padding-top:calc(8px*var(--stack))}ws-screen[ws-x~="@left"]{grid-template-columns:calc(8px*var(--stack)) calc(var(--screen-width) - 16px*var(--stack)) auto}ws-screen>:where(*){grid-area:content;height:100%;overflow:hidden}'},{name:"spinner",style:"ws-circle-spinner,ws-hexagon-spinner{--size:100px;--color:var(--primary);--ripple-color:var(--primary-ripple);width:var(--size);height:var(--size);display:inline-block}"},{name:"table",style:"table:where([ws-x]){--border-color:var(--color);border-spacing:0;position:relative}table:where([ws-x]) thead :is(td,th){background-color:var(--color);color:var(--text-color-fill);font-weight:700}table:where([ws-x]) :is(td,th){padding:8px;white-space:nowrap;background-color:var(--background-layer);border-bottom:1px solid var(--color)}table:where([ws-x]) :where(th:first-child){position:sticky;left:0;z-index:10}table:where([ws-x]) :where(td:first-child,th:first-child){border-left:1px solid var(--color)}table:where([ws-x]) :where(td:last-child,th:last-child){border-right:1px solid var(--color)}"},{name:"tabs",style:'ws-tabs{--color:var(--primary);display:flex;flex-direction:row;justify-content:stretch;align-items:stretch;user-select:none;cursor:pointer;gap:2px;padding:2px}ws-tabs[ws-x~="$vert"]{flex-direction:column;justify-content:flex-start}ws-tabs[ws-x~="$vert"]>ws-tab{border-bottom-width:0;border-right-width:2px;flex-grow:0}ws-tabs[ws-x~="@solid"]>ws-tab:where([tab-selected]){color:var(--text-color-fill);background-color:var(--color)}ws-tabs>ws-tab{display:flex;justify-content:center;align-items:center;flex-grow:1;padding:8px;border-color:var(--text-color-secondary);border-width:0 0 2px;border-style:solid}ws-tabs>ws-tab:where([tab-selected]){color:var(--color);border-color:var(--color)}'},{name:"titlebar",style:'ws-titlebar{--text-color:var(--text-color-normal);display:grid;height:48px;grid-template-columns:min-content auto min-content;grid-template-areas:"menu title action";user-select:none}ws-titlebar:where(:not([ws-x~="@fill"])){border-bottom:1px solid var(--color, var(--text-color-normal))}ws-titlebar>:where([ws-x~="slot[title]"],[slot=title]){grid-area:title;display:flex;flex-direction:column;justify-content:center;padding:4px}ws-titlebar>:where([ws-x~="slot[menu]"],[slot=menu]){grid-area:menu;--text-color-normal:var(--text-color)}ws-titlebar>:where([ws-x~="slot[action]"],[slot=action]){grid-area:action;--text-color-normal:var(--text-color)}'},{name:"toaster",style:'ws-toaster{position:fixed;z-index:100;display:inline-flex;flex-direction:column;padding:4px;gap:4px;height:min-content!important}ws-toaster[ws-x~="$tl"]{top:0;left:0}ws-toaster[ws-x~="$tc"]{top:0;left:50%;transform:translateX(-50%)}ws-toaster[ws-x~="$tr"]{top:0;right:0}ws-toaster[ws-x~="$ml"]{top:50%;left:0;transform:translateY(-50%)}ws-toaster[ws-x~="$mr"]{top:50%;right:0;transform:translateY(-50%)}ws-toaster[ws-x~="$bl"]{bottom:0;left:0}ws-toaster[ws-x~="$bc"]{bottom:0;left:50%;transform:translateX(-50%)}ws-toaster[ws-x~="$br"]{bottom:0;right:0}'},{name:"toggle",style:'label[ws-x~="@toggle"]{--color:var(--default);--ripple-color:var(--default-ripple);--border-color:var(--default);cursor:pointer;display:inline-flex;align-items:center;justify-content:space-between;padding:4px;border-radius:4px;border:1px solid var(--border-color);overflow:hidden;position:relative;user-select:none}label[ws-x~="@toggle"]:where(:not([disabled]))::after{content:"";position:absolute;top:0;left:0;bottom:0;right:0;transition:background-color 150ms linear;pointer-events:none}label[ws-x~="@toggle"]:where(:not([disabled])):active::after{transition:none;background-color:var(--ripple-color)}label[ws-x~="@toggle"]:focus-within{--border-color:var(--color)}label[ws-x~="@toggle"]:focus-within:where([ws-x~="@flat"]){outline:2px solid var(--ripple-color);outline-offset:-2px}label[ws-x~="@toggle"]>input{position:relative;min-width:20px;min-height:20px;-webkit-appearance:none;appearance:none;margin:0}label[ws-x~="@toggle"]>input:focus{outline:0}label[ws-x~="@toggle"]>input:disabled{--color:var(--disabled-background)}label[ws-x~="@toggle"]>input:checked{color:var(--text-color-invert)}label[ws-x~="@toggle"]>input:checked::after{background-color:var(--color)}label[ws-x~="@toggle"]>input::after{content:"";position:absolute;font-size:18px;font-family:tabler-icons!important;speak:none;font-style:normal;font-weight:400;font-variant:normal;text-transform:none;top:50%;left:50%;width:20px;height:20px;transform:translate(-50%,-50%);display:flex;border:1px solid var(--color);border-radius:4px;align-items:center;justify-content:center;overflow:hidden}label[ws-x~="@toggle"]>input[type=radio]::after{border-radius:50%}label[ws-x~="@toggle"]>input[type=checkbox]:disabled,label[ws-x~="@toggle"]>input[type=radio]:disabled::after{background-color:var(--disabled-background)}label[ws-x~="@toggle"]>input[type=radio]:checked::after{content:""}label[ws-x~="@toggle"]>input[type=checkbox]:checked::after{content:""}label[ws-x~="@toggle"]>input[type=checkbox][ws-x~="$switch"]{position:relative;border:1px solid var(--color);height:24px;width:44px;border-radius:12px}label[ws-x~="@toggle"]>input[type=checkbox][ws-x~="$switch"]::after{content:"";background-color:var(--text-color-secondary);position:absolute;width:18px;height:18px;border-radius:10px;top:2px;left:2px;transform:none;border-width:0;transition:left 100ms linear,color 100ms linear}label[ws-x~="@toggle"]>input[type=checkbox][ws-x~="$switch"]:checked::after{background-color:var(--color);left:22px}'},{name:"tooltip",style:'ws-tooltip{position:relative;display:inline-grid;overflow:visible}ws-tooltip::after{position:absolute;content:attr(ws-text);left:50%;bottom:calc(100% + 2px);transform:translateX(-50%);height:20px;background-color:var(--background-layer);opacity:0;transition:opacity 100ms linear;pointer-events:none;border-radius:4px;border:1px solid var(--text-color-secondary);padding:2px 8px;font-size:var(--text-size-subtitle);width:60%;display:flex;align-items:center;justify-content:center;z-index:5}ws-tooltip:hover::after{opacity:1}ws-tooltip[ws-x~="$bottom"]::after{bottom:unset;top:calc(100% + 2px)}'},{name:"dark",style:'[ws-x~="theme[dark]"]{--font:Roboto;--text-light:white;--text-dark:black;--text-color-normal:var(--text-light);--text-color-secondary:#a0a0a0;--text-color-invert:var(--text-dark);--text-color-fill:var(--text-dark);--text-size-normal:14px;--text-size-title:18px;--text-size-header:16px;--text-size-info:13px;--text-size-subtitle:12px;--text-size-data:10px;--background:#161616;--background-layer:#333333;--layer-border-width:1px;--layer-border-color:#505050;--default:var(--text-color-normal);--default-ripple:var(--ripple-normal);--primary:#00aaff;--primary-ripple:#00aaff60;--secondary:#2fbc2f;--secondary-ripple:#2fbc2f60;--danger:#df5348;--danger-ripple:#df534860;--warning:#ffff00;--warning-ripple:#ffff0060;--accent:#ff4dff;--accent-ripple:#ff4dff60;--button-filled-text-color:var(--text-color-normal);--ripple-dark:#00000060;--ripple-light:#FFFFFF60;--ripple-normal:var(--ripple-light);--ripple-invert:var(--ripple-dark);--shadow-color:rgb(0, 0, 0, 0.25);--disabled-background:#606060;color-scheme:dark}'},{name:"light",style:'[ws-x~="theme[light]"]{--font:Roboto;--text-light:white;--text-dark:black;--text-color-normal:var(--text-dark);--text-color-secondary:#505050;--text-color-invert:var(--text-light);--text-color-fill:var(--text-light);--text-size-normal:14px;--text-size-title:18px;--text-size-header:16px;--text-size-info:13px;--text-size-subtitle:12px;--text-size-data:10px;--background:#e9e9e9;--background-layer:#ffffff;--layer-border-width:1px;--layer-border-color:#aaaaaa;--default:var(--text-color-normal);--default-ripple:var(--ripple-normal);--primary:#1d62d5;--primary-ripple:#1d62d560;--secondary:#128f12;--secondary-ripple:#128f1260;--danger:#F44336;--danger-ripple:#F4433660;--warning:#db990d;--warning-ripple:#db990d60;--accent:#cf00cf;--accent-ripple:#cf00cf60;--button-filled-text-color:var(--text-color-invert);--ripple-dark:#00000060;--ripple-light:#FFFFFF60;--ripple-normal:var(--ripple-dark);--ripple-invert:var(--ripple-light);--shadow-color:rgb(0, 0, 0, 0.25);--disabled-background:#c7c7c7}'},{name:"tron",style:'[ws-x~="theme[tron]"]{--font:Share Tech Mono;--text-light:white;--text-dark:black;--text-color-normal:var(--text-light);--text-color-secondary:#a0a0a0;--text-color-invert:var(--text-dark);--text-color-fill:var(--text-dark);--text-size-normal:14px;--text-size-title:18px;--text-size-header:16px;--text-size-info:13px;--text-size-subtitle:12px;--text-size-data:10px;--background:#030303;--background-layer:#04080C;--layer-border-width:1px;--layer-border-color:#00EEEE;--default:var(--text-color-normal);--default-ripple:var(--ripple-normal);--primary:#00aaff;--primary-ripple:#00aaff60;--secondary:#2fbc2f;--secondary-ripple:#2fbc2f60;--danger:#df5348;--danger-ripple:#df534860;--warning:#ffff00;--warning-ripple:#ffff0060;--accent:#ff4dff;--accent-ripple:#ff4dff60;--button-filled-text-color:var(--text-normal-color);--ripple-dark:#00000060;--ripple-light:#FFFFFF60;--ripple-normal:var(--ripple-light);--ripple-invert:var(--ripple-dark);--shadow-color:rgb(255, 255, 255, 0.25);--disabled-background:#606060;color-scheme:dark}'}];const d=document.head,c=document.createElement("style"),p=Math.ceil(screen.width*devicePixelRatio*10)%10>=5;s.push({name:"correction",style:`body {--sub-pixel-offset:${p?1:0}px}`});for(const{name:e,style:t}of s){const r=document.createElement("style");r.setAttribute("ws-name",e),r.innerHTML=t,d.appendChild(r);}d.appendChild(c),c.setAttribute("ws-calculated","");const b=c.sheet,w={},x=(e,t)=>[o(`--${e.name.slice(1)}`,t)],h=e=>{if(null===e)return;const t=void 0!==w[e.key],r=void 0===n[e.name]&&!1===e.name.startsWith("&");if(!0===t||!0===r)return;const o=!0===e.name.startsWith("&")?x:n[e.name],a=void 0!==e.mod?`:${e.mod.slice(0,-1)}`:"",l=o(e,...e.args);b.insertRule(`[ws-x][ws-x~="${e.key}"]${a} {\n${l.join(";\n")};\n}`,b.cssRules.length),w[e.key]=b.cssRules[b.cssRules.length-1];},g=t=>{const o=t.getAttribute("ws-x");if(null===o)return;const a=((t,o)=>[...t.matchAll(e)].map((e=>{const{groups:t}=e;return {name:t.name,mod:t.mod,args:r(t.args??""),key:e[0],node:o}})))(o,t);a.forEach(h);},f=document.createElement("template");f.innerHTML='\n<style>\n@keyframes hi{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}\ncircle{animation-name:hi;animation-iteration-count:infinite;animation-timing-function:linear;transform-origin:50% 50%;}\ncircle:nth-child(1){animation-duration:4s;}\ncircle:nth-child(2){animation-duration:3s;animation-direction:reverse;}\ncircle:nth-child(3){animation-duration:2s;}\n</style>\n<svg style="width:var(--size);height:var(--size)" viewBox="0 0 100 100"><circle stroke="var(--color)" cx="50" cy="50" stroke-width="4" fill="transparent" r="48" stroke-dasharray="0 37.7 75.4 75.4 75.4 75.4"/><circle stroke="var(--ripple-color)" cx="50" cy="50" stroke-width="4" fill="transparent" r="40" stroke-dasharray="0 31.4 62.83 62.83 62.83 62.83"/><circle stroke="var(--color)" cx="50" cy="50" stroke-width="4" fill="transparent" r="32" stroke-dasharray="0 12.57 25.13 25.13 25.13 25.13 25.13 25.13 25.13 25.13"/></svg>',customElements.define("ws-circle-spinner",class extends HTMLElement{constructor(){super();const e=f.content.cloneNode(!0);this.attachShadow({mode:"closed"}).appendChild(e);}});const m=document.createElement("template");m.innerHTML='\n<style>\n@keyframes hi{from{transform:rotateY(0deg)}to{transform:rotateY(360deg)}}\npath{animation-name:hi;animation-iteration-count:infinite;animation-timing-function:linear;transform-origin:50% 50%;}\npath:nth-child(1){animation-duration:3s;}\npath:nth-child(2){animation-duration:2s;animation-direction:reverse;}\npath:nth-child(3){animation-duration:1s;}\n</style><svg style="width: var(--size); height: var(--size);" viewBox="0 0 100 100"><path stroke="var(--color)" stroke-width="4" fill="none" d="M91.57 26v48L50 98 8.43 74V26L50 2l41.57 24Z"/><path stroke="var(--ripple-color)" stroke-width="4" fill="none" d="M81.177 32v36L50 86 18.823 68V32L50 14l31.177 18Z"/><path stroke="var(--color)" stroke-width="4" fill="none" d="M70.785 38v24L50 74 29.215 62V38L50 26l20.785 12Z"/></svg>',customElements.define("ws-hexagon-spinner",class extends HTMLElement{constructor(){super();const e=m.content.cloneNode(!0);this.attachShadow({mode:"closed"}).appendChild(e);}});const u={childList(e){if(0!==e.addedNodes.length)for(const t of e.addedNodes){(void 0===t.tagName?[]:[t,...t.querySelectorAll("*")]).forEach(g);}},attributes(e){g(e.target);}};new MutationObserver((e=>e.forEach((e=>u[e.type](e))))).observe(document.body,{subtree:!0,attributes:!0,childList:!0,attributeFilter:["ws-x"]}),g(document.body);for(const e of document.body.querySelectorAll("*"))g(e);
+const e=/(?<key>(?<mod>[\w\-\(\)\+]+:)?(?<name>[\$\@\&\w\-]+)(\[(?<args>.*?)\])?)/g,t={"(":1,")":-1},r=e=>{const r=e.trim().replace(/__|_/g,(e=>"__"===e?"_":" "));if(""===r)return [];const o=r.split("").reduce(((e,o,a)=>","===o&&0===e.p?(e.args.push(r.substring(e.s,a).trim()),e.s=a,e):(e.p+=t[o]??0,e)),{args:[],p:0,s:0});return [...o.args,r.slice(o.s).trim()]},o=(e,t)=>void 0===t?"":`${e}: ${(e=>!0===e.startsWith("&")?`var(--${e.slice(1)})`:e)(t)}`,a=e=>(t,r)=>[o(e,r)],l=(...e)=>(t,r)=>e.map((e=>o(e,r)));var i=Object.freeze({__proto__:null,multi:l,prop:o,simple:a,wsx:e=>Object.entries(e).reduce(((e,[t,r])=>{if(null==r||!1===r)return e;const o=!0===r?t:`${t}[${(e=>e.replace(/( )|(_)/g,((e,t)=>t?"_":"__")))(r)}]`;return e.push(o),e}),[]).join(" ")});const n={area:a("grid-area"),b:a("border"),"b-c":a("border-color"),"b-s":a("border-style"),"b-w":a("border-width"),"b-t":a("border-top"),"b-t-c":a("border-top-color"),"b-t-s":a("border-top-style"),"b-t-w":a("border-top-width"),"b-b":a("border-bottom"),"b-b-c":a("border-bottom-color"),"b-b-s":a("border-bottom-style"),"b-b-w":a("border-bottom-width"),"b-l":a("border-left"),"b-l-c":a("border-left-color"),"b-l-s":a("border-left-style"),"b-l-w":a("border-left-width"),"b-r":a("border-right"),"b-r-c":a("border-right-color"),"b-r-s":a("border-right-style"),"b-r-w":a("border-right-width"),bg:a("background"),"bg-a":a("background-attachment"),"bg-c":a("background-color"),"bg-img":a("background-image"),block:()=>[o("display","block")],c:a("color"),col:a("grid-column"),cur:a("cursor"),flex:(e,t="column")=>[o("display","flex"),o("flex-direction",t)],"fl-center":()=>[o("align-items","center"),o("justify-content","center")],"fl-cr-a":a("align-items"),"fl-dir":a("flex-direction"),"fl-wr":a("flex-wrap"),"fl-m-a":a("justify-content"),font:a("font-family"),gap:a("gap"),grid:(e,t="row")=>[o("display","grid"),o("grid-auto-flow",t)],"gr-col":a("grid-template-columns"),"gr-row":a("grid-template-rows"),"gr-acol":a("grid-auto-columns"),"gr-arow":a("grid-auto-rows"),"gr-flow":a("grid-auto-flow"),h:a("height"),"h-max":a("max-height"),"h-min":a("min-height"),hide:()=>[o("display","none")],iblock:()=>[o("display","inline-block")],iflex:(e,t="column")=>[o("display","inline-flex"),o("flex-direction",t)],igrid:(e,t="row")=>[o("display","inline-grid"),o("grid-auto-flow",t)],inset:l("top","left","bottom","right"),"inset-x":l("left","right"),"inset-y":l("top","bottom"),m:a("margin"),"m-b":a("margin-bottom"),"m-l":a("margin-left"),"m-r":a("margin-right"),"m-t":a("margin-top"),over:a("overflow"),"over-x":a("overflow-x"),"over-y":a("overflow-y"),p:a("padding"),"p-b":a("padding-bottom"),"p-l":a("padding-left"),"p-r":a("padding-right"),"p-t":a("padding-top"),"p-x":l("padding-left","padding-right"),"p-y":l("padding-top","padding-bottom"),pos:a("position"),r:a("border-radius"),"r-tl":a("border-top-left-radius"),"r-tr":a("border-top-right-radius"),"r-bl":a("border-bottom-left-radius"),"r-br":a("border-bottom-right-radius"),"r-t":l("border-top-left-radius","border-top-right-radius"),"r-r":l("border-top-right-radius","border-bottom-right-radius"),"r-l":l("border-bottom-left-radius","border-top-left-radius"),"r-b":l("border-bottom-right-radius","border-bottom-left-radius"),row:a("grid-row"),sel:a("user-select"),shdw:a("box-shadow"),"t-a":a("text-align"),"t-br":a("word-break"),"t-deco":a("text-decoration"),"t-lh":a("line-height"),"t-over":a("text-overflow"),"t-sz":a("font-size"),"t-tr":a("text-transform"),"t-wght":a("font-weight"),"t-ws":a("white-space"),theme:()=>[o("color","var(--text-color-normal)"),o("font-family","var(--font)"),o("font-size","var(--text-size-normal)")],tr:a("transform"),w:a("width"),"w-max":a("max-width"),"w-min":a("min-width"),x:a("left"),y:a("top"),"-x":a("right"),"-y":a("bottom"),z:a("z-index"),$color:(e,t)=>[o("--color",`&${t}`),o("--ripple-color",`&${t}-ripple`)],$adorn:()=>[o("display","flex"),o("justify-content","center"),o("align-items","center"),o("padding","2px")],$compact:()=>[o("padding","0px 8px")],$title:()=>[o("font-size","&text-size-title"),o("font-weight","700"),o("display","flex"),o("flex-direction","column"),o("justify-content","center"),o("padding","4px")],$subtitle:()=>[o("font-size","&text-size-subtitle"),o("display","flex"),o("flex-direction","column"),o("justify-content","center"),o("padding","0px 4px")],"@flat":()=>[o("border-width","0px"),o("--border-size","0px")],"@outline":()=>[o("border-width","1px"),o("border-color","&color")],"@fill":()=>[o("--ripple-color","var(--ripple-dark) !important"),o("--text-color","&text-color-fill"),o("background-color","&color"),o("color","&text-color-fill")]};var s=[{name:"baseline",style:'@import url(https://fonts.googleapis.com/css2?family=Share+Tech+Mono:wght@400;500;600;700;800;900&family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500;1,700;1,900&display=swap);@import url(https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.13.0/tabler-icons.min.css);*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}:where([ws-x]){border-style:solid;border-width:0;border-color:var(--text-color-normal)}body,html{padding:0;margin:0;width:100%;height:100%;-webkit-tap-highlight-color:transparent}body[ws-x*="theme["]{background-color:var(--background)}body[ws-x~="@app"]{overflow:hidden;position:fixed;touch-action:pan-x pan-y}'},{name:"avatar",style:"ws-avatar{--color:transparent;--size:36px;display:inline-flex;overflow:hidden;border-radius:500px;align-items:center;justify-content:center;width:var(--size);height:var(--size);background-color:var(--color);color:var(--text-color-fill);vertical-align:text-bottom}ws-avatar>img{width:100%}"},{name:"badge",style:"ws-badge{--color:var(--primary);position:relative;display:inline-grid;overflow:visible}ws-badge::after{position:absolute;content:attr(ws-text);right:-10px;top:0;transform:translateY(-50%);background-color:var(--color);pointer-events:none;border-radius:20px;padding:4px;min-width:20px;height:20px;box-sizing:border-box;text-align:center;font-size:var(--text-size-subtitle);color:var(--text-color-fill);line-height:14px;z-index:5}"},{name:"button",style:':is(label,a):where([ws-x~="@button"]),button:where([ws-x~="@flat"],[ws-x~="@fill"],[ws-x~="@outline"]){--color:var(--text-color-normal);--ripple-color:var(--ripple-normal);border:0 solid var(--color);color:var(--color);font-family:var(--font);background-color:transparent;border-radius:4px;cursor:pointer;padding:8px 16px;display:inline-flex;align-items:center;justify-content:center;overflow:hidden;position:relative;user-select:none}:is(label,a):where([ws-x~="@button"]):where(:not([disabled]))::after,button:where([ws-x~="@flat"],[ws-x~="@fill"],[ws-x~="@outline"]):where(:not([disabled]))::after{content:"";position:absolute;top:0;left:0;bottom:0;right:0;transition:background-color 150ms linear;pointer-events:none}:is(label,a):where([ws-x~="@button"]):where(:not([disabled])):active::after,button:where([ws-x~="@flat"],[ws-x~="@fill"],[ws-x~="@outline"]):where(:not([disabled])):active::after{transition:none;background-color:var(--ripple-color)}:is(label,a):where([ws-x~="@button"]):where([disabled]),button:where([ws-x~="@flat"],[ws-x~="@fill"],[ws-x~="@outline"]):where([disabled]){opacity:.6;background-color:rgba(200,200,200,.4)}'},{name:"chip",style:'ws-chip{display:inline-flex;align-items:center;justify-content:center;border-radius:100px;padding:4px 12px;user-select:none;vertical-align:text-bottom}ws-chip:where([ws-x~="$click"]){cursor:pointer;overflow:hidden;position:relative;user-select:none}ws-chip:where([ws-x~="$click"]):where(:not([disabled]))::after{content:"";position:absolute;top:0;left:0;bottom:0;right:0;transition:background-color 150ms linear;pointer-events:none}ws-chip:where([ws-x~="$click"]):where(:not([disabled])):active::after{transition:none;background-color:var(--ripple-color)}'},{name:"control",style:'label:where([ws-x~="@control"]){--color:var(--default);--border-color:var(--default);position:relative;display:inline-grid;grid-template-areas:"label label label"" start control end""extra extra extra";grid-template-rows:minmax(0,min-content) auto minmax(0,min-content);grid-template-columns:minmax(0,min-content) auto minmax(0,min-content);border:1px solid var(--border-color);border-radius:4px;user-select:none;overflow:hidden}label:where([ws-x~="@control"]):where([ws-error])::after{content:attr(ws-error);grid-row:3;grid-column:span 3;padding:4px;font-size:var(--text-size-info);background-color:var(--danger-ripple)}label:where([ws-x~="@control"]):focus-within{--border-color:var(--color)}label:where([ws-x~="@control"]):focus-within:where([ws-x~="@flat"])>:is(input,select){outline:2px solid var(--ripple-color);outline-offset:-2px}label:where([ws-x~="@control"]) :is(input,select,textarea):disabled{background-color:var(--disabled-background)}label:where([ws-x~="@control"])>:where(select){--color:var(--text-color-normal);border-width:0;padding:8px;min-height:36px;background-color:transparent;color:var(--color);font:var(--font);font-size:var(--text-size-normal);cursor:pointer;background-color:var(--background-layer);grid-area:control}label:where([ws-x~="@control"])>:where(input,textarea):focus,label:where([ws-x~="@control"])>:where(select):focus{outline:0}label:where([ws-x~="@control"])>:where(select) optgroup,label:where([ws-x~="@control"])>:where(select) option{background-color:var(--background-layer);border-color:var(--background-layer);color:var(--text-color-normal);font-size:var(--text-size-normal);font-family:Arial}label:where([ws-x~="@control"])>:where(input,textarea){border-width:0;background:0 0;color:var(--text-normal-color);font-family:var(--font);min-width:24px;min-height:36px;width:100%;height:100%;grid-area:control;padding:4px;background-color:var(--background-layer)}label:where([ws-x~="@control"])>input[type=file]{position:relative;padding:0}label:where([ws-x~="@control"])>input[type=file]::file-selector-button{font-family:var(--font);height:100%;margin:0 4px 0 0;padding:4px;color:var(--text-normal-color);background-color:var(--background-layer);border-width:0;border-right:1px solid var(--border-color);text-decoration:underline}label:where([ws-x~="@control"])>:where([ws-x~="$text"]){grid-area:label;padding:4px;display:flex;flex-direction:column;align-items:start;border-bottom:var(--border-size, 1px) solid var(--border-color);border-right:var(--border-size, 1px) solid var(--border-color);color:var(--color);width:min-content;white-space:nowrap;border-bottom-right-radius:4px}label:where([ws-x~="@control"])>:where([ws-x~="$text"]):where([ws-hint])::after{font-size:var(--text-size-subtitle);content:attr(ws-hint);color:var(--text-color-secondary)}label:where([ws-x~="@control"])>:where([ws-x~="slot[start]"],[slot=start]){grid-area:start}label:where([ws-x~="@control"])>:where([ws-x~="slot[end]"],[slot=end]){grid-area:end}'},{name:"details",style:'details:where([ws-x]){--color:var(--default);user-select:none;cursor:pointer;border:0 solid var(--color);padding:4px;padding-left:calc(1em + 4px);border-radius:4px}details:where([ws-x])>summary{color:var(--color);position:relative;padding-left:1em;margin-left:-1em}details:where([ws-x])>summary::before{position:absolute;left:0;top:50%;bottom:0;width:1em;display:flex;align-items:center;justify-content:center;font-family:tabler-icons!important;speak:none;font-style:normal;font-weight:400;font-variant:normal;text-transform:none;content:"";transform:translateY(-50%);transition:transform 100ms linear}details:where([ws-x])>summary::-webkit-details-marker,details:where([ws-x])>summary::marker{content:"";display:none}details:where([ws-x])[open]>summary::before{transform:translateY(-50%) rotate(90deg)}'},{name:"flex",style:"ws-flex{display:flex;flex-direction:column;gap:4px;padding:4px;overflow:hidden}ws-flex>*{flex-shrink:0}"},{name:"grid",style:"ws-grid{display:grid;overflow:hidden;gap:4px;padding:4px;grid-auto-rows:min-content}"},{name:"icon",style:"ws-icon{display:inline-block}ws-icon:where(:not(:empty))::before{margin-right:2px}ws-icon::before{font-family:tabler-icons!important;speak:none;font-style:normal;font-weight:400;font-variant:normal;text-transform:none;line-height:1;display:contents;-webkit-font-smoothing:antialiased}"},{name:"link",style:"a:where([ws-x]){--color:var(--text-color-normal)}a:where([ws-x]),a:where([ws-x]):hover,a:where([ws-x]):visited{color:var(--color)}"},{name:"modal",style:'ws-modal{--text-color:var(--text-color-normal);position:fixed;top:0;left:0;bottom:0;right:0;background-color:rgba(0,0,0,.35);z-index:100;display:none;color:var(--text-color-normal)}ws-modal>label:first-child{position:absolute;width:100%;height:100%;cursor:pointer}ws-modal[ws-x~="$show"]{display:block}input[type=checkbox]:not(:checked)+ws-modal{display:none}input[type=checkbox]:checked+ws-modal{display:block}ws-modal>:where(:not(label:first-child)){position:absolute;min-width:15vw}ws-modal>:where(:not(label:first-child)):where([ws-x~="@menu"]){top:0;left:0;height:100%}ws-modal>:where(:not(label:first-child)):where([ws-x~="@action"]){top:0;right:0;height:100%}ws-modal>:where(:not(label:first-child)):where([ws-x~="@select"]){top:0;left:50%;transform:translateX(-50%);max-height:75vh;max-width:min(90vw,720px)}ws-modal>:where(:not(label:first-child)):where([ws-x~="@dialog"]){top:50%;left:50%;transform:translate(-50%,-50%)}'},{name:"notification",style:'ws-notification{--background-color:var(--background-layer);--color:var(--text-color-normal);background-color:var(--background-color);color:var(--color);padding:8px;display:inline-flex;flex-direction:row;justify-content:space-between;align-items:center;border-radius:4px;cursor:pointer;user-select:none;border:1px solid var(--text-color-secondary)}ws-notification[ws-x*="$color"]{background-color:var(--color);color:var(--text-color-fill)}'},{name:"paper",style:'ws-paper{--color:var(--layer-border-color);display:grid;border-radius:4px;box-shadow:0 2px 4px var(--shadow-color);overflow:hidden;grid-template-columns:1fr;grid-template-rows:min-content auto min-content;grid-template-areas:"header""content""footer";background-color:var(--background-layer)}ws-paper::before{content:"";grid-area:header}ws-paper::after{content:"";grid-area:footer;pointer-events:none}ws-paper>:where([ws-x~="slot[content]"],[slot=content]){grid-area:content}ws-paper>:where([ws-x~="slot[header]"],[slot=header]){grid-area:header;font-size:var(--text-size-header)}ws-paper>:where([ws-x~="slot[footer]"],[slot=footer]){grid-area:footer}'},{name:"popover",style:'ws-popover{display:grid;position:relative}ws-popover:not(:visibile)>:where([ws-x~="slot[content]"],[slot=content]){display:none}ws-popover>:where([ws-x~="slot[content]"],[slot=content]){position:absolute;z-index:25;display:none}ws-popover[ws-x~="$show"]>:where([ws-x~="slot[content]"],[slot=content]){display:block}ws-popover>input:where([type=checkbox]):checked+:where([ws-x~="slot[content]"],[slot=content]){display:block}ws-popover>input:where([type=checkbox]):not(:checked)+:where([ws-x~="slot[content]"],[slot=content]){display:none}'},{name:"progress",style:'label[ws-x~="@progress"]{--color:var(--text-color-normal);--border-size:0px;display:inline-grid;grid-template-columns:1fr;grid-template-rows:min-content auto;border-radius:4px;overflow:hidden;user-select:none}label[ws-x~="@progress"][ws-x~="$row"]{grid-template-columns:min-content auto;grid-template-rows:1fr}label[ws-x~="@progress"]>[ws-x~="$text"]{padding:4px;display:flex;border-bottom:var(--border-size, 1px) solid var(--color);color:var(--color)}label[ws-x~="@progress"]>progress{min-height:20px;height:100%;width:100%;border:0;background-color:var(--background-layer)}label[ws-x~="@progress"]>progress::-moz-progress-bar{background-color:var(--color);border-radius:0}label[ws-x~="@progress"]>progress::-webkit-progress-bar{background-color:var(--background-layer);border-radius:0}label[ws-x~="@progress"]>progress::-webkit-progress-value{background-color:var(--color);border-radius:0}'},{name:"screen",style:'ws-screen{--stack:0;--screen-width:min(720px, 100%);display:grid;width:calc(100% - var(--sub-pixel-offset));height:calc(100% - 1px);overflow:hidden;position:fixed;top:0;left:0;z-index:200;background-color:rgba(0,0,0,.4);grid-template-columns:auto calc(var(--screen-width) - 16px*var(--stack)) auto;grid-template-areas:". content .";padding-top:calc(8px*var(--stack))}ws-screen[ws-x~="@left"]{grid-template-columns:calc(8px*var(--stack)) calc(var(--screen-width) - 16px*var(--stack)) auto}ws-screen>:where(*){grid-area:content;height:100%;overflow:hidden}'},{name:"spinner",style:"ws-circle-spinner,ws-hexagon-spinner{--size:100px;--color:var(--primary);--ripple-color:var(--primary-ripple);width:var(--size);height:var(--size);display:inline-block}"},{name:"table",style:"table:where([ws-x]){--border-color:var(--color);border-spacing:0;position:relative}table:where([ws-x]) thead :is(td,th){background-color:var(--color);color:var(--text-color-fill);font-weight:700}table:where([ws-x]) :is(td,th){padding:8px;white-space:nowrap;background-color:var(--background-layer);border-bottom:1px solid var(--color)}table:where([ws-x]) :where(th:first-child){position:sticky;left:0;z-index:10}table:where([ws-x]) :where(td:first-child,th:first-child){border-left:1px solid var(--color)}table:where([ws-x]) :where(td:last-child,th:last-child){border-right:1px solid var(--color)}"},{name:"tabs",style:'ws-tabs{--color:var(--primary);display:flex;flex-direction:row;justify-content:stretch;align-items:stretch;user-select:none;cursor:pointer;gap:2px;padding:2px}ws-tabs[ws-x~="$vert"]{flex-direction:column;justify-content:flex-start}ws-tabs[ws-x~="$vert"]>ws-tab{border-bottom-width:0;border-right-width:2px;flex-grow:0}ws-tabs[ws-x~="@solid"]>ws-tab:where([ws-x~="$tab-selected"]){color:var(--text-color-fill);background-color:var(--color)}ws-tabs>ws-tab{display:flex;justify-content:center;align-items:center;flex-grow:1;padding:8px;border-color:var(--text-color-secondary);border-width:0 0 2px;border-style:solid}ws-tabs>ws-tab:where([ws-x~="$tab-selected"]){color:var(--color);border-color:var(--color)}'},{name:"titlebar",style:'ws-titlebar{--text-color:var(--text-color-normal);display:grid;height:48px;grid-template-columns:min-content auto min-content;grid-template-areas:"menu title action";user-select:none}ws-titlebar:where(:not([ws-x~="@fill"])){border-bottom:1px solid var(--color, var(--text-color-normal))}ws-titlebar>:where([ws-x~="slot[title]"],[slot=title]){grid-area:title}ws-titlebar>:where([ws-x~="slot[menu]"],[slot=menu]){grid-area:menu;--text-color-normal:var(--text-color)}ws-titlebar>:where([ws-x~="slot[action]"],[slot=action]){grid-area:action;--text-color-normal:var(--text-color)}'},{name:"toaster",style:'ws-toaster{position:fixed;z-index:100;display:inline-flex;flex-direction:column;padding:4px;gap:4px;height:min-content!important}ws-toaster[ws-x~="$tl"]{top:0;left:0}ws-toaster[ws-x~="$tc"]{top:0;left:50%;transform:translateX(-50%)}ws-toaster[ws-x~="$tr"]{top:0;right:0}ws-toaster[ws-x~="$ml"]{top:50%;left:0;transform:translateY(-50%)}ws-toaster[ws-x~="$mr"]{top:50%;right:0;transform:translateY(-50%)}ws-toaster[ws-x~="$bl"]{bottom:0;left:0}ws-toaster[ws-x~="$bc"]{bottom:0;left:50%;transform:translateX(-50%)}ws-toaster[ws-x~="$br"]{bottom:0;right:0}'},{name:"toggle",style:'label[ws-x~="@toggle"]{--color:var(--default);--ripple-color:var(--default-ripple);--border-color:var(--default);cursor:pointer;display:inline-flex;align-items:center;justify-content:space-between;padding:4px;border-radius:4px;border:1px solid var(--border-color);overflow:hidden;position:relative;user-select:none}label[ws-x~="@toggle"]:where(:not([disabled]))::after{content:"";position:absolute;top:0;left:0;bottom:0;right:0;transition:background-color 150ms linear;pointer-events:none}label[ws-x~="@toggle"]:where(:not([disabled])):active::after{transition:none;background-color:var(--ripple-color)}label[ws-x~="@toggle"]:focus-within{--border-color:var(--color)}label[ws-x~="@toggle"]:focus-within:where([ws-x~="@flat"]){outline:2px solid var(--ripple-color);outline-offset:-2px}label[ws-x~="@toggle"]>input{position:relative;min-width:20px;min-height:20px;-webkit-appearance:none;appearance:none;margin:0}label[ws-x~="@toggle"]>input:focus{outline:0}label[ws-x~="@toggle"]>input:disabled{--color:var(--disabled-background)}label[ws-x~="@toggle"]>input:checked{color:var(--text-color-invert)}label[ws-x~="@toggle"]>input:checked::after{background-color:var(--color)}label[ws-x~="@toggle"]>input::after{content:"";position:absolute;font-size:18px;font-family:tabler-icons!important;speak:none;font-style:normal;font-weight:400;font-variant:normal;text-transform:none;top:50%;left:50%;width:20px;height:20px;transform:translate(-50%,-50%);display:flex;border:1px solid var(--color);border-radius:4px;align-items:center;justify-content:center;overflow:hidden}label[ws-x~="@toggle"]>input[type=radio]::after{border-radius:50%}label[ws-x~="@toggle"]>input[type=checkbox]:disabled,label[ws-x~="@toggle"]>input[type=radio]:disabled::after{background-color:var(--disabled-background)}label[ws-x~="@toggle"]>input[type=radio]:checked::after{content:""}label[ws-x~="@toggle"]>input[type=checkbox]:checked::after{content:""}label[ws-x~="@toggle"]>input[type=checkbox][ws-x~="$switch"]{position:relative;border:1px solid var(--color);height:24px;width:44px;border-radius:12px}label[ws-x~="@toggle"]>input[type=checkbox][ws-x~="$switch"]::after{content:"";background-color:var(--text-color-secondary);position:absolute;width:18px;height:18px;border-radius:10px;top:2px;left:2px;transform:none;border-width:0;transition:left 100ms linear,color 100ms linear}label[ws-x~="@toggle"]>input[type=checkbox][ws-x~="$switch"]:checked::after{background-color:var(--color);left:22px}'},{name:"tooltip",style:'ws-tooltip{position:relative;display:inline-grid;overflow:visible}ws-tooltip::after{position:absolute;content:attr(ws-text);left:50%;bottom:calc(100% + 2px);transform:translateX(-50%);height:20px;background-color:var(--background-layer);opacity:0;transition:opacity 100ms linear;pointer-events:none;border-radius:4px;border:1px solid var(--text-color-secondary);padding:2px 8px;font-size:var(--text-size-subtitle);width:60%;display:flex;align-items:center;justify-content:center;z-index:5}ws-tooltip:hover::after{opacity:1}ws-tooltip[ws-x~="$bottom"]::after{bottom:unset;top:calc(100% + 2px)}'},{name:"dark",style:'[ws-x~="theme[dark]"]{--font:Roboto;--text-light:white;--text-dark:black;--text-color-normal:var(--text-light);--text-color-secondary:#a0a0a0;--text-color-invert:var(--text-dark);--text-color-fill:var(--text-dark);--text-size-normal:14px;--text-size-title:18px;--text-size-header:16px;--text-size-info:13px;--text-size-subtitle:12px;--text-size-data:10px;--background:#161616;--background-layer:#333333;--layer-border-width:1px;--layer-border-color:#505050;--default:var(--text-color-normal);--default-ripple:var(--ripple-normal);--primary:#00aaff;--primary-ripple:#00aaff60;--secondary:#2fbc2f;--secondary-ripple:#2fbc2f60;--danger:#df5348;--danger-ripple:#df534860;--warning:#ffff00;--warning-ripple:#ffff0060;--accent:#ff4dff;--accent-ripple:#ff4dff60;--ripple-dark:#00000060;--ripple-light:#FFFFFF60;--ripple-normal:var(--ripple-light);--ripple-invert:var(--ripple-dark);--shadow-color:rgb(0, 0, 0, 0.25);--disabled-background:#606060;color-scheme:dark}'},{name:"light",style:'[ws-x~="theme[light]"]{--font:Roboto;--text-light:white;--text-dark:black;--text-color-normal:var(--text-dark);--text-color-secondary:#505050;--text-color-invert:var(--text-light);--text-color-fill:var(--text-light);--text-size-normal:14px;--text-size-title:18px;--text-size-header:16px;--text-size-info:13px;--text-size-subtitle:12px;--text-size-data:10px;--background:#e9e9e9;--background-layer:#ffffff;--layer-border-width:1px;--layer-border-color:#aaaaaa;--default:var(--text-color-normal);--default-ripple:var(--ripple-normal);--primary:#1d62d5;--primary-ripple:#1d62d560;--secondary:#128f12;--secondary-ripple:#128f1260;--danger:#F44336;--danger-ripple:#F4433660;--warning:#db990d;--warning-ripple:#db990d60;--accent:#cf00cf;--accent-ripple:#cf00cf60;--ripple-dark:#00000060;--ripple-light:#FFFFFF60;--ripple-normal:var(--ripple-dark);--ripple-invert:var(--ripple-light);--shadow-color:rgb(0, 0, 0, 0.25);--disabled-background:#c7c7c7}'},{name:"tron",style:'[ws-x~="theme[tron]"]{--font:Share Tech Mono;--text-light:white;--text-dark:black;--text-color-normal:var(--text-light);--text-color-secondary:#a0a0a0;--text-color-invert:var(--text-dark);--text-color-fill:var(--text-dark);--text-size-normal:14px;--text-size-title:18px;--text-size-header:16px;--text-size-info:13px;--text-size-subtitle:12px;--text-size-data:10px;--background:#030303;--background-layer:#04080C;--layer-border-width:1px;--layer-border-color:#00EEEE;--default:var(--text-color-normal);--default-ripple:var(--ripple-normal);--primary:#00aaff;--primary-ripple:#00aaff60;--secondary:#2fbc2f;--secondary-ripple:#2fbc2f60;--danger:#df5348;--danger-ripple:#df534860;--warning:#ffff00;--warning-ripple:#ffff0060;--accent:#ff4dff;--accent-ripple:#ff4dff60;--ripple-dark:#00000060;--ripple-light:#FFFFFF60;--ripple-normal:var(--ripple-light);--ripple-invert:var(--ripple-dark);--shadow-color:rgb(255, 255, 255, 0.25);--disabled-background:#606060;color-scheme:dark}'}];const d=document.head,c=document.createElement("style"),p=Math.ceil(screen.width*devicePixelRatio*10)%10>=5;s.push({name:"correction",style:`body {--sub-pixel-offset:${p?1:0}px}`});for(const{name:e,style:t}of s){const r=document.createElement("style");r.setAttribute("ws-name",e),r.innerHTML=t,d.appendChild(r);}d.appendChild(c),c.setAttribute("ws-calculated","");const w=c.sheet,b={},x=(e,t)=>[o(`--${e.name.slice(1)}`,t)],h=e=>{if(null===e)return;const t=void 0!==b[e.key],r=void 0===n[e.name]&&!1===e.name.startsWith("&");if(!0===t||!0===r)return;const o=!0===e.name.startsWith("&")?x:n[e.name],a=void 0!==e.mod?`:${e.mod.slice(0,-1)}`:"",l=o(e,...e.args);w.insertRule(`[ws-x][ws-x~="${e.key}"]${a} {\n${l.join(";\n")};\n}`,w.cssRules.length),b[e.key]=w.cssRules[w.cssRules.length-1];},g=t=>{const o=t.getAttribute("ws-x");if(null===o)return;const a=((t,o)=>[...t.matchAll(e)].map((e=>{const{groups:t}=e;return {name:t.name,mod:t.mod,args:r(t.args??""),key:e[0],node:o}})))(o,t);a.forEach(h);},f=document.createElement("template");f.innerHTML='\n<style>\n@keyframes hi{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}\ncircle{animation-name:hi;animation-iteration-count:infinite;animation-timing-function:linear;transform-origin:50% 50%;}\ncircle:nth-child(1){animation-duration:4s;}\ncircle:nth-child(2){animation-duration:3s;animation-direction:reverse;}\ncircle:nth-child(3){animation-duration:2s;}\n</style>\n<svg style="width:var(--size);height:var(--size)" viewBox="0 0 100 100"><circle stroke="var(--color)" cx="50" cy="50" stroke-width="4" fill="transparent" r="48" stroke-dasharray="0 37.7 75.4 75.4 75.4 75.4"/><circle stroke="var(--ripple-color)" cx="50" cy="50" stroke-width="4" fill="transparent" r="40" stroke-dasharray="0 31.4 62.83 62.83 62.83 62.83"/><circle stroke="var(--color)" cx="50" cy="50" stroke-width="4" fill="transparent" r="32" stroke-dasharray="0 12.57 25.13 25.13 25.13 25.13 25.13 25.13 25.13 25.13"/></svg>',customElements.define("ws-circle-spinner",class extends HTMLElement{constructor(){super();const e=f.content.cloneNode(!0);this.attachShadow({mode:"closed"}).appendChild(e);}});const m=document.createElement("template");m.innerHTML='\n<style>\n@keyframes hi{from{transform:rotateY(0deg)}to{transform:rotateY(360deg)}}\npath{animation-name:hi;animation-iteration-count:infinite;animation-timing-function:linear;transform-origin:50% 50%;}\npath:nth-child(1){animation-duration:3s;}\npath:nth-child(2){animation-duration:2s;animation-direction:reverse;}\npath:nth-child(3){animation-duration:1s;}\n</style><svg style="width: var(--size); height: var(--size);" viewBox="0 0 100 100"><path stroke="var(--color)" stroke-width="4" fill="none" d="M91.57 26v48L50 98 8.43 74V26L50 2l41.57 24Z"/><path stroke="var(--ripple-color)" stroke-width="4" fill="none" d="M81.177 32v36L50 86 18.823 68V32L50 14l31.177 18Z"/><path stroke="var(--color)" stroke-width="4" fill="none" d="M70.785 38v24L50 74 29.215 62V38L50 26l20.785 12Z"/></svg>',customElements.define("ws-hexagon-spinner",class extends HTMLElement{constructor(){super();const e=m.content.cloneNode(!0);this.attachShadow({mode:"closed"}).appendChild(e);}});const u={childList(e){if(0!==e.addedNodes.length)for(const t of e.addedNodes){(void 0===t.tagName?[]:[t,...t.querySelectorAll("*")]).forEach(g);}},attributes(e){g(e.target);}},v=new MutationObserver((e=>e.forEach((e=>u[e.type](e)))));document.addEventListener("DOMContentLoaded",(()=>{v.observe(document.body,{subtree:!0,attributes:!0,childList:!0,attributeFilter:["ws-x"]}),g(document.body);for(const e of document.body.querySelectorAll("*"))g(e);}));var y={...i,custom(e,t){void 0===n[e]?n[e]=t:console.warn(`Custom function "${e}" already defined`);}};
 
-const { wsx } = i;
+const { wsx } = y;
 
 /*md
 [@] Actions/wsx
@@ -845,16 +856,29 @@ var wsx$1 = (node, props) => {
     return { update }
 };
 
+var variant = ({ flat, fill, outline }, def = "@flat") => {
+    if (outline === true) {
+        return "@outline"
+    }
+    if (fill === true) {
+        return "@fill"
+    }
+    if (flat === true) {
+        return "@flat"
+    }
+    return def
+};
+
 /* src\button.svelte generated by Svelte v3.58.0 */
 
-function create_else_block$1(ctx) {
+function create_else_block$2(ctx) {
 	let button;
 	let wsx_action;
 	let current;
 	let mounted;
 	let dispose;
-	const default_slot_template = /*#slots*/ ctx[8].default;
-	const default_slot = create_slot(default_slot_template, ctx, /*$$scope*/ ctx[7], null);
+	const default_slot_template = /*#slots*/ ctx[10].default;
+	const default_slot = create_slot(default_slot_template, ctx, /*$$scope*/ ctx[9], null);
 
 	return {
 		c() {
@@ -874,7 +898,7 @@ function create_else_block$1(ctx) {
 			if (!mounted) {
 				dispose = [
 					action_destroyer(wsx_action = wsx$1.call(null, button, /*wind*/ ctx[3])),
-					listen(button, "click", stop_propagation(/*click_handler_1*/ ctx[10]))
+					listen(button, "click", stop_propagation(/*click_handler_1*/ ctx[12]))
 				];
 
 				mounted = true;
@@ -882,15 +906,15 @@ function create_else_block$1(ctx) {
 		},
 		p(ctx, dirty) {
 			if (default_slot) {
-				if (default_slot.p && (!current || dirty & /*$$scope*/ 128)) {
+				if (default_slot.p && (!current || dirty & /*$$scope*/ 512)) {
 					update_slot_base(
 						default_slot,
 						default_slot_template,
 						ctx,
-						/*$$scope*/ ctx[7],
+						/*$$scope*/ ctx[9],
 						!current
-						? get_all_dirty_from_scope(/*$$scope*/ ctx[7])
-						: get_slot_changes(default_slot_template, /*$$scope*/ ctx[7], dirty, null),
+						? get_all_dirty_from_scope(/*$$scope*/ ctx[9])
+						: get_slot_changes(default_slot_template, /*$$scope*/ ctx[9], dirty, null),
 						null
 					);
 				}
@@ -920,15 +944,15 @@ function create_else_block$1(ctx) {
 	};
 }
 
-// (72:0) {#if label === true}
-function create_if_block$3(ctx) {
+// (77:0) {#if label === true}
+function create_if_block$4(ctx) {
 	let label_1;
 	let wsx_action;
 	let current;
 	let mounted;
 	let dispose;
-	const default_slot_template = /*#slots*/ ctx[8].default;
-	const default_slot = create_slot(default_slot_template, ctx, /*$$scope*/ ctx[7], null);
+	const default_slot_template = /*#slots*/ ctx[10].default;
+	const default_slot = create_slot(default_slot_template, ctx, /*$$scope*/ ctx[9], null);
 
 	return {
 		c() {
@@ -949,7 +973,7 @@ function create_if_block$3(ctx) {
 			if (!mounted) {
 				dispose = [
 					action_destroyer(wsx_action = wsx$1.call(null, label_1, /*wind*/ ctx[3])),
-					listen(label_1, "click", stop_propagation(/*click_handler*/ ctx[9]))
+					listen(label_1, "click", stop_propagation(/*click_handler*/ ctx[11]))
 				];
 
 				mounted = true;
@@ -957,15 +981,15 @@ function create_if_block$3(ctx) {
 		},
 		p(ctx, dirty) {
 			if (default_slot) {
-				if (default_slot.p && (!current || dirty & /*$$scope*/ 128)) {
+				if (default_slot.p && (!current || dirty & /*$$scope*/ 512)) {
 					update_slot_base(
 						default_slot,
 						default_slot_template,
 						ctx,
-						/*$$scope*/ ctx[7],
+						/*$$scope*/ ctx[9],
 						!current
-						? get_all_dirty_from_scope(/*$$scope*/ ctx[7])
-						: get_slot_changes(default_slot_template, /*$$scope*/ ctx[7], dirty, null),
+						? get_all_dirty_from_scope(/*$$scope*/ ctx[9])
+						: get_slot_changes(default_slot_template, /*$$scope*/ ctx[9], dirty, null),
 						null
 					);
 				}
@@ -999,12 +1023,12 @@ function create_if_block$3(ctx) {
 	};
 }
 
-function create_fragment$l(ctx) {
+function create_fragment$o(ctx) {
 	let current_block_type_index;
 	let if_block;
 	let if_block_anchor;
 	let current;
-	const if_block_creators = [create_if_block$3, create_else_block$1];
+	const if_block_creators = [create_if_block$4, create_else_block$2];
 	const if_blocks = [];
 
 	function select_block_type(ctx, dirty) {
@@ -1068,15 +1092,17 @@ function create_fragment$l(ctx) {
 	};
 }
 
-function instance$l($$self, $$props, $$invalidate) {
+function instance$o($$self, $$props, $$invalidate) {
+	let type;
 	let wind;
-	const omit_props_names = ["color","compact","variant","disabled","for","label"];
+	const omit_props_names = ["color","compact","disabled","fill","outline","for","label"];
 	let $$restProps = compute_rest_props($$props, omit_props_names);
 	let { $$slots: slots = {}, $$scope } = $$props;
-	let { color = "default" } = $$props;
+	let { color = false } = $$props;
 	let { compact = false } = $$props;
-	let { variant = "flat" } = $$props;
 	let { disabled } = $$props;
+	let { fill = false } = $$props;
+	let { outline = false } = $$props;
 	let { for: _for = "" } = $$props;
 	let { label = false } = $$props;
 
@@ -1090,19 +1116,24 @@ function instance$l($$self, $$props, $$invalidate) {
 
 	$$self.$$set = $$new_props => {
 		$$props = assign(assign({}, $$props), exclude_internal_props($$new_props));
-		$$invalidate(11, $$restProps = compute_rest_props($$props, omit_props_names));
+		$$invalidate(13, $$restProps = compute_rest_props($$props, omit_props_names));
 		if ('color' in $$new_props) $$invalidate(4, color = $$new_props.color);
 		if ('compact' in $$new_props) $$invalidate(5, compact = $$new_props.compact);
-		if ('variant' in $$new_props) $$invalidate(6, variant = $$new_props.variant);
 		if ('disabled' in $$new_props) $$invalidate(0, disabled = $$new_props.disabled);
+		if ('fill' in $$new_props) $$invalidate(6, fill = $$new_props.fill);
+		if ('outline' in $$new_props) $$invalidate(7, outline = $$new_props.outline);
 		if ('for' in $$new_props) $$invalidate(1, _for = $$new_props.for);
 		if ('label' in $$new_props) $$invalidate(2, label = $$new_props.label);
-		if ('$$scope' in $$new_props) $$invalidate(7, $$scope = $$new_props.$$scope);
+		if ('$$scope' in $$new_props) $$invalidate(9, $$scope = $$new_props.$$scope);
 	};
 
 	$$self.$$.update = () => {
+		if ($$self.$$.dirty & /*fill, outline*/ 192) {
+			$$invalidate(8, type = variant({ fill, outline }));
+		}
+
 		$$invalidate(3, wind = {
-			[`@${variant}`]: true,
+			[type]: true,
 			$color: color,
 			$compact: compact,
 			"@button": label,
@@ -1117,7 +1148,9 @@ function instance$l($$self, $$props, $$invalidate) {
 		wind,
 		color,
 		compact,
-		variant,
+		fill,
+		outline,
+		type,
 		$$scope,
 		slots,
 		click_handler,
@@ -1129,14 +1162,308 @@ class Button extends SvelteComponent {
 	constructor(options) {
 		super();
 
-		init(this, options, instance$l, create_fragment$l, safe_not_equal, {
+		init(this, options, instance$o, create_fragment$o, safe_not_equal, {
 			color: 4,
 			compact: 5,
-			variant: 6,
 			disabled: 0,
+			fill: 6,
+			outline: 7,
 			for: 1,
 			label: 2
 		});
+	}
+}
+
+/* src\chip.svelte generated by Svelte v3.58.0 */
+
+function create_fragment$n(ctx) {
+	let ws_chip;
+	let wsx_action;
+	let current;
+	let mounted;
+	let dispose;
+	const default_slot_template = /*#slots*/ ctx[6].default;
+	const default_slot = create_slot(default_slot_template, ctx, /*$$scope*/ ctx[5], null);
+
+	return {
+		c() {
+			ws_chip = element("ws-chip");
+			if (default_slot) default_slot.c();
+		},
+		m(target, anchor) {
+			insert(target, ws_chip, anchor);
+
+			if (default_slot) {
+				default_slot.m(ws_chip, null);
+			}
+
+			current = true;
+
+			if (!mounted) {
+				dispose = [
+					action_destroyer(wsx_action = wsx$1.call(null, ws_chip, /*wind*/ ctx[0])),
+					listen(ws_chip, "click", /*click_handler*/ ctx[7])
+				];
+
+				mounted = true;
+			}
+		},
+		p(ctx, [dirty]) {
+			if (default_slot) {
+				if (default_slot.p && (!current || dirty & /*$$scope*/ 32)) {
+					update_slot_base(
+						default_slot,
+						default_slot_template,
+						ctx,
+						/*$$scope*/ ctx[5],
+						!current
+						? get_all_dirty_from_scope(/*$$scope*/ ctx[5])
+						: get_slot_changes(default_slot_template, /*$$scope*/ ctx[5], dirty, null),
+						null
+					);
+				}
+			}
+
+			if (wsx_action && is_function(wsx_action.update) && dirty & /*wind*/ 1) wsx_action.update.call(null, /*wind*/ ctx[0]);
+		},
+		i(local) {
+			if (current) return;
+			transition_in(default_slot, local);
+			current = true;
+		},
+		o(local) {
+			transition_out(default_slot, local);
+			current = false;
+		},
+		d(detaching) {
+			if (detaching) detach(ws_chip);
+			if (default_slot) default_slot.d(detaching);
+			mounted = false;
+			run_all(dispose);
+		}
+	};
+}
+
+function instance$n($$self, $$props, $$invalidate) {
+	let type;
+	let wind;
+	const omit_props_names = ["color","clickable","fill"];
+	let $$restProps = compute_rest_props($$props, omit_props_names);
+	let { $$slots: slots = {}, $$scope } = $$props;
+	let { color = "default" } = $$props;
+	let { clickable = false } = $$props;
+	let { fill = false } = $$props;
+
+	function click_handler(event) {
+		bubble.call(this, $$self, event);
+	}
+
+	$$self.$$set = $$new_props => {
+		$$props = assign(assign({}, $$props), exclude_internal_props($$new_props));
+		$$invalidate(8, $$restProps = compute_rest_props($$props, omit_props_names));
+		if ('color' in $$new_props) $$invalidate(1, color = $$new_props.color);
+		if ('clickable' in $$new_props) $$invalidate(2, clickable = $$new_props.clickable);
+		if ('fill' in $$new_props) $$invalidate(3, fill = $$new_props.fill);
+		if ('$$scope' in $$new_props) $$invalidate(5, $$scope = $$new_props.$$scope);
+	};
+
+	$$self.$$.update = () => {
+		if ($$self.$$.dirty & /*fill*/ 8) {
+			$$invalidate(4, type = variant({ fill }, "@outline"));
+		}
+
+		$$invalidate(0, wind = {
+			[type]: true,
+			$color: color,
+			$click: clickable,
+			...$$restProps
+		});
+	};
+
+	return [wind, color, clickable, fill, type, $$scope, slots, click_handler];
+}
+
+class Chip extends SvelteComponent {
+	constructor(options) {
+		super();
+		init(this, options, instance$n, create_fragment$n, safe_not_equal, { color: 1, clickable: 2, fill: 3 });
+	}
+}
+
+/* src\details.svelte generated by Svelte v3.58.0 */
+const get_label_slot_changes = dirty => ({});
+const get_label_slot_context = ctx => ({});
+
+// (18:27)              
+function fallback_block(ctx) {
+	let t;
+
+	return {
+		c() {
+			t = text(/*label*/ ctx[1]);
+		},
+		m(target, anchor) {
+			insert(target, t, anchor);
+		},
+		p(ctx, dirty) {
+			if (dirty & /*label*/ 2) set_data(t, /*label*/ ctx[1]);
+		},
+		d(detaching) {
+			if (detaching) detach(t);
+		}
+	};
+}
+
+function create_fragment$m(ctx) {
+	let details;
+	let summary;
+	let t;
+	let wsx_action;
+	let current;
+	let mounted;
+	let dispose;
+	const label_slot_template = /*#slots*/ ctx[6].label;
+	const label_slot = create_slot(label_slot_template, ctx, /*$$scope*/ ctx[5], get_label_slot_context);
+	const label_slot_or_fallback = label_slot || fallback_block(ctx);
+	const default_slot_template = /*#slots*/ ctx[6].default;
+	const default_slot = create_slot(default_slot_template, ctx, /*$$scope*/ ctx[5], null);
+
+	return {
+		c() {
+			details = element("details");
+			summary = element("summary");
+			if (label_slot_or_fallback) label_slot_or_fallback.c();
+			t = space();
+			if (default_slot) default_slot.c();
+		},
+		m(target, anchor) {
+			insert(target, details, anchor);
+			append(details, summary);
+
+			if (label_slot_or_fallback) {
+				label_slot_or_fallback.m(summary, null);
+			}
+
+			append(details, t);
+
+			if (default_slot) {
+				default_slot.m(details, null);
+			}
+
+			details.open = /*open*/ ctx[0];
+			current = true;
+
+			if (!mounted) {
+				dispose = [
+					action_destroyer(wsx_action = wsx$1.call(null, details, /*wind*/ ctx[2])),
+					listen(details, "toggle", /*details_toggle_handler*/ ctx[7])
+				];
+
+				mounted = true;
+			}
+		},
+		p(ctx, [dirty]) {
+			if (label_slot) {
+				if (label_slot.p && (!current || dirty & /*$$scope*/ 32)) {
+					update_slot_base(
+						label_slot,
+						label_slot_template,
+						ctx,
+						/*$$scope*/ ctx[5],
+						!current
+						? get_all_dirty_from_scope(/*$$scope*/ ctx[5])
+						: get_slot_changes(label_slot_template, /*$$scope*/ ctx[5], dirty, get_label_slot_changes),
+						get_label_slot_context
+					);
+				}
+			} else {
+				if (label_slot_or_fallback && label_slot_or_fallback.p && (!current || dirty & /*label*/ 2)) {
+					label_slot_or_fallback.p(ctx, !current ? -1 : dirty);
+				}
+			}
+
+			if (default_slot) {
+				if (default_slot.p && (!current || dirty & /*$$scope*/ 32)) {
+					update_slot_base(
+						default_slot,
+						default_slot_template,
+						ctx,
+						/*$$scope*/ ctx[5],
+						!current
+						? get_all_dirty_from_scope(/*$$scope*/ ctx[5])
+						: get_slot_changes(default_slot_template, /*$$scope*/ ctx[5], dirty, null),
+						null
+					);
+				}
+			}
+
+			if (wsx_action && is_function(wsx_action.update) && dirty & /*wind*/ 4) wsx_action.update.call(null, /*wind*/ ctx[2]);
+
+			if (dirty & /*open*/ 1) {
+				details.open = /*open*/ ctx[0];
+			}
+		},
+		i(local) {
+			if (current) return;
+			transition_in(label_slot_or_fallback, local);
+			transition_in(default_slot, local);
+			current = true;
+		},
+		o(local) {
+			transition_out(label_slot_or_fallback, local);
+			transition_out(default_slot, local);
+			current = false;
+		},
+		d(detaching) {
+			if (detaching) detach(details);
+			if (label_slot_or_fallback) label_slot_or_fallback.d(detaching);
+			if (default_slot) default_slot.d(detaching);
+			mounted = false;
+			run_all(dispose);
+		}
+	};
+}
+
+function instance$m($$self, $$props, $$invalidate) {
+	let wind;
+	const omit_props_names = ["label","outline","color","open"];
+	let $$restProps = compute_rest_props($$props, omit_props_names);
+	let { $$slots: slots = {}, $$scope } = $$props;
+	let { label } = $$props;
+	let { outline } = $$props;
+	let { color = "default" } = $$props;
+	let { open = false } = $$props;
+
+	function details_toggle_handler() {
+		open = this.open;
+		$$invalidate(0, open);
+	}
+
+	$$self.$$set = $$new_props => {
+		$$props = assign(assign({}, $$props), exclude_internal_props($$new_props));
+		$$invalidate(8, $$restProps = compute_rest_props($$props, omit_props_names));
+		if ('label' in $$new_props) $$invalidate(1, label = $$new_props.label);
+		if ('outline' in $$new_props) $$invalidate(3, outline = $$new_props.outline);
+		if ('color' in $$new_props) $$invalidate(4, color = $$new_props.color);
+		if ('open' in $$new_props) $$invalidate(0, open = $$new_props.open);
+		if ('$$scope' in $$new_props) $$invalidate(5, $$scope = $$new_props.$$scope);
+	};
+
+	$$self.$$.update = () => {
+		$$invalidate(2, wind = {
+			$color: color,
+			"@outline": outline,
+			...$$restProps
+		});
+	};
+
+	return [open, label, wind, outline, color, $$scope, slots, details_toggle_handler];
+}
+
+class Details extends SvelteComponent {
+	constructor(options) {
+		super();
+		init(this, options, instance$m, create_fragment$m, safe_not_equal, { label: 1, outline: 3, color: 4, open: 0 });
 	}
 }
 
@@ -1173,7 +1500,7 @@ function fly(node, { delay = 0, duration = 400, easing = cubicOut, x = 0, y = 0,
 
 /* src\flex.svelte generated by Svelte v3.58.0 */
 
-function create_fragment$k(ctx) {
+function create_fragment$l(ctx) {
 	let ws_flex;
 	let wsx_action;
 	let current;
@@ -1237,7 +1564,7 @@ function create_fragment$k(ctx) {
 	};
 }
 
-function instance$k($$self, $$props, $$invalidate) {
+function instance$l($$self, $$props, $$invalidate) {
 	let wind;
 	const omit_props_names = ["direction","pad","gap","cross","main"];
 	let $$restProps = compute_rest_props($$props, omit_props_names);
@@ -1277,7 +1604,7 @@ class Flex extends SvelteComponent {
 	constructor(options) {
 		super();
 
-		init(this, options, instance$k, create_fragment$k, safe_not_equal, {
+		init(this, options, instance$l, create_fragment$l, safe_not_equal, {
 			direction: 1,
 			pad: 2,
 			gap: 3,
@@ -1296,7 +1623,7 @@ const get_header_slot_changes$2 = dirty => ({});
 const get_header_slot_context$2 = ctx => ({});
 
 // (121:4) {:else}
-function create_else_block(ctx) {
+function create_else_block$1(ctx) {
 	let switch_instance;
 	let switch_instance_anchor;
 	let current;
@@ -1383,7 +1710,7 @@ function create_else_block(ctx) {
 }
 
 // (119:4) {#if $$slots.content}
-function create_if_block$2(ctx) {
+function create_if_block$3(ctx) {
 	let current;
 	const content_slot_template = /*#slots*/ ctx[9].content;
 	const content_slot = create_slot(content_slot_template, ctx, /*$$scope*/ ctx[10], get_content_slot_context$1);
@@ -1478,7 +1805,7 @@ function create_default_slot$9(ctx) {
 	};
 }
 
-function create_fragment$j(ctx) {
+function create_fragment$k(ctx) {
 	let ws_paper;
 	let t0;
 	let current_block_type_index;
@@ -1490,7 +1817,7 @@ function create_fragment$j(ctx) {
 	let dispose;
 	const header_slot_template = /*#slots*/ ctx[9].header;
 	const header_slot = create_slot(header_slot_template, ctx, /*$$scope*/ ctx[10], get_header_slot_context$2);
-	const if_block_creators = [create_if_block$2, create_else_block];
+	const if_block_creators = [create_if_block$3, create_else_block$1];
 	const if_blocks = [];
 
 	function select_block_type(ctx, dirty) {
@@ -1617,7 +1944,7 @@ function create_fragment$j(ctx) {
 	};
 }
 
-function instance$j($$self, $$props, $$invalidate) {
+function instance$k($$self, $$props, $$invalidate) {
 	let props;
 	let layoutProps;
 	let wind;
@@ -1691,7 +2018,7 @@ class Paper extends SvelteComponent {
 	constructor(options) {
 		super();
 
-		init(this, options, instance$j, create_fragment$j, safe_not_equal, {
+		init(this, options, instance$k, create_fragment$k, safe_not_equal, {
 			color: 4,
 			card: 5,
 			square: 6,
@@ -1707,11 +2034,11 @@ const get_header_slot_context$1 = ctx => ({ slot: "header" });
 const get_footer_slot_changes$1 = dirty => ({});
 const get_footer_slot_context$1 = ctx => ({ slot: "footer" });
 
-// (48:4) <Paper {...$$props}>
+// (49:4) <Paper {...$$props}>
 function create_default_slot$8(ctx) {
 	let current;
 	const default_slot_template = /*#slots*/ ctx[1].default;
-	const default_slot = create_slot(default_slot_template, ctx, /*$$scope*/ ctx[2], null);
+	const default_slot = create_slot(default_slot_template, ctx, /*$$scope*/ ctx[3], null);
 
 	return {
 		c() {
@@ -1726,15 +2053,15 @@ function create_default_slot$8(ctx) {
 		},
 		p(ctx, dirty) {
 			if (default_slot) {
-				if (default_slot.p && (!current || dirty & /*$$scope*/ 4)) {
+				if (default_slot.p && (!current || dirty & /*$$scope*/ 8)) {
 					update_slot_base(
 						default_slot,
 						default_slot_template,
 						ctx,
-						/*$$scope*/ ctx[2],
+						/*$$scope*/ ctx[3],
 						!current
-						? get_all_dirty_from_scope(/*$$scope*/ ctx[2])
-						: get_slot_changes(default_slot_template, /*$$scope*/ ctx[2], dirty, null),
+						? get_all_dirty_from_scope(/*$$scope*/ ctx[3])
+						: get_slot_changes(default_slot_template, /*$$scope*/ ctx[3], dirty, null),
 						null
 					);
 				}
@@ -1755,11 +2082,11 @@ function create_default_slot$8(ctx) {
 	};
 }
 
-// (49:8) 
+// (50:8) 
 function create_header_slot$7(ctx) {
 	let current;
 	const header_slot_template = /*#slots*/ ctx[1].header;
-	const header_slot = create_slot(header_slot_template, ctx, /*$$scope*/ ctx[2], get_header_slot_context$1);
+	const header_slot = create_slot(header_slot_template, ctx, /*$$scope*/ ctx[3], get_header_slot_context$1);
 
 	return {
 		c() {
@@ -1774,15 +2101,15 @@ function create_header_slot$7(ctx) {
 		},
 		p(ctx, dirty) {
 			if (header_slot) {
-				if (header_slot.p && (!current || dirty & /*$$scope*/ 4)) {
+				if (header_slot.p && (!current || dirty & /*$$scope*/ 8)) {
 					update_slot_base(
 						header_slot,
 						header_slot_template,
 						ctx,
-						/*$$scope*/ ctx[2],
+						/*$$scope*/ ctx[3],
 						!current
-						? get_all_dirty_from_scope(/*$$scope*/ ctx[2])
-						: get_slot_changes(header_slot_template, /*$$scope*/ ctx[2], dirty, get_header_slot_changes$1),
+						? get_all_dirty_from_scope(/*$$scope*/ ctx[3])
+						: get_slot_changes(header_slot_template, /*$$scope*/ ctx[3], dirty, get_header_slot_changes$1),
 						get_header_slot_context$1
 					);
 				}
@@ -1803,11 +2130,11 @@ function create_header_slot$7(ctx) {
 	};
 }
 
-// (51:8) 
+// (52:8) 
 function create_footer_slot$3(ctx) {
 	let current;
 	const footer_slot_template = /*#slots*/ ctx[1].footer;
-	const footer_slot = create_slot(footer_slot_template, ctx, /*$$scope*/ ctx[2], get_footer_slot_context$1);
+	const footer_slot = create_slot(footer_slot_template, ctx, /*$$scope*/ ctx[3], get_footer_slot_context$1);
 
 	return {
 		c() {
@@ -1822,15 +2149,15 @@ function create_footer_slot$3(ctx) {
 		},
 		p(ctx, dirty) {
 			if (footer_slot) {
-				if (footer_slot.p && (!current || dirty & /*$$scope*/ 4)) {
+				if (footer_slot.p && (!current || dirty & /*$$scope*/ 8)) {
 					update_slot_base(
 						footer_slot,
 						footer_slot_template,
 						ctx,
-						/*$$scope*/ ctx[2],
+						/*$$scope*/ ctx[3],
 						!current
-						? get_all_dirty_from_scope(/*$$scope*/ ctx[2])
-						: get_slot_changes(footer_slot_template, /*$$scope*/ ctx[2], dirty, get_footer_slot_changes$1),
+						? get_all_dirty_from_scope(/*$$scope*/ ctx[3])
+						: get_slot_changes(footer_slot_template, /*$$scope*/ ctx[3], dirty, get_footer_slot_changes$1),
 						get_footer_slot_context$1
 					);
 				}
@@ -1851,11 +2178,13 @@ function create_footer_slot$3(ctx) {
 	};
 }
 
-function create_fragment$i(ctx) {
+function create_fragment$j(ctx) {
 	let wind_wrapper;
 	let paper;
 	let wind_wrapper_transition;
 	let current;
+	let mounted;
+	let dispose;
 	const paper_spread_levels = [/*$$props*/ ctx[0]];
 
 	let paper_props = {
@@ -1883,13 +2212,18 @@ function create_fragment$i(ctx) {
 			insert(target, wind_wrapper, anchor);
 			mount_component(paper, wind_wrapper, null);
 			current = true;
+
+			if (!mounted) {
+				dispose = listen(wind_wrapper, "click", stop_propagation(/*click_handler*/ ctx[2]));
+				mounted = true;
+			}
 		},
 		p(ctx, [dirty]) {
 			const paper_changes = (dirty & /*$$props*/ 1)
 			? get_spread_update(paper_spread_levels, [get_spread_object(/*$$props*/ ctx[0])])
 			: {};
 
-			if (dirty & /*$$scope*/ 4) {
+			if (dirty & /*$$scope*/ 8) {
 				paper_changes.$$scope = { dirty, ctx };
 			}
 
@@ -1917,26 +2251,32 @@ function create_fragment$i(ctx) {
 			if (detaching) detach(wind_wrapper);
 			destroy_component(paper);
 			if (detaching && wind_wrapper_transition) wind_wrapper_transition.end();
+			mounted = false;
+			dispose();
 		}
 	};
 }
 
-function instance$i($$self, $$props, $$invalidate) {
+function instance$j($$self, $$props, $$invalidate) {
 	let { $$slots: slots = {}, $$scope } = $$props;
+
+	function click_handler(event) {
+		bubble.call(this, $$self, event);
+	}
 
 	$$self.$$set = $$new_props => {
 		$$invalidate(0, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
-		if ('$$scope' in $$new_props) $$invalidate(2, $$scope = $$new_props.$$scope);
+		if ('$$scope' in $$new_props) $$invalidate(3, $$scope = $$new_props.$$scope);
 	};
 
 	$$props = exclude_internal_props($$props);
-	return [$$props, slots, $$scope];
+	return [$$props, slots, click_handler, $$scope];
 }
 
 class Dialog extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$i, create_fragment$i, safe_not_equal, {});
+		init(this, options, instance$j, create_fragment$j, safe_not_equal, {});
 	}
 }
 
@@ -2090,7 +2430,7 @@ function create_footer_slot$2(ctx) {
 	};
 }
 
-function create_fragment$h(ctx) {
+function create_fragment$i(ctx) {
 	let wind_drawer_container;
 	let wind_transition;
 	let paper;
@@ -2204,7 +2544,7 @@ const css = {
         `
 };
 
-function instance$h($$self, $$props, $$invalidate) {
+function instance$i($$self, $$props, $$invalidate) {
 	let container;
 	const omit_props_names = ["height","type"];
 	let $$restProps = compute_rest_props($$props, omit_props_names);
@@ -2241,13 +2581,13 @@ function instance$h($$self, $$props, $$invalidate) {
 class Drawer extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$h, create_fragment$h, safe_not_equal, { height: 3, type: 4 });
+		init(this, options, instance$i, create_fragment$i, safe_not_equal, { height: 3, type: 4 });
 	}
 }
 
 /* src\grid.svelte generated by Svelte v3.58.0 */
 
-function create_fragment$g(ctx) {
+function create_fragment$h(ctx) {
 	let ws_grid;
 	let wsx_action;
 	let current;
@@ -2311,7 +2651,7 @@ function create_fragment$g(ctx) {
 	};
 }
 
-function instance$g($$self, $$props, $$invalidate) {
+function instance$h($$self, $$props, $$invalidate) {
 	let wind;
 	const omit_props_names = ["direction","pad","gap","cols","rows","autoCol","autoRow"];
 	let $$restProps = compute_rest_props($$props, omit_props_names);
@@ -2357,7 +2697,7 @@ class Grid extends SvelteComponent {
 	constructor(options) {
 		super();
 
-		init(this, options, instance$g, create_fragment$g, safe_not_equal, {
+		init(this, options, instance$h, create_fragment$h, safe_not_equal, {
 			direction: 1,
 			pad: 2,
 			gap: 3,
@@ -2371,7 +2711,7 @@ class Grid extends SvelteComponent {
 
 /* src\icon.svelte generated by Svelte v3.58.0 */
 
-function create_fragment$f(ctx) {
+function create_fragment$g(ctx) {
 	let ws_icon;
 	let ws_icon_class_value;
 	let wsx_action;
@@ -2441,7 +2781,7 @@ function create_fragment$f(ctx) {
 	};
 }
 
-function instance$f($$self, $$props, $$invalidate) {
+function instance$g($$self, $$props, $$invalidate) {
 	const omit_props_names = ["name"];
 	let $$restProps = compute_rest_props($$props, omit_props_names);
 	let { $$slots: slots = {}, $$scope } = $$props;
@@ -2460,20 +2800,20 @@ function instance$f($$self, $$props, $$invalidate) {
 class Icon extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$f, create_fragment$f, safe_not_equal, { name: 0 });
+		init(this, options, instance$g, create_fragment$g, safe_not_equal, { name: 0 });
 	}
 }
 
 /* src\link.svelte generated by Svelte v3.58.0 */
 
-function create_fragment$e(ctx) {
+function create_fragment$f(ctx) {
 	let a;
 	let wsx_action;
 	let current;
 	let mounted;
 	let dispose;
-	const default_slot_template = /*#slots*/ ctx[8].default;
-	const default_slot = create_slot(default_slot_template, ctx, /*$$scope*/ ctx[7], null);
+	const default_slot_template = /*#slots*/ ctx[10].default;
+	const default_slot = create_slot(default_slot_template, ctx, /*$$scope*/ ctx[9], null);
 
 	return {
 		c() {
@@ -2499,15 +2839,15 @@ function create_fragment$e(ctx) {
 		},
 		p(ctx, [dirty]) {
 			if (default_slot) {
-				if (default_slot.p && (!current || dirty & /*$$scope*/ 128)) {
+				if (default_slot.p && (!current || dirty & /*$$scope*/ 512)) {
 					update_slot_base(
 						default_slot,
 						default_slot_template,
 						ctx,
-						/*$$scope*/ ctx[7],
+						/*$$scope*/ ctx[9],
 						!current
-						? get_all_dirty_from_scope(/*$$scope*/ ctx[7])
-						: get_slot_changes(default_slot_template, /*$$scope*/ ctx[7], dirty, null),
+						? get_all_dirty_from_scope(/*$$scope*/ ctx[9])
+						: get_slot_changes(default_slot_template, /*$$scope*/ ctx[9], dirty, null),
 						null
 					);
 				}
@@ -2545,60 +2885,68 @@ function create_fragment$e(ctx) {
 	};
 }
 
-function instance$e($$self, $$props, $$invalidate) {
+function instance$f($$self, $$props, $$invalidate) {
+	let type;
 	let wind;
-	const omit_props_names = ["button","variant","color","href","rel","target"];
+	const omit_props_names = ["button","color","href","rel","target","fill","outline"];
 	let $$restProps = compute_rest_props($$props, omit_props_names);
 	let { $$slots: slots = {}, $$scope } = $$props;
 	let { button = false } = $$props;
-	let { variant = "flat" } = $$props;
-	let { color = "default" } = $$props;
+	let { color = false } = $$props;
 	let { href = "" } = $$props;
 	let { rel = "noreferrer" } = $$props;
 	let { target = null } = $$props;
+	let { fill = false } = $$props;
+	let { outline = false } = $$props;
 
 	$$self.$$set = $$new_props => {
 		$$props = assign(assign({}, $$props), exclude_internal_props($$new_props));
-		$$invalidate(9, $$restProps = compute_rest_props($$props, omit_props_names));
+		$$invalidate(11, $$restProps = compute_rest_props($$props, omit_props_names));
 		if ('button' in $$new_props) $$invalidate(4, button = $$new_props.button);
-		if ('variant' in $$new_props) $$invalidate(5, variant = $$new_props.variant);
-		if ('color' in $$new_props) $$invalidate(6, color = $$new_props.color);
+		if ('color' in $$new_props) $$invalidate(5, color = $$new_props.color);
 		if ('href' in $$new_props) $$invalidate(0, href = $$new_props.href);
 		if ('rel' in $$new_props) $$invalidate(1, rel = $$new_props.rel);
 		if ('target' in $$new_props) $$invalidate(2, target = $$new_props.target);
-		if ('$$scope' in $$new_props) $$invalidate(7, $$scope = $$new_props.$$scope);
+		if ('fill' in $$new_props) $$invalidate(6, fill = $$new_props.fill);
+		if ('outline' in $$new_props) $$invalidate(7, outline = $$new_props.outline);
+		if ('$$scope' in $$new_props) $$invalidate(9, $$scope = $$new_props.$$scope);
 	};
 
 	$$self.$$.update = () => {
+		if ($$self.$$.dirty & /*fill, outline*/ 192) {
+			$$invalidate(8, type = variant({ fill, outline }));
+		}
+
 		$$invalidate(3, wind = {
 			"@button": button,
-			[`@${variant}`]: true,
+			[type]: true,
 			$color: color,
 			...$$restProps
 		});
 	};
 
-	return [href, rel, target, wind, button, variant, color, $$scope, slots];
+	return [href, rel, target, wind, button, color, fill, outline, type, $$scope, slots];
 }
 
 class Link extends SvelteComponent {
 	constructor(options) {
 		super();
 
-		init(this, options, instance$e, create_fragment$e, safe_not_equal, {
+		init(this, options, instance$f, create_fragment$f, safe_not_equal, {
 			button: 4,
-			variant: 5,
-			color: 6,
+			color: 5,
 			href: 0,
 			rel: 1,
-			target: 2
+			target: 2,
+			fill: 6,
+			outline: 7
 		});
 	}
 }
 
 /* src\modal.svelte generated by Svelte v3.58.0 */
 
-function create_if_block$1(ctx) {
+function create_if_block$2(ctx) {
 	let ws_modal;
 	let switch_instance;
 	let current;
@@ -2690,10 +3038,10 @@ function create_if_block$1(ctx) {
 	};
 }
 
-function create_fragment$d(ctx) {
+function create_fragment$e(ctx) {
 	let if_block_anchor;
 	let current;
-	let if_block = /*resolver*/ ctx[2] !== null && create_if_block$1(ctx);
+	let if_block = /*resolver*/ ctx[2] !== null && create_if_block$2(ctx);
 
 	return {
 		c() {
@@ -2714,7 +3062,7 @@ function create_fragment$d(ctx) {
 						transition_in(if_block, 1);
 					}
 				} else {
-					if_block = create_if_block$1(ctx);
+					if_block = create_if_block$2(ctx);
 					if_block.c();
 					transition_in(if_block, 1);
 					if_block.m(if_block_anchor.parentNode, if_block_anchor);
@@ -2745,7 +3093,7 @@ function create_fragment$d(ctx) {
 	};
 }
 
-function instance$d($$self, $$props, $$invalidate) {
+function instance$e($$self, $$props, $$invalidate) {
 	let { component } = $$props;
 	let modalProps = null;
 	let resolver = null;
@@ -2790,7 +3138,7 @@ function instance$d($$self, $$props, $$invalidate) {
 class Modal extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$d, create_fragment$d, safe_not_equal, { component: 0, show: 6 });
+		init(this, options, instance$e, create_fragment$e, safe_not_equal, { component: 0, show: 6 });
 	}
 
 	get show() {
@@ -2810,7 +3158,7 @@ const get_default_slot_changes = dirty => ({});
 const get_default_slot_context = ctx => ({ show: /*show*/ ctx[2] });
 
 // (55:4) {#if visible}
-function create_if_block(ctx) {
+function create_if_block$1(ctx) {
 	let wind_content;
 	let wind_content_transition;
 	let current;
@@ -2876,7 +3224,7 @@ function create_if_block(ctx) {
 	};
 }
 
-function create_fragment$c(ctx) {
+function create_fragment$d(ctx) {
 	let ws_popover;
 	let t;
 	let wsx_action;
@@ -2885,7 +3233,7 @@ function create_fragment$c(ctx) {
 	let dispose;
 	const default_slot_template = /*#slots*/ ctx[6].default;
 	const default_slot = create_slot(default_slot_template, ctx, /*$$scope*/ ctx[5], get_default_slot_context);
-	let if_block = /*visible*/ ctx[0] && create_if_block(ctx);
+	let if_block = /*visible*/ ctx[0] && create_if_block$1(ctx);
 
 	return {
 		c() {
@@ -2934,7 +3282,7 @@ function create_fragment$c(ctx) {
 						transition_in(if_block, 1);
 					}
 				} else {
-					if_block = create_if_block(ctx);
+					if_block = create_if_block$1(ctx);
 					if_block.c();
 					transition_in(if_block, 1);
 					if_block.m(ws_popover, null);
@@ -2972,7 +3320,7 @@ function create_fragment$c(ctx) {
 	};
 }
 
-function instance$c($$self, $$props, $$invalidate) {
+function instance$d($$self, $$props, $$invalidate) {
 	let wind;
 	const omit_props_names = [];
 	let $$restProps = compute_rest_props($$props, omit_props_names);
@@ -2998,14 +3346,15 @@ function instance$c($$self, $$props, $$invalidate) {
 class Popover extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$c, create_fragment$c, safe_not_equal, {});
+		init(this, options, instance$d, create_fragment$d, safe_not_equal, {});
 	}
 }
 
 // let crypto = null
-(typeof window !== "undefined")
-    ? window.crypto
-    : (await import('node:crypto')).default;
+// const crypto =
+//     (typeof window !== "undefined")
+//     ? window.crypto
+//     : (await import("node:crypto")).default
 
 BigInt(8640000000000000);
 
@@ -3057,7 +3406,7 @@ const handler$ = (func) =>
 
 /* src\screen.svelte generated by Svelte v3.58.0 */
 
-function create_fragment$b(ctx) {
+function create_fragment$c(ctx) {
 	let ws_screen;
 	let wsx_action;
 	let ws_screen_transition;
@@ -3136,7 +3485,7 @@ function create_fragment$b(ctx) {
 
 const ctxStack = Symbol("stack context");
 
-function instance$b($$self, $$props, $$invalidate) {
+function instance$c($$self, $$props, $$invalidate) {
 	let wind;
 	const omit_props_names = ["width"];
 	let $$restProps = compute_rest_props($$props, omit_props_names);
@@ -3168,13 +3517,13 @@ function instance$b($$self, $$props, $$invalidate) {
 class Screen extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$b, create_fragment$b, safe_not_equal, { width: 2 });
+		init(this, options, instance$c, create_fragment$c, safe_not_equal, { width: 2 });
 	}
 }
 
 /* src\text.svelte generated by Svelte v3.58.0 */
 
-function create_fragment$a(ctx) {
+function create_fragment$b(ctx) {
 	let span;
 	let wsx_action;
 	let current;
@@ -3238,7 +3587,7 @@ function create_fragment$a(ctx) {
 	};
 }
 
-function instance$a($$self, $$props, $$invalidate) {
+function instance$b($$self, $$props, $$invalidate) {
 	let wind;
 	const omit_props_names = ["title","subtitle","block","adorn"];
 	let $$restProps = compute_rest_props($$props, omit_props_names);
@@ -3275,7 +3624,7 @@ class Text extends SvelteComponent {
 	constructor(options) {
 		super();
 
-		init(this, options, instance$a, create_fragment$a, safe_not_equal, {
+		init(this, options, instance$b, create_fragment$b, safe_not_equal, {
 			title: 1,
 			subtitle: 2,
 			block: 3,
@@ -3292,7 +3641,7 @@ const get_title_slot_context = ctx => ({});
 const get_menu_slot_changes = dirty => ({});
 const get_menu_slot_context = ctx => ({});
 
-function create_fragment$9(ctx) {
+function create_fragment$a(ctx) {
 	let ws_titlebar;
 	let t0;
 	let t1;
@@ -3414,7 +3763,7 @@ function create_fragment$9(ctx) {
 	};
 }
 
-function instance$9($$self, $$props, $$invalidate) {
+function instance$a($$self, $$props, $$invalidate) {
 	let wind;
 	const omit_props_names = ["color","fill"];
 	let $$restProps = compute_rest_props($$props, omit_props_names);
@@ -3444,7 +3793,385 @@ function instance$9($$self, $$props, $$invalidate) {
 class Titlebar extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$9, create_fragment$9, safe_not_equal, { color: 1, fill: 2 });
+		init(this, options, instance$a, create_fragment$a, safe_not_equal, { color: 1, fill: 2 });
+	}
+}
+
+/* src\toggle.svelte generated by Svelte v3.58.0 */
+
+function create_if_block_1(ctx) {
+	let current_block_type_index;
+	let if_block;
+	let if_block_anchor;
+	let current;
+	const if_block_creators = [create_if_block_2, create_else_block];
+	const if_blocks = [];
+
+	function select_block_type(ctx, dirty) {
+		if (/*$$slots*/ ctx[5].default) return 0;
+		return 1;
+	}
+
+	current_block_type_index = select_block_type(ctx);
+	if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
+
+	return {
+		c() {
+			if_block.c();
+			if_block_anchor = empty();
+		},
+		m(target, anchor) {
+			if_blocks[current_block_type_index].m(target, anchor);
+			insert(target, if_block_anchor, anchor);
+			current = true;
+		},
+		p(ctx, dirty) {
+			let previous_block_index = current_block_type_index;
+			current_block_type_index = select_block_type(ctx);
+
+			if (current_block_type_index === previous_block_index) {
+				if_blocks[current_block_type_index].p(ctx, dirty);
+			} else {
+				group_outros();
+
+				transition_out(if_blocks[previous_block_index], 1, 1, () => {
+					if_blocks[previous_block_index] = null;
+				});
+
+				check_outros();
+				if_block = if_blocks[current_block_type_index];
+
+				if (!if_block) {
+					if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
+					if_block.c();
+				} else {
+					if_block.p(ctx, dirty);
+				}
+
+				transition_in(if_block, 1);
+				if_block.m(if_block_anchor.parentNode, if_block_anchor);
+			}
+		},
+		i(local) {
+			if (current) return;
+			transition_in(if_block);
+			current = true;
+		},
+		o(local) {
+			transition_out(if_block);
+			current = false;
+		},
+		d(detaching) {
+			if_blocks[current_block_type_index].d(detaching);
+			if (detaching) detach(if_block_anchor);
+		}
+	};
+}
+
+// (86:8) {:else}
+function create_else_block(ctx) {
+	let span;
+	let t;
+
+	return {
+		c() {
+			span = element("span");
+			t = text(/*label*/ ctx[1]);
+		},
+		m(target, anchor) {
+			insert(target, span, anchor);
+			append(span, t);
+		},
+		p(ctx, dirty) {
+			if (dirty & /*label*/ 2) set_data(t, /*label*/ ctx[1]);
+		},
+		i: noop,
+		o: noop,
+		d(detaching) {
+			if (detaching) detach(span);
+		}
+	};
+}
+
+// (84:8) {#if $$slots.default}
+function create_if_block_2(ctx) {
+	let current;
+	const default_slot_template = /*#slots*/ ctx[12].default;
+	const default_slot = create_slot(default_slot_template, ctx, /*$$scope*/ ctx[11], null);
+
+	return {
+		c() {
+			if (default_slot) default_slot.c();
+		},
+		m(target, anchor) {
+			if (default_slot) {
+				default_slot.m(target, anchor);
+			}
+
+			current = true;
+		},
+		p(ctx, dirty) {
+			if (default_slot) {
+				if (default_slot.p && (!current || dirty & /*$$scope*/ 2048)) {
+					update_slot_base(
+						default_slot,
+						default_slot_template,
+						ctx,
+						/*$$scope*/ ctx[11],
+						!current
+						? get_all_dirty_from_scope(/*$$scope*/ ctx[11])
+						: get_slot_changes(default_slot_template, /*$$scope*/ ctx[11], dirty, null),
+						null
+					);
+				}
+			}
+		},
+		i(local) {
+			if (current) return;
+			transition_in(default_slot, local);
+			current = true;
+		},
+		o(local) {
+			transition_out(default_slot, local);
+			current = false;
+		},
+		d(detaching) {
+			if (default_slot) default_slot.d(detaching);
+		}
+	};
+}
+
+// (91:4) {#if reverse === true}
+function create_if_block(ctx) {
+	let span;
+	let t;
+
+	return {
+		c() {
+			span = element("span");
+			t = text(/*label*/ ctx[1]);
+		},
+		m(target, anchor) {
+			insert(target, span, anchor);
+			append(span, t);
+		},
+		p(ctx, dirty) {
+			if (dirty & /*label*/ 2) set_data(t, /*label*/ ctx[1]);
+		},
+		d(detaching) {
+			if (detaching) detach(span);
+		}
+	};
+}
+
+function create_fragment$9(ctx) {
+	let label_1;
+	let t0;
+	let input_1;
+	let wsx_action;
+	let t1;
+	let wsx_action_1;
+	let current;
+	let mounted;
+	let dispose;
+	let if_block0 = /*reverse*/ ctx[2] !== true && create_if_block_1(ctx);
+	let if_block1 = /*reverse*/ ctx[2] === true && create_if_block(ctx);
+
+	return {
+		c() {
+			label_1 = element("label");
+			if (if_block0) if_block0.c();
+			t0 = space();
+			input_1 = element("input");
+			t1 = space();
+			if (if_block1) if_block1.c();
+			attr(input_1, "type", "checkbox");
+		},
+		m(target, anchor) {
+			insert(target, label_1, anchor);
+			if (if_block0) if_block0.m(label_1, null);
+			append(label_1, t0);
+			append(label_1, input_1);
+			input_1.checked = /*checked*/ ctx[0];
+			append(label_1, t1);
+			if (if_block1) if_block1.m(label_1, null);
+			current = true;
+
+			if (!mounted) {
+				dispose = [
+					listen(input_1, "change", /*input_1_change_handler*/ ctx[13]),
+					action_destroyer(wsx_action = wsx$1.call(null, input_1, /*input*/ ctx[3])),
+					action_destroyer(wsx_action_1 = wsx$1.call(null, label_1, /*container*/ ctx[4]))
+				];
+
+				mounted = true;
+			}
+		},
+		p(ctx, [dirty]) {
+			if (/*reverse*/ ctx[2] !== true) {
+				if (if_block0) {
+					if_block0.p(ctx, dirty);
+
+					if (dirty & /*reverse*/ 4) {
+						transition_in(if_block0, 1);
+					}
+				} else {
+					if_block0 = create_if_block_1(ctx);
+					if_block0.c();
+					transition_in(if_block0, 1);
+					if_block0.m(label_1, t0);
+				}
+			} else if (if_block0) {
+				group_outros();
+
+				transition_out(if_block0, 1, 1, () => {
+					if_block0 = null;
+				});
+
+				check_outros();
+			}
+
+			if (dirty & /*checked*/ 1) {
+				input_1.checked = /*checked*/ ctx[0];
+			}
+
+			if (wsx_action && is_function(wsx_action.update) && dirty & /*input*/ 8) wsx_action.update.call(null, /*input*/ ctx[3]);
+
+			if (/*reverse*/ ctx[2] === true) {
+				if (if_block1) {
+					if_block1.p(ctx, dirty);
+				} else {
+					if_block1 = create_if_block(ctx);
+					if_block1.c();
+					if_block1.m(label_1, null);
+				}
+			} else if (if_block1) {
+				if_block1.d(1);
+				if_block1 = null;
+			}
+
+			if (wsx_action_1 && is_function(wsx_action_1.update) && dirty & /*container*/ 16) wsx_action_1.update.call(null, /*container*/ ctx[4]);
+		},
+		i(local) {
+			if (current) return;
+			transition_in(if_block0);
+			current = true;
+		},
+		o(local) {
+			transition_out(if_block0);
+			current = false;
+		},
+		d(detaching) {
+			if (detaching) detach(label_1);
+			if (if_block0) if_block0.d();
+			if (if_block1) if_block1.d();
+			mounted = false;
+			run_all(dispose);
+		}
+	};
+}
+
+function instance$9($$self, $$props, $$invalidate) {
+	let container;
+	let input;
+	const omit_props_names = ["label","color","checked","flat","value","group","checkbox","reverse"];
+	let $$restProps = compute_rest_props($$props, omit_props_names);
+	let { $$slots: slots = {}, $$scope } = $$props;
+	const $$slots = compute_slots(slots);
+	let { label = "" } = $$props;
+	let { color = "default" } = $$props;
+	let { checked = false } = $$props;
+	let { flat = false } = $$props;
+	let { value } = $$props;
+	let { group = [] } = $$props;
+	let { checkbox = false } = $$props;
+	let { reverse = false } = $$props;
+
+	const updateGroup = checked => {
+		if (checked === true) {
+			if (group.includes(value) === true) {
+				return;
+			}
+
+			$$invalidate(6, group = [...group, value]);
+			return;
+		}
+
+		if (group.includes(value) === false) {
+			return;
+		}
+
+		$$invalidate(6, group = group.filter(item => item !== value));
+	};
+
+	function input_1_change_handler() {
+		checked = this.checked;
+		$$invalidate(0, checked);
+	}
+
+	$$self.$$set = $$new_props => {
+		$$props = assign(assign({}, $$props), exclude_internal_props($$new_props));
+		$$invalidate(15, $$restProps = compute_rest_props($$props, omit_props_names));
+		if ('label' in $$new_props) $$invalidate(1, label = $$new_props.label);
+		if ('color' in $$new_props) $$invalidate(7, color = $$new_props.color);
+		if ('checked' in $$new_props) $$invalidate(0, checked = $$new_props.checked);
+		if ('flat' in $$new_props) $$invalidate(8, flat = $$new_props.flat);
+		if ('value' in $$new_props) $$invalidate(9, value = $$new_props.value);
+		if ('group' in $$new_props) $$invalidate(6, group = $$new_props.group);
+		if ('checkbox' in $$new_props) $$invalidate(10, checkbox = $$new_props.checkbox);
+		if ('reverse' in $$new_props) $$invalidate(2, reverse = $$new_props.reverse);
+		if ('$$scope' in $$new_props) $$invalidate(11, $$scope = $$new_props.$$scope);
+	};
+
+	$$self.$$.update = () => {
+		$$invalidate(4, container = {
+			"@toggle": true,
+			"@flat": flat,
+			$color: color,
+			...$$restProps
+		});
+
+		if ($$self.$$.dirty & /*checkbox*/ 1024) {
+			$$invalidate(3, input = { "$switch": checkbox === false });
+		}
+
+		if ($$self.$$.dirty & /*checked*/ 1) {
+			updateGroup(checked);
+		}
+	};
+
+	return [
+		checked,
+		label,
+		reverse,
+		input,
+		container,
+		$$slots,
+		group,
+		color,
+		flat,
+		value,
+		checkbox,
+		$$scope,
+		slots,
+		input_1_change_handler
+	];
+}
+
+class Toggle extends SvelteComponent {
+	constructor(options) {
+		super();
+
+		init(this, options, instance$9, create_fragment$9, safe_not_equal, {
+			label: 1,
+			color: 7,
+			checked: 0,
+			flat: 8,
+			value: 9,
+			group: 6,
+			checkbox: 10,
+			reverse: 2
+		});
 	}
 }
 
@@ -5209,7 +5936,7 @@ function create_title_slot$2(ctx) {
 	};
 }
 
-// (19:12) <Button slot="action" on:click={close} color={false} compact>
+// (19:12) <Button slot="action" on:click={close} compact>
 function create_default_slot_1$2(ctx) {
 	let icon;
 	let current;
@@ -5247,7 +5974,6 @@ function create_action_slot$1(ctx) {
 	button = new Button({
 			props: {
 				slot: "action",
-				color: false,
 				compact: true,
 				$$slots: { default: [create_default_slot_1$2] },
 				$$scope: { ctx }
@@ -5762,6 +6488,205 @@ class Menu extends SvelteComponent {
 
 /* test\src\app.svelte generated by Svelte v3.58.0 */
 
+function create_default_slot_23(ctx) {
+	let t;
+
+	return {
+		c() {
+			t = text("Blep");
+		},
+		m(target, anchor) {
+			insert(target, t, anchor);
+		},
+		d(detaching) {
+			if (detaching) detach(t);
+		}
+	};
+}
+
+// (151:12) <Chip color="primary" fill>
+function create_default_slot_22(ctx) {
+	let t;
+
+	return {
+		c() {
+			t = text("Blep");
+		},
+		m(target, anchor) {
+			insert(target, t, anchor);
+		},
+		d(detaching) {
+			if (detaching) detach(t);
+		}
+	};
+}
+
+// (154:8) <Toggle>
+function create_default_slot_21(ctx) {
+	let t;
+
+	return {
+		c() {
+			t = text("Wat");
+		},
+		m(target, anchor) {
+			insert(target, t, anchor);
+		},
+		d(detaching) {
+			if (detaching) detach(t);
+		}
+	};
+}
+
+// (159:8) <Details label="Wat">
+function create_default_slot_20(ctx) {
+	let t;
+
+	return {
+		c() {
+			t = text("Test");
+		},
+		m(target, anchor) {
+			insert(target, t, anchor);
+		},
+		d(detaching) {
+			if (detaching) detach(t);
+		}
+	};
+}
+
+// (162:8) <Details label="Wat" outline>
+function create_default_slot_19(ctx) {
+	let t;
+
+	return {
+		c() {
+			t = text("Test");
+		},
+		m(target, anchor) {
+			insert(target, t, anchor);
+		},
+		d(detaching) {
+			if (detaching) detach(t);
+		}
+	};
+}
+
+// (165:8) <Details label="Wat" color="primary" bind:open>
+function create_default_slot_18(ctx) {
+	let t;
+
+	return {
+		c() {
+			t = text("Test");
+		},
+		m(target, anchor) {
+			insert(target, t, anchor);
+		},
+		d(detaching) {
+			if (detaching) detach(t);
+		}
+	};
+}
+
+// (168:8) <Details>
+function create_default_slot_17(ctx) {
+	let t;
+
+	return {
+		c() {
+			t = text("Test");
+		},
+		m(target, anchor) {
+			insert(target, t, anchor);
+		},
+		d(detaching) {
+			if (detaching) detach(t);
+		}
+	};
+}
+
+// (169:12) <Icon name="menu" slot="label">
+function create_default_slot_16(ctx) {
+	let t;
+
+	return {
+		c() {
+			t = text("Something");
+		},
+		m(target, anchor) {
+			insert(target, t, anchor);
+		},
+		d(detaching) {
+			if (detaching) detach(t);
+		}
+	};
+}
+
+// (169:12) 
+function create_label_slot(ctx) {
+	let icon;
+	let current;
+
+	icon = new Icon({
+			props: {
+				name: "menu",
+				slot: "label",
+				$$slots: { default: [create_default_slot_16] },
+				$$scope: { ctx }
+			}
+		});
+
+	return {
+		c() {
+			create_component(icon.$$.fragment);
+		},
+		m(target, anchor) {
+			mount_component(icon, target, anchor);
+			current = true;
+		},
+		p(ctx, dirty) {
+			const icon_changes = {};
+
+			if (dirty & /*$$scope*/ 1048576) {
+				icon_changes.$$scope = { dirty, ctx };
+			}
+
+			icon.$set(icon_changes);
+		},
+		i(local) {
+			if (current) return;
+			transition_in(icon.$$.fragment, local);
+			current = true;
+		},
+		o(local) {
+			transition_out(icon.$$.fragment, local);
+			current = false;
+		},
+		d(detaching) {
+			destroy_component(icon, detaching);
+		}
+	};
+}
+
+// (173:8) <Button outline color="accent">
+function create_default_slot_15(ctx) {
+	let t;
+
+	return {
+		c() {
+			t = text("Blep");
+		},
+		m(target, anchor) {
+			insert(target, t, anchor);
+		},
+		d(detaching) {
+			if (detaching) detach(t);
+		}
+	};
+}
+
+// (176:8) <Button outline>
 function create_default_slot_14(ctx) {
 	let t;
 
@@ -5778,7 +6703,7 @@ function create_default_slot_14(ctx) {
 	};
 }
 
-// (149:8) <Link color="primary" href="#">
+// (180:8) <Link color="primary" href="#">
 function create_default_slot_13(ctx) {
 	let t;
 
@@ -5795,7 +6720,7 @@ function create_default_slot_13(ctx) {
 	};
 }
 
-// (153:8) <EntryButton component={TestScreen} on:entry={console.log}>
+// (184:8) <EntryButton component={TestScreen} on:entry={console.log}>
 function create_default_slot_12(ctx) {
 	let t;
 
@@ -5812,7 +6737,7 @@ function create_default_slot_12(ctx) {
 	};
 }
 
-// (157:8) <EntryButton component={Menu} on:entry={console.log}>
+// (188:8) <EntryButton component={Menu} on:entry={console.log}>
 function create_default_slot_11(ctx) {
 	let t;
 
@@ -5829,7 +6754,7 @@ function create_default_slot_11(ctx) {
 	};
 }
 
-// (161:8) <EntryButton component={TestDialog} on:entry={console.log} props={testDialog}>
+// (192:8) <EntryButton component={TestDialog} on:entry={console.log} props={testDialog}>
 function create_default_slot_10(ctx) {
 	let t;
 
@@ -5846,7 +6771,7 @@ function create_default_slot_10(ctx) {
 	};
 }
 
-// (165:8) <EntryButton component={Alert} props={{ message: "Hi", color: "primary" }} color="secondary">
+// (196:8) <EntryButton component={Alert} props={{ message: "Hi", color: "primary" }} color="secondary">
 function create_default_slot_9(ctx) {
 	let t;
 
@@ -5863,7 +6788,7 @@ function create_default_slot_9(ctx) {
 	};
 }
 
-// (168:8) <EntryButton          component={Confirm}          props={{ message: "Hi", color: "accent" }}          color="warning"          on:entry={e => console.log(e.detail)}          >
+// (199:8) <EntryButton          component={Confirm}          props={{ message: "Hi", color: "accent" }}          color="warning"          on:entry={e => console.log(e.detail)}          >
 function create_default_slot_8(ctx) {
 	let t;
 
@@ -5880,7 +6805,7 @@ function create_default_slot_8(ctx) {
 	};
 }
 
-// (178:12) <Button on:click={show}>
+// (209:12) <Button on:click={show}>
 function create_default_slot_7(ctx) {
 	let t;
 
@@ -5897,7 +6822,7 @@ function create_default_slot_7(ctx) {
 	};
 }
 
-// (177:8) <Popover let:show let:hide>
+// (208:8) <Popover let:show let:hide>
 function create_default_slot_6(ctx) {
 	let button;
 	let current;
@@ -5910,7 +6835,7 @@ function create_default_slot_6(ctx) {
 		});
 
 	button.$on("click", function () {
-		if (is_function(/*show*/ ctx[16])) /*show*/ ctx[16].apply(this, arguments);
+		if (is_function(/*show*/ ctx[18])) /*show*/ ctx[18].apply(this, arguments);
 	});
 
 	return {
@@ -5925,7 +6850,7 @@ function create_default_slot_6(ctx) {
 			ctx = new_ctx;
 			const button_changes = {};
 
-			if (dirty & /*$$scope*/ 262144) {
+			if (dirty & /*$$scope*/ 1048576) {
 				button_changes.$$scope = { dirty, ctx };
 			}
 
@@ -5946,7 +6871,7 @@ function create_default_slot_6(ctx) {
 	};
 }
 
-// (182:16) <Button on:click={hide}>
+// (213:16) <Button on:click={hide}>
 function create_default_slot_5(ctx) {
 	let t;
 
@@ -5963,7 +6888,7 @@ function create_default_slot_5(ctx) {
 	};
 }
 
-// (181:12) 
+// (212:12) 
 function create_content_slot(ctx) {
 	let div;
 	let button;
@@ -5977,7 +6902,7 @@ function create_content_slot(ctx) {
 		});
 
 	button.$on("click", function () {
-		if (is_function(/*hide*/ ctx[17])) /*hide*/ ctx[17].apply(this, arguments);
+		if (is_function(/*hide*/ ctx[19])) /*hide*/ ctx[19].apply(this, arguments);
 	});
 
 	return {
@@ -5996,7 +6921,7 @@ function create_content_slot(ctx) {
 			ctx = new_ctx;
 			const button_changes = {};
 
-			if (dirty & /*$$scope*/ 262144) {
+			if (dirty & /*$$scope*/ 1048576) {
 				button_changes.$$scope = { dirty, ctx };
 			}
 
@@ -6018,33 +6943,132 @@ function create_content_slot(ctx) {
 	};
 }
 
-// (137:4) <Paper square card l-pad="12px">
+// (141:4) <Paper square card l-pad="12px">
 function create_default_slot_4(ctx) {
-	let button;
+	let div;
+	let chip0;
 	let t0;
-	let link;
+	let chip1;
 	let t1;
-	let entrybutton0;
+	let toggle0;
 	let t2;
-	let entrybutton1;
+	let toggle1;
 	let t3;
-	let entrybutton2;
+	let details0;
 	let t4;
-	let entrybutton3;
+	let details1;
 	let t5;
-	let entrybutton4;
+	let details2;
+	let updating_open;
 	let t6;
-	let popover;
+	let details3;
 	let t7;
-	let circlespinner;
+	let button0;
 	let t8;
+	let button1;
+	let t9;
+	let link;
+	let t10;
+	let entrybutton0;
+	let t11;
+	let entrybutton1;
+	let t12;
+	let entrybutton2;
+	let t13;
+	let entrybutton3;
+	let t14;
+	let entrybutton4;
+	let t15;
+	let popover;
+	let t16;
+	let circlespinner;
+	let t17;
 	let hexagonspinner;
 	let current;
 
-	button = new Button({
+	chip0 = new Chip({
 			props: {
-				variant: "outline",
+				color: "primary",
+				$$slots: { default: [create_default_slot_23] },
+				$$scope: { ctx }
+			}
+		});
+
+	chip1 = new Chip({
+			props: {
+				color: "primary",
+				fill: true,
+				$$slots: { default: [create_default_slot_22] },
+				$$scope: { ctx }
+			}
+		});
+
+	toggle0 = new Toggle({
+			props: {
+				$$slots: { default: [create_default_slot_21] },
+				$$scope: { ctx }
+			}
+		});
+
+	toggle1 = new Toggle({ props: { label: "test", flat: true } });
+
+	details0 = new Details({
+			props: {
+				label: "Wat",
+				$$slots: { default: [create_default_slot_20] },
+				$$scope: { ctx }
+			}
+		});
+
+	details1 = new Details({
+			props: {
+				label: "Wat",
+				outline: true,
+				$$slots: { default: [create_default_slot_19] },
+				$$scope: { ctx }
+			}
+		});
+
+	function details2_open_binding(value) {
+		/*details2_open_binding*/ ctx[2](value);
+	}
+
+	let details2_props = {
+		label: "Wat",
+		color: "primary",
+		$$slots: { default: [create_default_slot_18] },
+		$$scope: { ctx }
+	};
+
+	if (/*open*/ ctx[0] !== void 0) {
+		details2_props.open = /*open*/ ctx[0];
+	}
+
+	details2 = new Details({ props: details2_props });
+	binding_callbacks.push(() => bind(details2, 'open', details2_open_binding));
+
+	details3 = new Details({
+			props: {
+				$$slots: {
+					label: [create_label_slot],
+					default: [create_default_slot_17]
+				},
+				$$scope: { ctx }
+			}
+		});
+
+	button0 = new Button({
+			props: {
+				outline: true,
 				color: "accent",
+				$$slots: { default: [create_default_slot_15] },
+				$$scope: { ctx }
+			}
+		});
+
+	button1 = new Button({
+			props: {
+				outline: true,
 				$$slots: { default: [create_default_slot_14] },
 				$$scope: { ctx }
 			}
@@ -6082,7 +7106,7 @@ function create_default_slot_4(ctx) {
 	entrybutton2 = new Entry_button({
 			props: {
 				component: Test_dialog,
-				props: /*testDialog*/ ctx[0],
+				props: /*testDialog*/ ctx[1],
 				$$slots: { default: [create_default_slot_10] },
 				$$scope: { ctx }
 			}
@@ -6110,20 +7134,20 @@ function create_default_slot_4(ctx) {
 			}
 		});
 
-	entrybutton4.$on("entry", /*entry_handler*/ ctx[1]);
+	entrybutton4.$on("entry", /*entry_handler*/ ctx[3]);
 
 	popover = new Popover({
 			props: {
 				$$slots: {
 					content: [
 						create_content_slot,
-						({ show, hide }) => ({ 16: show, 17: hide }),
-						({ show, hide }) => (show ? 65536 : 0) | (hide ? 131072 : 0)
+						({ show, hide }) => ({ 18: show, 19: hide }),
+						({ show, hide }) => (show ? 262144 : 0) | (hide ? 524288 : 0)
 					],
 					default: [
 						create_default_slot_6,
-						({ show, hide }) => ({ 16: show, 17: hide }),
-						({ show, hide }) => (show ? 65536 : 0) | (hide ? 131072 : 0)
+						({ show, hide }) => ({ 18: show, 19: hide }),
+						({ show, hide }) => (show ? 262144 : 0) | (hide ? 524288 : 0)
 					]
 				},
 				$$scope: { ctx }
@@ -6135,101 +7159,201 @@ function create_default_slot_4(ctx) {
 
 	return {
 		c() {
-			create_component(button.$$.fragment);
+			div = element("div");
+			create_component(chip0.$$.fragment);
 			t0 = space();
-			create_component(link.$$.fragment);
+			create_component(chip1.$$.fragment);
 			t1 = space();
-			create_component(entrybutton0.$$.fragment);
+			create_component(toggle0.$$.fragment);
 			t2 = space();
-			create_component(entrybutton1.$$.fragment);
+			create_component(toggle1.$$.fragment);
 			t3 = space();
-			create_component(entrybutton2.$$.fragment);
+			create_component(details0.$$.fragment);
 			t4 = space();
-			create_component(entrybutton3.$$.fragment);
+			create_component(details1.$$.fragment);
 			t5 = space();
-			create_component(entrybutton4.$$.fragment);
+			create_component(details2.$$.fragment);
 			t6 = space();
-			create_component(popover.$$.fragment);
+			create_component(details3.$$.fragment);
 			t7 = space();
-			create_component(circlespinner.$$.fragment);
+			create_component(button0.$$.fragment);
 			t8 = space();
+			create_component(button1.$$.fragment);
+			t9 = space();
+			create_component(link.$$.fragment);
+			t10 = space();
+			create_component(entrybutton0.$$.fragment);
+			t11 = space();
+			create_component(entrybutton1.$$.fragment);
+			t12 = space();
+			create_component(entrybutton2.$$.fragment);
+			t13 = space();
+			create_component(entrybutton3.$$.fragment);
+			t14 = space();
+			create_component(entrybutton4.$$.fragment);
+			t15 = space();
+			create_component(popover.$$.fragment);
+			t16 = space();
+			create_component(circlespinner.$$.fragment);
+			t17 = space();
 			create_component(hexagonspinner.$$.fragment);
 		},
 		m(target, anchor) {
-			mount_component(button, target, anchor);
-			insert(target, t0, anchor);
-			mount_component(link, target, anchor);
+			insert(target, div, anchor);
+			mount_component(chip0, div, null);
+			append(div, t0);
+			mount_component(chip1, div, null);
 			insert(target, t1, anchor);
-			mount_component(entrybutton0, target, anchor);
+			mount_component(toggle0, target, anchor);
 			insert(target, t2, anchor);
-			mount_component(entrybutton1, target, anchor);
+			mount_component(toggle1, target, anchor);
 			insert(target, t3, anchor);
-			mount_component(entrybutton2, target, anchor);
+			mount_component(details0, target, anchor);
 			insert(target, t4, anchor);
-			mount_component(entrybutton3, target, anchor);
+			mount_component(details1, target, anchor);
 			insert(target, t5, anchor);
-			mount_component(entrybutton4, target, anchor);
+			mount_component(details2, target, anchor);
 			insert(target, t6, anchor);
-			mount_component(popover, target, anchor);
+			mount_component(details3, target, anchor);
 			insert(target, t7, anchor);
-			mount_component(circlespinner, target, anchor);
+			mount_component(button0, target, anchor);
 			insert(target, t8, anchor);
+			mount_component(button1, target, anchor);
+			insert(target, t9, anchor);
+			mount_component(link, target, anchor);
+			insert(target, t10, anchor);
+			mount_component(entrybutton0, target, anchor);
+			insert(target, t11, anchor);
+			mount_component(entrybutton1, target, anchor);
+			insert(target, t12, anchor);
+			mount_component(entrybutton2, target, anchor);
+			insert(target, t13, anchor);
+			mount_component(entrybutton3, target, anchor);
+			insert(target, t14, anchor);
+			mount_component(entrybutton4, target, anchor);
+			insert(target, t15, anchor);
+			mount_component(popover, target, anchor);
+			insert(target, t16, anchor);
+			mount_component(circlespinner, target, anchor);
+			insert(target, t17, anchor);
 			mount_component(hexagonspinner, target, anchor);
 			current = true;
 		},
 		p(ctx, dirty) {
-			const button_changes = {};
+			const chip0_changes = {};
 
-			if (dirty & /*$$scope*/ 262144) {
-				button_changes.$$scope = { dirty, ctx };
+			if (dirty & /*$$scope*/ 1048576) {
+				chip0_changes.$$scope = { dirty, ctx };
 			}
 
-			button.$set(button_changes);
+			chip0.$set(chip0_changes);
+			const chip1_changes = {};
+
+			if (dirty & /*$$scope*/ 1048576) {
+				chip1_changes.$$scope = { dirty, ctx };
+			}
+
+			chip1.$set(chip1_changes);
+			const toggle0_changes = {};
+
+			if (dirty & /*$$scope*/ 1048576) {
+				toggle0_changes.$$scope = { dirty, ctx };
+			}
+
+			toggle0.$set(toggle0_changes);
+			const details0_changes = {};
+
+			if (dirty & /*$$scope*/ 1048576) {
+				details0_changes.$$scope = { dirty, ctx };
+			}
+
+			details0.$set(details0_changes);
+			const details1_changes = {};
+
+			if (dirty & /*$$scope*/ 1048576) {
+				details1_changes.$$scope = { dirty, ctx };
+			}
+
+			details1.$set(details1_changes);
+			const details2_changes = {};
+
+			if (dirty & /*$$scope*/ 1048576) {
+				details2_changes.$$scope = { dirty, ctx };
+			}
+
+			if (!updating_open && dirty & /*open*/ 1) {
+				updating_open = true;
+				details2_changes.open = /*open*/ ctx[0];
+				add_flush_callback(() => updating_open = false);
+			}
+
+			details2.$set(details2_changes);
+			const details3_changes = {};
+
+			if (dirty & /*$$scope*/ 1048576) {
+				details3_changes.$$scope = { dirty, ctx };
+			}
+
+			details3.$set(details3_changes);
+			const button0_changes = {};
+
+			if (dirty & /*$$scope*/ 1048576) {
+				button0_changes.$$scope = { dirty, ctx };
+			}
+
+			button0.$set(button0_changes);
+			const button1_changes = {};
+
+			if (dirty & /*$$scope*/ 1048576) {
+				button1_changes.$$scope = { dirty, ctx };
+			}
+
+			button1.$set(button1_changes);
 			const link_changes = {};
 
-			if (dirty & /*$$scope*/ 262144) {
+			if (dirty & /*$$scope*/ 1048576) {
 				link_changes.$$scope = { dirty, ctx };
 			}
 
 			link.$set(link_changes);
 			const entrybutton0_changes = {};
 
-			if (dirty & /*$$scope*/ 262144) {
+			if (dirty & /*$$scope*/ 1048576) {
 				entrybutton0_changes.$$scope = { dirty, ctx };
 			}
 
 			entrybutton0.$set(entrybutton0_changes);
 			const entrybutton1_changes = {};
 
-			if (dirty & /*$$scope*/ 262144) {
+			if (dirty & /*$$scope*/ 1048576) {
 				entrybutton1_changes.$$scope = { dirty, ctx };
 			}
 
 			entrybutton1.$set(entrybutton1_changes);
 			const entrybutton2_changes = {};
 
-			if (dirty & /*$$scope*/ 262144) {
+			if (dirty & /*$$scope*/ 1048576) {
 				entrybutton2_changes.$$scope = { dirty, ctx };
 			}
 
 			entrybutton2.$set(entrybutton2_changes);
 			const entrybutton3_changes = {};
 
-			if (dirty & /*$$scope*/ 262144) {
+			if (dirty & /*$$scope*/ 1048576) {
 				entrybutton3_changes.$$scope = { dirty, ctx };
 			}
 
 			entrybutton3.$set(entrybutton3_changes);
 			const entrybutton4_changes = {};
 
-			if (dirty & /*$$scope*/ 262144) {
+			if (dirty & /*$$scope*/ 1048576) {
 				entrybutton4_changes.$$scope = { dirty, ctx };
 			}
 
 			entrybutton4.$set(entrybutton4_changes);
 			const popover_changes = {};
 
-			if (dirty & /*$$scope, hide, show*/ 458752) {
+			if (dirty & /*$$scope, hide, show*/ 1835008) {
 				popover_changes.$$scope = { dirty, ctx };
 			}
 
@@ -6237,7 +7361,16 @@ function create_default_slot_4(ctx) {
 		},
 		i(local) {
 			if (current) return;
-			transition_in(button.$$.fragment, local);
+			transition_in(chip0.$$.fragment, local);
+			transition_in(chip1.$$.fragment, local);
+			transition_in(toggle0.$$.fragment, local);
+			transition_in(toggle1.$$.fragment, local);
+			transition_in(details0.$$.fragment, local);
+			transition_in(details1.$$.fragment, local);
+			transition_in(details2.$$.fragment, local);
+			transition_in(details3.$$.fragment, local);
+			transition_in(button0.$$.fragment, local);
+			transition_in(button1.$$.fragment, local);
 			transition_in(link.$$.fragment, local);
 			transition_in(entrybutton0.$$.fragment, local);
 			transition_in(entrybutton1.$$.fragment, local);
@@ -6250,7 +7383,16 @@ function create_default_slot_4(ctx) {
 			current = true;
 		},
 		o(local) {
-			transition_out(button.$$.fragment, local);
+			transition_out(chip0.$$.fragment, local);
+			transition_out(chip1.$$.fragment, local);
+			transition_out(toggle0.$$.fragment, local);
+			transition_out(toggle1.$$.fragment, local);
+			transition_out(details0.$$.fragment, local);
+			transition_out(details1.$$.fragment, local);
+			transition_out(details2.$$.fragment, local);
+			transition_out(details3.$$.fragment, local);
+			transition_out(button0.$$.fragment, local);
+			transition_out(button1.$$.fragment, local);
 			transition_out(link.$$.fragment, local);
 			transition_out(entrybutton0.$$.fragment, local);
 			transition_out(entrybutton1.$$.fragment, local);
@@ -6263,30 +7405,48 @@ function create_default_slot_4(ctx) {
 			current = false;
 		},
 		d(detaching) {
-			destroy_component(button, detaching);
-			if (detaching) detach(t0);
-			destroy_component(link, detaching);
+			if (detaching) detach(div);
+			destroy_component(chip0);
+			destroy_component(chip1);
 			if (detaching) detach(t1);
-			destroy_component(entrybutton0, detaching);
+			destroy_component(toggle0, detaching);
 			if (detaching) detach(t2);
-			destroy_component(entrybutton1, detaching);
+			destroy_component(toggle1, detaching);
 			if (detaching) detach(t3);
-			destroy_component(entrybutton2, detaching);
+			destroy_component(details0, detaching);
 			if (detaching) detach(t4);
-			destroy_component(entrybutton3, detaching);
+			destroy_component(details1, detaching);
 			if (detaching) detach(t5);
-			destroy_component(entrybutton4, detaching);
+			destroy_component(details2, detaching);
 			if (detaching) detach(t6);
-			destroy_component(popover, detaching);
+			destroy_component(details3, detaching);
 			if (detaching) detach(t7);
-			destroy_component(circlespinner, detaching);
+			destroy_component(button0, detaching);
 			if (detaching) detach(t8);
+			destroy_component(button1, detaching);
+			if (detaching) detach(t9);
+			destroy_component(link, detaching);
+			if (detaching) detach(t10);
+			destroy_component(entrybutton0, detaching);
+			if (detaching) detach(t11);
+			destroy_component(entrybutton1, detaching);
+			if (detaching) detach(t12);
+			destroy_component(entrybutton2, detaching);
+			if (detaching) detach(t13);
+			destroy_component(entrybutton3, detaching);
+			if (detaching) detach(t14);
+			destroy_component(entrybutton4, detaching);
+			if (detaching) detach(t15);
+			destroy_component(popover, detaching);
+			if (detaching) detach(t16);
+			destroy_component(circlespinner, detaching);
+			if (detaching) detach(t17);
 			destroy_component(hexagonspinner, detaching);
 		}
 	};
 }
 
-// (140:16) <Text title>
+// (144:16) <Text title>
 function create_default_slot_3(ctx) {
 	let t;
 
@@ -6303,7 +7463,7 @@ function create_default_slot_3(ctx) {
 	};
 }
 
-// (141:16) <Text subtitle>
+// (145:16) <Text subtitle>
 function create_default_slot_2(ctx) {
 	let t;
 
@@ -6320,7 +7480,7 @@ function create_default_slot_2(ctx) {
 	};
 }
 
-// (139:12) <Flex slot="title">
+// (143:12) <Flex slot="title">
 function create_default_slot_1(ctx) {
 	let text0;
 	let t;
@@ -6358,14 +7518,14 @@ function create_default_slot_1(ctx) {
 		p(ctx, dirty) {
 			const text0_changes = {};
 
-			if (dirty & /*$$scope*/ 262144) {
+			if (dirty & /*$$scope*/ 1048576) {
 				text0_changes.$$scope = { dirty, ctx };
 			}
 
 			text0.$set(text0_changes);
 			const text1_changes = {};
 
-			if (dirty & /*$$scope*/ 262144) {
+			if (dirty & /*$$scope*/ 1048576) {
 				text1_changes.$$scope = { dirty, ctx };
 			}
 
@@ -6390,7 +7550,7 @@ function create_default_slot_1(ctx) {
 	};
 }
 
-// (139:12) 
+// (143:12) 
 function create_title_slot(ctx) {
 	let flex;
 	let current;
@@ -6414,7 +7574,7 @@ function create_title_slot(ctx) {
 		p(ctx, dirty) {
 			const flex_changes = {};
 
-			if (dirty & /*$$scope*/ 262144) {
+			if (dirty & /*$$scope*/ 1048576) {
 				flex_changes.$$scope = { dirty, ctx };
 			}
 
@@ -6435,7 +7595,7 @@ function create_title_slot(ctx) {
 	};
 }
 
-// (138:8) 
+// (142:8) 
 function create_header_slot(ctx) {
 	let titlebar;
 	let current;
@@ -6461,7 +7621,7 @@ function create_header_slot(ctx) {
 		p(ctx, dirty) {
 			const titlebar_changes = {};
 
-			if (dirty & /*$$scope*/ 262144) {
+			if (dirty & /*$$scope*/ 1048576) {
 				titlebar_changes.$$scope = { dirty, ctx };
 			}
 
@@ -6482,7 +7642,7 @@ function create_header_slot(ctx) {
 	};
 }
 
-// (136:0) <Screen>
+// (140:0) <Screen>
 function create_default_slot(ctx) {
 	let paper;
 	let current;
@@ -6511,7 +7671,7 @@ function create_default_slot(ctx) {
 		p(ctx, dirty) {
 			const paper_changes = {};
 
-			if (dirty & /*$$scope*/ 262144) {
+			if (dirty & /*$$scope, open*/ 1048577) {
 				paper_changes.$$scope = { dirty, ctx };
 			}
 
@@ -6568,7 +7728,7 @@ function create_fragment(ctx) {
 		p(ctx, [dirty]) {
 			const screen_changes = {};
 
-			if (dirty & /*$$scope*/ 262144) {
+			if (dirty & /*$$scope, open*/ 1048577) {
 				screen_changes.$$scope = { dirty, ctx };
 			}
 
@@ -6596,7 +7756,7 @@ function create_fragment(ctx) {
 let theme = "tron";
 let page = 0;
 
-function instance($$self) {
+function instance($$self, $$props, $$invalidate) {
 	let bind = {};
 
 	const options = [
@@ -6625,11 +7785,25 @@ function instance($$self) {
 		Array.from({ length: 4 }, (_, i) => `Sub ${i - 2}`)
 	];
 	const testDialog = () => ({ message: Math.random().toString(16) });
+	let open = false;
+
+	function details2_open_binding(value) {
+		open = value;
+		$$invalidate(0, open);
+	}
+
 	const entry_handler = e => console.log(e.detail);
+
+	$$self.$$.update = () => {
+		if ($$self.$$.dirty & /*open*/ 1) {
+			console.log("open", open);
+		}
+	};
+
 	console.log(bind);
 	console.log(tab);
 	console.log("page:", page);
-	return [testDialog, entry_handler];
+	return [open, testDialog, details2_open_binding, entry_handler];
 }
 
 class App extends SvelteComponent {

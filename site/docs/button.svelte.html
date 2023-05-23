@@ -16,9 +16,9 @@ are supported.</p>
 <li><h3 id="label-string">label <code>string</code></h3>
   If true, the button will be displayed in the DOM using a <code>&lt;label&gt;</code>
   element instead of a <code>&lt;button&gt;</code>.</li>
-<li><h3 id="variant-string">variant <code>string</code></h3>
-  Sets the button type to <code>@&lt;variant&gt;</code> (ex: &quot;flat&quot; -&gt; <code>@flat</code>). Default
-  variant is &quot;flat&quot;. Currently supports &quot;flat&quot;, &quot;fill&quot;, &quot;outline&quot;.</li>
+<li><h3 id="fill--outline-bool">fill / outline <code>bool</code></h3>
+  Sets the button type to @fill if fill is true, @outline if outline
+  is true, or @flat if neither is true.</li>
 </ul>
 <h2 id="events">Events</h2>
 <ul>
@@ -28,10 +28,10 @@ are supported.</p>
 <pre><code class="language-svelte">&lt;Button on:click={action}&gt;
     Flat Button
 &lt;/Button&gt;
-&lt;Button on:click={action} variant=&quot;outline&quot;&gt;
+&lt;Button on:click={action} outline&gt;
     Outlined Button
 &lt;/Button&gt;
-&lt;Button on:click={action} variant=&quot;fill&quot; color=&quot;danger&quot;&gt;
+&lt;Button on:click={action} fill color=&quot;danger&quot;&gt;
     Filled Button
 &lt;/Button&gt;
 
