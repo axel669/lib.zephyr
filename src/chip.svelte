@@ -17,9 +17,8 @@
         Sets `$color`
     - ### clickable `bool`
         If true, the chip will have the button ripple effect when clicked.
-    - ### variant `string`
-        Sets the chip type to `@<variant>` (ex: "fill" -> `@fill`). Default
-        variant is "outline". Currently supports "fill", "outline".
+    - ### fill `bool`
+        If true, sets @fill on the chip. If false @outline is set instead.
 
     ## Events
     - click
@@ -34,13 +33,17 @@
     */
 
     import wsx from "./wsx.mjs"
+    import variant from "./variant.mjs"
 
     export let color = "default"
     export let clickable = false
-    export let variant = "outline"
+
+    export let fill = false
+
+    $: type = variant({ fill }, "@outline")
 
     $: wind = {
-        [`@${variant}`]: true,
+        [type]: true,
         $color: color,
         $click: clickable,
         ...$$restProps

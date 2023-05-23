@@ -23,9 +23,9 @@
     - ### label `string`
         If true, the button will be displayed in the DOM using a `<label>`
         element instead of a `<button>`.
-    - ### variant `string`
-        Sets the button type to `@<variant>` (ex: "flat" -> `@flat`). Default
-        variant is "flat". Currently supports "flat", "fill", "outline".
+    - ### fill / outline `bool`
+        Sets the button type to @fill if fill is true, @outline if outline
+        is true, or @flat if neither is true.
 
     ## Events
     - click
@@ -50,18 +50,23 @@
     */
 
     import wsx from "./wsx.mjs"
+    import variant from "./variant.mjs"
 
     export let color = false
     export let compact = false
-    export let variant = "flat"
     export let disabled
+
+    export let fill = false
+    export let outline = false
 
     let _for = ""
     export { _for as for }
     export let label = false
 
+    $: type = variant({ fill, outline })
+
     $: wind = {
-        [`@${variant}`]: true,
+        [type]: true,
         $color: color,
         $compact: compact,
         "@button": label,

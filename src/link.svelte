@@ -24,9 +24,9 @@
         Sets the rel attribute.
     - ### target `string`
         Sets the target attribute
-    - ### variant `string`
-        Sets the link-button type to `@<variant>` (ex: "flat" -> `@flat`).
-        Default variant is "flat". Currently supports "flat", "fill", "outline".
+    - ### fill / outline `bool`
+        Sets the link-button type to @fill if fill is true, @outline if outline
+        is true, or @flat if neither is true.
 
     ## Usage
     ```svelte
@@ -40,18 +40,23 @@
     */
 
     import wsx from "./wsx.mjs"
+    import variant from "./variant.mjs"
 
     export let button = false
     export let color = false
-    export let color = "default"
 
     export let href = ""
     export let rel = "noreferrer"
     export let target = null
 
+    export let fill = false
+    export let outline = false
+
+    $: type = variant({ fill, outline })
+
     $: wind = {
         "@button": button,
-        [`@${variant}`]: true,
+        [type]: true,
         $color: color,
         ...$$restProps
     }
