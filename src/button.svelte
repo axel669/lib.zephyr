@@ -51,7 +51,7 @@
 
     import wsx from "./wsx.mjs"
 
-    export let color = "default"
+    export let color = false
     export let compact = false
     export let variant = "flat"
     export let disabled
