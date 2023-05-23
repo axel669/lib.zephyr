@@ -35,10 +35,10 @@
     <Button on:click={action}>
         Flat Button
     </Button>
-    <Button on:click={action} variant="outline">
+    <Button on:click={action} outline>
         Outlined Button
     </Button>
-    <Button on:click={action} variant="fill" color="danger">
+    <Button on:click={action} fill color="danger">
         Filled Button
     </Button>
 

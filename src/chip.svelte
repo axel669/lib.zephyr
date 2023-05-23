@@ -28,7 +28,7 @@
     Emails:
     <Chip clickable>admin@site.com</Chip>
     <Chip clickable color="warning">weirdge@site.com</Chip>
-    <Chip color="primary">required@site.io</Chip>
+    <Chip color="primary" fill>required@site.io</Chip>
     ```
     */
 

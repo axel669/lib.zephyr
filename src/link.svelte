@@ -33,7 +33,7 @@
     <Link color="primary" href="test" target="_blank">
         Test
     </Link>
-    <Link color="primary" href="logout" button variant="outline">
+    <Link color="primary" href="logout" button outline>
         Logout
     </Link>
     ```
