@@ -75,7 +75,7 @@
 
     $: wind = {
         "$flat": flat,
-        "@control": true,
+        "$control": true,
         "$color": color,
         ...$$restProps,
     }

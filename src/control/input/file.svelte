@@ -56,14 +56,11 @@
 
     export let value
 
-    export let validate = () => true
-    export let valid
-
     const handler = (evt) => value = [...evt.target.files]
 
     $: wind = {
         "$flat": flat,
-        "@control": true,
+        "$control": true,
         "$color": color,
         ...$$restProps,
     }
