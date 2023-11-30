@@ -1,3 +1,7 @@
+<script context="module">
+    let topClose = null
+</script>
+
 <script>
     /*md
     [@] Components/Modal
@@ -38,7 +42,7 @@
     </Button>
     ```
     */
-   import { tick } from "svelte"
+    import { tick } from "svelte"
 
     export let component
 
@@ -51,6 +55,13 @@
         resolver = null
         modalProps = null
         visible.checked = false
+        if (topClose !== close) {
+            return
+        }
+        topClose = null
+    }
+    const closeToTop = (value) => {
+        topClose(value)
     }
     const cancel = () => displayed.cancel?.()
 
@@ -58,6 +69,7 @@
         async (resolve) => {
             modalProps = props ?? {}
             resolver = resolve
+            topClose = topClose ?? close
             await tick()
             setTimeout(
                 () => visible.checked = true,
@@ -78,6 +90,7 @@
         this={component}
         {...modalProps}
         {close}
+        {closeToTop}
         />
     </ws-modal>
 {/if}
