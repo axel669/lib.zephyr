@@ -1,33 +1,17 @@
 <script context="module">
     const defs = {
         select: {
-            "@select": true,
-            "w-min": "35vw",
+            "$select": true,
+            "w.min": "35vw",
             grid: true,
             over: "hidden"
         },
         menu: {
-            "@menu": true,
-            w: "15vw",
+            "$menu": true,
         },
         action: {
-            "@action": true,
-            w: "15vw",
+            "$action": true,
         }
-    }
-    const css = {
-        select: (t, u) => `
-            transform: translateY(-${u * 100}%);
-            opacity: ${t};
-        `,
-        menu: (t, u) => `
-            transform: translateX(-${u * 100}%);
-            opacity: ${t};
-        `,
-        action: (t, u) => `
-            transform: translateX(${u * 100}%);
-            opacity: ${t};
-        `
     }
 </script>
 
@@ -83,9 +67,6 @@
     </EntryButton>
     ```
     */
-
-    import { fly } from "svelte/transition"
-
     import wsx from "../wsx.mjs"
 
     import Paper from "./paper.svelte"
@@ -93,15 +74,11 @@
     export let height
     export let type = "menu"
 
-    const slide = (node, options) => ({
+    const trick = (node, options) => ({
         delay: 0,
-        duration: 200,
-        css: css[type],
+        duration: 250,
+        css: () => "",
     })
-
-    const animation = {
-        duration: 200
-    }
 
     $: container = {
         ...defs[type],
@@ -111,12 +88,11 @@
 </script>
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-interactive-supports-focus -->
-<wind-drawer-container use:wsx={container} on:click|stopPropagation role="menubar">
-    <wind-transition transition:slide ws-x="grid">
-        <Paper {...$$restProps}>
-            <slot name="header" slot="header" />
-            <slot />
-            <slot name="footer" slot="footer" />
-        </Paper>
-    </wind-transition>
+<wind-drawer-container use:wsx={container} on:click|stopPropagation
+role="menubar" transition:trick>
+    <Paper {...$$restProps}>
+        <slot name="header" slot="header" />
+        <slot />
+        <slot name="footer" slot="footer" />
+    </Paper>
 </wind-drawer-container>

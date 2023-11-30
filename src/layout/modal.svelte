@@ -38,6 +38,7 @@
     </Button>
     ```
     */
+   import { tick } from "svelte"
 
     export let component
 
@@ -49,20 +50,29 @@
         resolver(value)
         resolver = null
         modalProps = null
+        visible.checked = false
     }
     const cancel = () => displayed.cancel?.()
 
     export const show = (props) => new Promise(
-        (resolve) => {
+        async (resolve) => {
             modalProps = props ?? {}
             resolver = resolve
+            await tick()
+            setTimeout(
+                () => visible.checked = true,
+                0
+            )
         }
     )
+
+    let visible = null
 </script>
 
+<input type="checkbox" bind:this={visible} ws-x="disp[none]" />
 {#if resolver !== null}
     <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <ws-modal ws-x="$show" on:click={cancel} role="dialog">
+    <ws-modal on:click={cancel} role="dialog">
         <svelte:component
         bind:this={displayed}
         this={component}

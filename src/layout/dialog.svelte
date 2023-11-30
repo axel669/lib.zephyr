@@ -42,10 +42,16 @@
     import wsx from "../wsx.mjs"
 
     import Paper from "./paper.svelte"
+
+    const trick = (node, options) => ({
+        delay: 0,
+        duration: 250,
+        css: () => "",
+    })
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<wind-wrapper transition:fade={{ duration: 200 }} ws-x="@dialog grid" on:click|stopPropagation
+<wind-wrapper transition:trick ws-x="$dialog grid" on:click|stopPropagation
 role="dialog">
     <Paper {...$$props}>
         <slot name="header" slot="header" />
