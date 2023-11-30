@@ -50,11 +50,11 @@
     export let autoRow = false
 
     $: wind = {
-        "gr-dir": direction,
-        "gr-col": cols?.join?.(" ") ?? cols ?? false,
-        "gr-row": rows?.join?.(" ") ?? rows ?? false,
-        "gr-acol": autoCol,
-        "gr-arow": autoRow,
+        "gr.flow": direction,
+        "gr.cols": cols?.join?.(" ") ?? cols ?? false,
+        "gr.rows": rows?.join?.(" ") ?? rows ?? false,
+        "gr.cols.a": autoCol,
+        "gr.rows.a": autoRow,
         p: pad,
         gap: gap,
         ...$$restProps
