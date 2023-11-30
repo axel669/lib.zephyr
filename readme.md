@@ -1,3 +1,6 @@
+NOTE: add docs for dumbass svelte browser resolve bullshit
+https://svelte.dev/docs/v4-migration-guide#browser-conditions-for-bundlers
+
 # Zephyr
 Zephyr is a svelte binding for the
 [Windstorm](https://www.npmjs.com/package/@axel669/windstorm)
