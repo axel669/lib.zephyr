@@ -108,7 +108,7 @@
     const next = () => page = Math.min(pageCount - 1, page + 1)
 </script>
 
-<Paper card {color} lprops={{ "fl-cr-a": "stretch", p: "0px" }}>
+<Paper card {color} l-fl.cross="stretch" l-p="0px">
     <table use:wsx={wind}>
         <thead>
             <tr>
