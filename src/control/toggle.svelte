@@ -89,6 +89,10 @@
     {/if}
     <input type="checkbox" bind:checked use:wsx={input} />
     {#if reverse === true}
-        <span>{label}</span>
+        {#if $$slots.default}
+            <slot />
+        {:else}
+            <span>{label}</span>
+        {/if}
     {/if}
 </label>
