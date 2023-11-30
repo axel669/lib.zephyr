@@ -42,7 +42,7 @@
     let visible = false
     const show = () => visible = true
     const hide = () => visible = false
-    const anim = { duration: 200 }
+    const anim = { duration: 250 }
 
     $: wind = {
         $show: true,
@@ -53,7 +53,7 @@
 <ws-popover use:wsx={wind}>
     <slot {show} />
     {#if visible}
-        <wind-content ws-x="slot[content] inset[0px]" transition:fade={anim}>
+        <wind-content slot="content" ws-x="inset[0px]" transition:fade={anim}>
             <slot name="content" {hide} />
         </wind-content>
     {/if}
