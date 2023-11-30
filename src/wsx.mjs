@@ -1,5 +1,5 @@
-import wind from "@axel669/windstorm"
-const { wsx } = wind
+import ws from "@axel669/windstorm"
+// const { wsx } = wind
 
 /*md
 [@] Actions/wsx
@@ -30,16 +30,22 @@ $: windStff = {
 */
 
 export default (node, props) => {
-    const update = (props) => {
-        if (props === null || props === undefined) {
+    const { slot = null, ...goodProps } = props
+    const update = (goodProps) => {
+        if (goodProps === null || goodProps === undefined) {
             node.setAttribute("ws-x", null)
             return
         }
         node.setAttribute(
             "ws-x",
-            wsx(props)
+            ws.x(goodProps)
         )
+        if (slot === null) {
+            node.removeAttribute("slot")
+            return
+        }
+        node.setAttribute("slot", slot)
     }
-    update(props)
+    update(goodProps)
     return { update }
 }

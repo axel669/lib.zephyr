@@ -40,8 +40,8 @@
 
     import { createEventDispatcher } from "svelte"
 
-    import Button from "../button.svelte"
-    import Modal from "../modal.svelte"
+    import Button from "../control/button.svelte"
+    import Modal from "../layout/modal.svelte"
     import { handler$ } from "../handler$.mjs"
 
     export let component

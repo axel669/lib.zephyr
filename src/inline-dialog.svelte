@@ -1,5 +1,5 @@
 <script>
-    import wsx from "./wsx.mjs"
+    import wsx from "../wsx.mjs"
 
     import Paper from "./paper.svelte"
 
@@ -7,7 +7,7 @@
 
     $: paper = {
         "@dialog": true,
-        "@outline": true,
+        "$outline": true,
         ...$$restProps
     }
 </script>

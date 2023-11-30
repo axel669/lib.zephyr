@@ -75,12 +75,12 @@
     ```
     */
 
-    import Button from "../button.svelte"
-    import Icon from "../icon.svelte"
-    import Paper from "../paper.svelte"
+    import Button from "../control/button.svelte"
+    import Icon from "../info/icon.svelte"
+    import Paper from "../layout/paper.svelte"
     import Text from "../text.svelte"
 
-    import Grid from "../grid.svelte"
+    import Grid from "../layout/grid.svelte"
 
     import wsx from "../wsx.mjs"
 
@@ -94,7 +94,7 @@
     export let rowHeight = "40px"
 
     $: wind = {
-        $color: color,
+        "$color": color,
         ...$$restProps,
     }
 

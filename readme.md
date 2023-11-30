@@ -1,5 +1,3 @@
-
-
 # Zephyr
 Zephyr is a svelte binding for the
 [Windstorm](https://www.npmjs.com/package/@axel669/windstorm)

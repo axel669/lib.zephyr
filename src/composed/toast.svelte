@@ -61,7 +61,7 @@
 
     import { eventHandler$ } from "../handler$.mjs"
 
-    import Toaster from "../toaster.svelte"
+    import Toaster from "../info/toaster.svelte"
 
     import ToastMessage from "./toast/message.svelte"
 
