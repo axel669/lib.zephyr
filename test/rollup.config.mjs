@@ -9,7 +9,8 @@ export default {
     input: "test/src/index.html",
     output: {
         file: "test/build/app.mjs",
-        format: "esm"
+        format: "esm",
+        sourcemap: true,
     },
     plugins: [
         {
@@ -24,7 +25,7 @@ export default {
         svelte({
             emitCss: false
         }),
-        resolve(),
+        resolve({ browser: true }),
         // terser(),
     ]
 }
