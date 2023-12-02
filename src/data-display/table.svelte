@@ -2,34 +2,39 @@
     import wsx from "../wsx.mjs"
 
     export let color = false
+    export let fillHeader = false
     export let data = []
-    export let cols = []
-    export let rowWSX = null
-    export let cellWSX = null
 
+    $: header = data?.[0] ?? {}
+    $: colNames = Object.keys(header)
     $: wind = {
         "$color": color,
+        "$header-fill": fillHeader,
         ...$$restProps,
     }
 </script>
 
 <table use:wsx={wind}>
     <thead>
-        <tr>
-            {#each cols as col}
-                <th use:wsx={{ w: col.width }}>{col.label}</th>
-            {/each}
-        </tr>
-    </thead>
-    <tbody>
-        {#each data as row, rowNum}
-            <tr use:wsx={rowWSX?.(row, rowNum)}>
-                {#each row as cell, colNum}
-                    <td use:wsx={cellWSX?.(cell, rowNum, colNum)}>
-                        {cell}
-                    </td>
+        <slot name="header">
+            <tr>
+                {#each colNames as columnName}
+                    <th>{columnName}</th>
+                {:else}
+                    <th>No Data</th>
                 {/each}
             </tr>
+        </slot>
+    </thead>
+    <tbody>
+        {#each data as row}
+            <slot name="row" {row}>
+                <tr>
+                    {#each colNames as key}
+                        <td>{row[key] ?? ""}</td>
+                    {/each}
+                </tr>
+            </slot>
         {/each}
     </tbody>
 </table>
