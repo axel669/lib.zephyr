@@ -1,8 +1,8 @@
 import ws from "@axel669/windstorm"
 
 export default (node, props) => {
-    const { slot = null, ...goodProps } = props
-    const update = (goodProps) => {
+    const update = (props) => {
+        const { slot = null, ...goodProps } = props
         if (goodProps === null || goodProps === undefined) {
             node.setAttribute("ws-x", null)
             return
@@ -17,6 +17,6 @@ export default (node, props) => {
         }
         node.setAttribute("slot", slot)
     }
-    update(goodProps)
+    update(props)
     return { update }
 }
