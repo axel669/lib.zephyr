@@ -41,6 +41,7 @@ export { default as Confirm } from "./dialogs/confirm.svelte"
 export { default as DataTable } from "./composed/data-table.svelte"
 export { default as EntryButton } from "./composed/entry-button.svelte"
 export { default as Toast } from "./composed/toast.svelte"
+export { filters } from "./composed/data-table.svelte"
 
 export { default as wsx } from "./wsx.mjs"
 
