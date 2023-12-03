@@ -12,7 +12,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@axel669/windstorm": "0.2.2",
+    "@axel669/windstorm": "0.2.3",
     "@labyrinthos/asuid": "^0.2.0"
   },
   "devDependencies": {

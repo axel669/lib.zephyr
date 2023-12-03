@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@axel669/windstorm':
-    specifier: 0.2.2
-    version: 0.2.2
+    specifier: 0.2.3
+    version: 0.2.3
   '@labyrinthos/asuid':
     specifier: ^0.2.0
     version: 0.2.0
@@ -73,8 +73,8 @@ packages:
       node-html-parser: 5.4.2
     dev: true
 
-  /@axel669/windstorm@0.2.2:
-    resolution: {integrity: sha512-BMnisA8/iiqZv/S5Eg45EtvoCWdFk4OcU0QzK0V7BTcQek9y7d4r8F+MJ/BPi7uJga720Z0j2RyS8vdenb/4LQ==}
+  /@axel669/windstorm@0.2.3:
+    resolution: {integrity: sha512-UovJNXF1nm1crSr8+VzPuTYUtBVIiIqNk3BjDYdd4rmwphXm4PpaLuwje8NSLCo7NgEKxzv8bjmWLY/0pRWpFQ==}
     dev: false
 
   /@jridgewell/gen-mapping@0.3.2:
