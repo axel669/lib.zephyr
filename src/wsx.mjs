@@ -1,8 +1,10 @@
 import ws from "@axel669/windstorm"
 
+ws.custom("outline", (o) => ws.prop("outline", o))
+
 export default (node, props) => {
     const update = (props) => {
-        const { slot = null, ...goodProps } = props
+        const { slot = null, ...goodProps } = props ?? {}
         if (goodProps === null || goodProps === undefined) {
             node.setAttribute("ws-x", null)
             return
