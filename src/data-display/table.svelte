@@ -21,13 +21,13 @@
         </slot>
     </thead>
     <tbody>
-        {#each data as row}
+        {#each data as row, rowNum}
             {#if row === undefined}
-                <slot name="empty-row" />
+                <slot name="empty-row" {rowNum} />
             {:else}
-                <slot name="row" {row}>
+                <slot name="row" {row} {rowNum}>
                     <tr>
-                        <th>No Row Template</th>
+                        <td>No Row Template</td>
                     </tr>
                 </slot>
             {/if}
