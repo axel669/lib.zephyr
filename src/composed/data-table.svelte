@@ -12,6 +12,15 @@
             return true
         }
     )
+    const sortIcons = {
+        "asc": "arrow-down",
+        "desc": "arrow-up",
+    }
+    const noSort = {
+        col: null,
+        direction: null,
+        func: (a, b) => 0
+    }
 
     export const filters = {
         text: (propName) =>
@@ -62,9 +71,13 @@
         .filter(
             (pair) => pair[0] !== undefined
         )
-    $: filteredData = applyFilters(data, filterFunctions, filterInput)
-
-    $: console.log(filterInput)
+    let sorting = noSort
+    $: if (cols !== {}) {
+        sorting = noSort
+    }
+    $: filteredData =
+        applyFilters(data, filterFunctions, filterInput)
+        .sort(sorting.func)
 
     const prev = () => page = Math.max(0, page - 1)
     const next = () => page = Math.min(maxPage, page + 1)
@@ -74,10 +87,38 @@
         (row) => fire("row-click", row)
     )
 
-    const fuckSvelte = eventHandler$(
+    const fixSvelteBug = eventHandler$(
         (event, index) => {
             filterInput[index] = event.target.value
             filterInput = [...filterInput]
+        }
+    )
+    const updateSort = handler$(
+        (col) => {
+            if (sorting.direction === "desc") {
+                sorting = noSort
+                return
+            }
+            const func =
+                (typeof col.sort === "function")
+                ? col.sort
+                : (a, b) => {
+                    const av = a[col.sort]
+                    const bv = b[col.sort]
+                    if (av < bv) {
+                        return -1
+                    }
+                    if (av > bv) {
+                        return 1
+                    }
+                    return 0
+                }
+            const direction = sorting.direction === null ? "asc" : "desc"
+            sorting = {
+                col,
+                direction,
+                func: (direction === "asc") ? func : (a, b) => -func(a, b)
+            }
         }
     )
 </script>
@@ -88,12 +129,15 @@
             <tr ws-x="h[{rowHeight}]">
                 {#each cols as col, colNum}
                     <th use:wsx={{p: "0px", ...col.wsx}}>
-                        {#if col.sort === true}
+                        {#if col.sort !== undefined}
                             <Button compact r="0px" w="100%" color="primary"
                             h="calc({rowHeight} - 1px)" fill={fillHeader}
-                            t.wt="inherit">
+                            t.wt="inherit" on:click={updateSort(col)}>
                                 <Icon
-                                    name="arrows-up-down"
+                                    name={sorting.col === col
+                                        ? sortIcons[sorting.direction]
+                                        : "arrows-up-down"
+                                    }
                                     m.r="8px"
                                     t.sz="16px"
                                 />
@@ -119,7 +163,7 @@
                                     type="text"
                                     ws-x="w.min[30px] w[100%]
                                     outline:focus[none] p[2px] r[2px]"
-                                    on:input={fuckSvelte(colNum)}
+                                    on:input={fixSvelteBug(colNum)}
                                 />
                             </Grid>
                         </th>
@@ -141,7 +185,7 @@
         <tr ws-x="h[{rowHeight}]" slot="empty-row" />
     </Table>
     <Grid slot="footer" gr.cols="min-content min-content min-content 1fr">
-        {#if pageCount > 1}
+        {#if pageCount > 0}
             <Button on:click={prev} disabled={page === 0}>
                 <Icon name="arrow-big-left" />
             </Button>
@@ -149,9 +193,7 @@
                 <Icon name="arrow-big-right" />
             </Button>
             <Text adorn t.ws="nowrap">
-                {#if pageCount !== 0}
-                    Page {page + 1} / {pageCount}
-                {/if}
+                Page {page + 1} / {pageCount}
             </Text>
         {/if}
     </Grid>
