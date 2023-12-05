@@ -14,6 +14,7 @@
         "$toggle": true,
         "$flat": flat,
         "$color": color,
+        "fl.dir": reverse ? "row-reverse" : false,
         ...$$restProps,
     }
     $: input = {
@@ -37,15 +38,10 @@
 </script>
 
 <label use:wsx={container}>
-    {#if reverse !== true}
+    <div>
         <slot>
-            <span>{label}</span>
+            {label}
         </slot>
-    {/if}
+    </div>
     <input type="checkbox" bind:checked use:wsx={input} />
-    {#if reverse === true}
-        <slot>
-            <span>{label}</span>
-        </slot>
-    {/if}
 </label>
