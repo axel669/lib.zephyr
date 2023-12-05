@@ -12,27 +12,17 @@
             return true
         }
     )
-    const sortIcons = {
-        "asc": "arrow-down",
-        "desc": "arrow-up",
-    }
     const noSort = {
-        col: null,
         direction: null,
-        func: (a, b) => 0
+        func: (a, b) => 0,
+        base: null,
     }
 
-    export const filters = {
-        text: (propName) =>
-            (text, row) =>
-                row[propName]
-                .toLowerCase()
-                .includes(text.toLowerCase())
-    }
+    export const dtContext = Symbol("table key")
 </script>
 
 <script>
-    import { createEventDispatcher } from "svelte"
+    import { createEventDispatcher, setContext } from "svelte"
     import { writable } from "svelte/store"
 
     import Button from "../control/button.svelte"
@@ -72,9 +62,6 @@
             (pair) => pair[0] !== undefined
         )
     let sorting = noSort
-    $: if (cols !== {}) {
-        sorting = noSort
-    }
     $: filteredData =
         applyFilters(data, filterFunctions, filterInput)
         .sort(sorting.func)
@@ -82,105 +69,51 @@
     const prev = () => page = Math.max(0, page - 1)
     const next = () => page = Math.min(maxPage, page + 1)
 
-    const fire = createEventDispatcher()
-    const pass = handler$(
-        (row) => fire("row-click", row)
-    )
-
-    const fixSvelteBug = eventHandler$(
-        (event, index) => {
-            filterInput[index] = event.target.value
-            filterInput = [...filterInput]
-        }
-    )
-    const updateSort = handler$(
-        (col) => {
+    const updateSort = (func) => {
+        if (sorting.base === func) {
             if (sorting.direction === "desc") {
                 sorting = noSort
                 return
             }
-            const func =
-                (typeof col.sort === "function")
-                ? col.sort
-                : (a, b) => {
-                    const av = a[col.sort]
-                    const bv = b[col.sort]
-                    if (av < bv) {
-                        return -1
-                    }
-                    if (av > bv) {
-                        return 1
-                    }
-                    return 0
-                }
-            const direction = sorting.direction === null ? "asc" : "desc"
             sorting = {
-                col,
-                direction,
-                func: (direction === "asc") ? func : (a, b) => -func(a, b)
+                func: (a, b) => -func(a, b),
+                base: func,
+                direction: "desc"
             }
+            return
         }
+        sorting = {
+            func,
+            base: func,
+            direction: "asc",
+        }
+    }
+
+    const context = writable({})
+    $: $context = {
+        updateSort,
+        fillHeader,
+        sorting,
+    }
+    setContext(dtContext, context)
+
+    const fire = createEventDispatcher()
+    const pass = handler$(
+        (row) => fire("row-click", row)
     )
 </script>
 
 <Paper card {color} l-fl.cross="stretch" l-p="0px">
     <Table data={rows} {color} {fillHeader} {...$$restProps}>
-        <svelte:fragment slot="header" let:colNames>
-            <tr ws-x="h[{rowHeight}]">
-                {#each cols as col, colNum}
-                    <th use:wsx={{p: "0px", ...col.wsx}}>
-                        {#if col.sort !== undefined}
-                            <Button compact r="0px" w="100%" color="primary"
-                            h="calc({rowHeight} - 1px)" fill={fillHeader}
-                            t.wt="inherit" on:click={updateSort(col)}>
-                                <Icon
-                                    name={sorting.col === col
-                                        ? sortIcons[sorting.direction]
-                                        : "arrows-up-down"
-                                    }
-                                    m.r="8px"
-                                    t.sz="16px"
-                                />
-                                <slot name="header-label" {col} {colNum}>
-                                    {col.label ?? ""}
-                                </slot>
-                            </Button>
-                        {:else}
-                            <slot name="header-label" {col} {colNum}>
-                                {col.label ?? ""}
-                            </slot>
-                        {/if}
-                    </th>
-                {/each}
-            </tr>
-            <tr>
-                {#each cols as col, colNum}
-                    {#if col.filter !== undefined}
-                        <th ws-x="p[0px]">
-                            <Grid p="2px" gap="2px" cols="min-content 1fr">
-                                <Icon name="filter" />
-                                <input
-                                    type="text"
-                                    ws-x="w.min[30px] w[100%]
-                                    outline:focus[none] p[2px] r[2px]"
-                                    on:input={fixSvelteBug(colNum)}
-                                />
-                            </Grid>
-                        </th>
-                    {:else}
-                        <th ws-x="p[0px]"></th>
-                    {/if}
-                {/each}
-            </tr>
-        </svelte:fragment>
-        <tr ws-x="h[{rowHeight}]" slot="row" let:row let:rowNum>
-            {#each cols as col, colNum}
-                <slot name="data-cell" {row} {rowNum} {col} {colNum}>
-                    <td>
-                        {row[colNum] ?? row[col.prop] ?? ""}
-                    </td>
-                </slot>
-            {/each}
+        <tr ws-x="h.min[{rowHeight}]" slot="header">
+            <slot name="header">
+                <th>No Header Defined</th>
+            </slot>
+        </tr>
+        <tr ws-x="h[{rowHeight}]" slot="row" let:row>
+            <slot name="row" {row}>
+                <th>No Row Defined</th>
+            </slot>
         </tr>
         <tr ws-x="h[{rowHeight}]" slot="empty-row" />
     </Table>

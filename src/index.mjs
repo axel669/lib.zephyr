@@ -38,12 +38,18 @@ export { default as HexagonSpinner } from "./spinner/hexagon-spinner.svelte"
 export { default as Alert } from "./dialogs/alert.svelte"
 export { default as Confirm } from "./dialogs/confirm.svelte"
 
-export { default as DataTable } from "./composed/data-table.svelte"
 export { default as EntryButton } from "./composed/entry-button.svelte"
 export { default as Toast } from "./composed/toast.svelte"
-export { filters } from "./composed/data-table.svelte"
+
+import DataTable from "./composed/data-table.svelte"
+import th from "./composed/data-table/th.svelte"
+DataTable.th = th
+
+export { DataTable, th }
+// export { default as DataTable } from "./composed/data-table.svelte"
 
 export { default as wsx } from "./wsx.mjs"
 
 
 export * from "./handler$.mjs"
+export * from "./composed/table-functions.js"
