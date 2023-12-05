@@ -2,10 +2,10 @@
 
 <script context="module">
     // find the first filter in the list that returns false
-    const applyFilters = (data, filters, filterInput) => data.filter(
+    const applyFilters = (data, filters) => data.filter(
         (row) => {
-            for (const [filter, index] of filters) {
-                if (filter(filterInput[index], row) === false) {
+            for (const [filter, value] of filters) {
+                if (filter(row, value) === false) {
                     return false
                 }
             }
@@ -40,7 +40,6 @@
     export let color = false
     export let fillHeader = true
     export let data = []
-    export let cols = []
     export let pageSize = 10
     export let page = 0
     export let rowHeight = "40px"
@@ -53,17 +52,12 @@
     $: pageCount = Math.ceil(rowCount / pageSize)
     $: maxPage = Math.max(pageCount - 1, 0)
 
-    $: filterInput = cols.map(() => "")
-    $: filterFunctions =
-        cols.map(
-            (col, index) => [col.filter, index]
-        )
-        .filter(
-            (pair) => pair[0] !== undefined
-        )
     let sorting = noSort
+    let filters = new Map()
+    let filterFunctions = []
+
     $: filteredData =
-        applyFilters(data, filterFunctions, filterInput)
+        applyFilters(data, filterFunctions)
         .sort(sorting.func)
 
     const prev = () => page = Math.max(0, page - 1)
@@ -88,12 +82,22 @@
             direction: "asc",
         }
     }
+    const updateFilter = (func, value) => {
+        if (func === null) {
+            return
+        }
+        filters.set(func, value)
+        filterFunctions = [
+            ...filters.entries()
+        ]
+    }
 
     const context = writable({})
     $: $context = {
         updateSort,
         fillHeader,
         sorting,
+        updateFilter,
     }
     setContext(dtContext, context)
 

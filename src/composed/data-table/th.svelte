@@ -22,6 +22,9 @@
 
     const setSort = () => $context.updateSort(sort)
 
+    let value = ""
+    $: $context.updateFilter(filter, value)
+
     $: wind = {
         ...$$restProps,
         p: "0px",
@@ -48,10 +51,10 @@
             </Button>
         {/if}
         {#if filter !== null}
-            <div>
+            <Grid gap="0px" p="0px" cols="min-content 1fr">
                 <Icon name="filter" />
-                <input type="text" ws-x="w.min[20px]" />
-            </div>
+                <input type="text" ws-x="w.min[20px] outline:focus[none]" bind:value />
+            </Grid>
         {/if}
     </Grid>
 </th>

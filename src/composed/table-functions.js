@@ -1,6 +1,6 @@
 export const filters = {
     text: (propName) =>
-        (text, row) =>
+        (row, text) =>
             row[propName]
                 .toLowerCase()
                 .includes(text.toLowerCase())
