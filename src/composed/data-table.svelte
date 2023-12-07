@@ -30,7 +30,6 @@
     import Paper from "../layout/paper.svelte"
     import Table from "../data-display/table.svelte"
     import Text from "../text.svelte"
-    import TextInput from "../control/input/text.svelte"
 
     import Grid from "../layout/grid.svelte"
 
