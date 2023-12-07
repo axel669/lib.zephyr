@@ -45,6 +45,7 @@
 <input type="checkbox" bind:this={visible} ws-x="disp[none]" />
 {#if resolver !== null}
     <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
     <ws-modal on:click={cancel} role="dialog">
         <svelte:component
         bind:this={displayed}
