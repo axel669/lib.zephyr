@@ -1,10 +1,10 @@
 export { default as Button } from "./control/button.svelte"
+export { default as Input } from "./control/input.svelte"
 export { default as Link } from "./control/link.svelte"
 export { default as Radio } from "./control/radio.svelte"
 export { default as Select } from "./control/select.svelte"
 export { default as Tabs } from "./control/tabs.svelte"
 export { default as Toggle } from "./control/toggle.svelte"
-export * as Input from "./control/input/elems.mjs"
 
 export { default as Avatar } from "./data-display/avatar.svelte"
 export { default as TheLastAirbender } from "./data-display/avatar.svelte"
