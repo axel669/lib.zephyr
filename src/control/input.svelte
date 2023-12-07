@@ -27,6 +27,7 @@
     export let disabled
 
     export let value = ""
+    export let autocompleteOptions = null
 
     export let transform = i => i
     export let tvalue
@@ -36,6 +37,11 @@
     let input = null
     let internalValue = value
     export const focus = () => input.focus()
+
+    const id =
+        (autocompleteOptions === null)
+        ? null
+        : `${Math.random().toString(16)}_${Date.now()}`
 
     $: isNumeric = (type === "number" || type === "range")
     $: if (diff(type, value, internalValue) === true) {
@@ -80,8 +86,9 @@
         this={tag}
         {...props.input}
         {disabled}
-        value={internalValue}
         {type}
+        value={internalValue}
+        list={id}
         on:focus
         on:blur
         on:input={update}
@@ -90,4 +97,11 @@
 
     <slot name="start" />
     <slot name="end" />
+    {#if autocompleteOptions !== null}
+        <datalist {id}>
+            {#each autocompleteOptions as value}
+                <option {value} />
+            {/each}
+        </datalist>
+    {/if}
 </label>
