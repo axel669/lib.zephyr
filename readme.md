@@ -1,7 +1,3 @@
-NOTE: add docs for dumbass svelte browser resolve bullshit
-https://svelte.dev/docs/v4-migration-guide#browser-conditions-for-bundlers
-- form controls?
-
 # Zephyr
 Zephyr is a svelte binding for the [Windstorm](https://windstorm.axel669.net)
 library, with some additional parts to make it look nice in the markup.
