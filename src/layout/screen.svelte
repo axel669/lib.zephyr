@@ -8,7 +8,6 @@
     import { fly } from "svelte/transition"
 
     import wsx from "../wsx.mjs"
-    import vars from "../vars.mjs"
 
     export let width = false
 
