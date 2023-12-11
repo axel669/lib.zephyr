@@ -21,13 +21,14 @@ the entire lib can imported at once, but I dunno how big that bundle will be.
 Components can also take any windstorm function as a prop, using the same rules
 as the `wsx` action.
 
-## Theming
+### Theming
 Windstorm expects a theme to be defined on an ancestor of the html elements
 that use it, and Zephyr does not automatically set the theme because it can
 used anywhere in the page. This means the wsx action (or setting the ws-x
 attribute directly) will be needed for components to look right. Any valid
 Windstorm theme is usable, including custom ones.
 
+### Example
 ```svelte
 <script>
     //  individual import for tree shaking
@@ -49,7 +50,7 @@ Windstorm theme is usable, including custom ones.
 </Wind.Button>
 ```
 
-### Svelte Config
+## Svelte Config
 Zephyr does not output any css of its own, so no configuration is required to
 make it styled as expected. For people using Svelte 4+ you will need to make
 sure your bundler has the browser conditions set as some components do use
