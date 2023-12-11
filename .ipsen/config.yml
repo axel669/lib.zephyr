@@ -6,7 +6,7 @@ langPlugins:
 - prism-svelte
 options:
   theme: dark
-  github: https://github.com/axel669/lib.zephyr
+  repo: https://github.com/axel669/lib.zephyr
   favicon: https://axel669.net/images/megaman-rounded.png
   opengraph:
     title: Zephyr
