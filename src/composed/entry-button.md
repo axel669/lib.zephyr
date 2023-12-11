@@ -20,7 +20,7 @@ addition to the buttons that show them.
     When the component is close the entry event is fired. The detail
     property of the event will have the value from closing it
 
-## Usage
+## Example
 ```svelte
 <EntryButton component={Subscreen} on:entry={console.log}>
     Open Subscreen

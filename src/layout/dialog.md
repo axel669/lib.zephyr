@@ -8,9 +8,10 @@ The Dialog component is used as a wrapper for content and is used in
 conjunction with the Modal component to be controlled on screen.
 
 ## Props
-See the Paper component props.
+This component just wraps a [Paper](./paper.md) component with some extra parts,
+and passes the props to a `Paper`.
 
-## Usage
+## Example
 `cool-dialog.svelte`
 ```svelte
 <Dialog>

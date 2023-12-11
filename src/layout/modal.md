@@ -19,17 +19,29 @@ closes in response to that event.
 Because the Modal does not render content of its own, it does not support
 any wind functions.
 
-- ### component `Component`
-    The component to display when `show` is called
+
+### component
+`Component`
+
+The component to display when `show` is called
 
 ## Functions
-- ### `show(props?) -> Promise`
-    Shows the given component and passes any props provided.
 
-## Usage
+### `show(props?) -> Promise`
+Shows the given component and passes any props provided.
+
+## Example
 ```svelte
+<script>
+    let dialog = null
+    const dialogThing = async () => {
+        const value = await dialog.show({ a: 10, b: 12 })
+        console.log(value)
+    }
+</script>
+
 <Modal component={CoolDialog} bind:this={dialog} />
-<Button on:click={() => dialog.show({ a: 10, b: 12 })}>
+<Button on:click={dialogThing}>
     Open Dialog
 </Button>
 ```

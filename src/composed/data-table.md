@@ -14,21 +14,33 @@ are supported.
 
 - ### color
     Sets `$color`
-- ### cols `Array`
+
+### cols
+`Array`
+
     The columns that should be displayed. Should be in the format of
     `{ label, width?, format?, prop? }`. If a format function is provided,
     it is called on each cell to determine a cells value as
     `format(rowItem)`, otherwise the property defined in prop will be used
     as the cell value.
-- ### data `Array`
+
+### data
+`Array`
+
     The data to display. Each item in the array can be in either the same
     format as the Table, or any kind of object if column format functions
     are used.
-- ### cellWSX `function`
+
+### cellWSX
+`function`
+
     If given, this function will be called for each cell, and should return
     an object that will be passed to the `wsx` action for each <td>
     generated. The function is passed `(rowvalue, rowNum, col)`.
-- ### rowWSX `function`
+
+### rowWSX
+`function`
+
     If given, this function will be called for each row, and should return
     an object that will be passed to the `wsx` action for each <tr>
     generated. The function is passed `(rowValue, rowNum)`.
@@ -42,7 +54,7 @@ are supported.
     that may lead to a degraded user experience if the rows change size
     while paging through the data
 
-## Usage
+## Example
 ```js
 let page
 const cols = [

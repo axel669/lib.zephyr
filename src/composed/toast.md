@@ -26,7 +26,7 @@ also controls the children being shown for convenience.
     actions to be taken against interactions in the message without having
     to bind all kinds of events or callbacks.
 
-## Usage
+## Example
 ```js
 let toast = null
 const notify = () => toast.show(5000, { message: "hi" })

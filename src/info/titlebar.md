@@ -4,27 +4,30 @@ The titlebar is used to set section titles with some style, and provides
 slots for buttons on either side of the title text. Works well as a header
 for Paper components.
 
-## Base
-[Windstorm Titlebar](https://axel669.github.io/lib.windstorm/#components-titlebar)
-
 ## Props
-All [windstorm functions](https://axel669.github.io/lib.windstorm/#css-shorthands)
-are supported.
 
-- ### color `string`
-    Sets `$color`
-- ### fill `bool`
-    Sets `@fill`
+### color
+`string`
+
+Sets `$color`
+
+### fill
+`bool`
+
+Sets `$fill`
 
 ## Slots
-- title\\
-    The center of the titlebar, where the text usually goes
-- menu\\
-    The area on the left of the titlebar (where drawer menus tend to open)
-- action\\
-    The area on the right of the titlebar
 
-## Usage
+### title
+The center of the titlebar, where the text usually goes
+
+### menu
+The area on the left of the titlebar (where drawer menus tend to open)
+
+### action
+The area on the right of the titlebar
+
+## Example
 ```svelte
 <Titlebar color="primary" fill>
     <Text title slot="title">

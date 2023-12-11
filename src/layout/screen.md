@@ -7,17 +7,14 @@ pass values back from child screens. The stacking effect of the Screen is
 controlled by internally tracked svelte context, so no manual effort is
 required to get stacking screens to have the effect.
 
-## Base
-[Windstorm Screen](https://axel669.github.io/lib.windstorm/#components-screen)
-
 ## Props
-All [windstorm functions](https://axel669.github.io/lib.windstorm/#css-shorthands)
-are supported, but they probably won't help much with this component.
 
-- ### width `string`
-    The width of the screen before stack-based padding is applied
+### width
+`string`
 
-## Usage
+The width of the screen before stack-based padding is applied
+
+## Example
 `cool-screen.svelte`
 ```svelte
 <Screen width="70%">

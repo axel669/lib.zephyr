@@ -9,24 +9,45 @@ Container that uses grid layout by default with some nice default values.
 All [windstorm functions](https://axel669.github.io/lib.windstorm/#css-shorthands)
 are supported.
 
-- ### direction `string`
-    Sets `gr-dir`
-- ### pad `string`
-    Sets `p`
-- ### gap `string`
-    Sets `gap`
-- ### cols `string|Array`
-    Sets `gr-col`. Accepts either an array of values that are joined by " "
-    or a regular string value.
-- ### rows `string|Array`
-    Sets `gr-row`. Accepts either an array of values that are joined by " "
-    or a regular string value.
-- ### autoCol `string`
-    Sets `gr-acol`
-- ### autoRow `string`
-    Sets `gr-arow`
 
-## Usage
+### direction
+`string`
+
+Sets `gr.flow`
+
+### pad
+`string`
+
+Sets `p`
+
+### gap
+`string`
+
+Sets `gap`
+
+### cols
+`string|Array`
+
+Sets `gr.cols`. Accepts either an array of values that are joined by " "
+or a regular string value.
+
+### rows
+`string|Array`
+
+Sets `gr.rows`. Accepts either an array of values that are joined by " "
+or a regular string value.
+
+### autoCol
+`string`
+
+Sets `gr.cols.a`
+
+### autoRow
+`string`
+
+Sets `gr.rows.a`
+
+## Example
 ```svelte
 <Grid cross="stretch">
     <Text>Content</Text>

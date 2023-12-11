@@ -3,17 +3,15 @@
 The Toaster component is used for building popup notifications along the
 edges of the window.
 
-## Base
-[Windstorm Toaster](https://axel669.github.io/lib.windstorm/#components-toaster)
-
 ## Props
-All [windstorm functions](https://axel669.github.io/lib.windstorm/#css-shorthands)
-are supported, but probably not very meaningful for this container.
 
-- ### position
-    Sets position of the toaster. See the windstorm base for values.
+### position
+Sets position of the toaster. See the
+[windstorm base](https://windstorm.axel669.net/lib/css/component/toaster)
+for values.
 
-## Usage
+## Example
+```svelte
 <Toaster position="$tc">
     <Notification>
         <Icon name="info">
@@ -21,3 +19,4 @@ are supported, but probably not very meaningful for this container.
         </Icon>
     </Notification>
 </Toaster>
+```

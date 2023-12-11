@@ -10,17 +10,29 @@ using a `<select>`
 All [windstorm functions](https://axel669.github.io/lib.windstorm/#css-shorthands)
 are supported.
 
-- ### color `string`
-    Sets `$color`
-- ### label `string`
-    The text to display as the label
-- ### options `Array[Object]`
-    An array of options and groups to show in the select. Details below
-- ### outline `bool`
-    Sets `@outline`
-- ### value `any`
-    The value currently selected. Can be bound to react to selections or
-    change the current selection.
+### color
+`string`
+
+Sets `$color`
+
+### label
+`string`
+
+The text to display as the label
+
+### options
+`Array[Object]`
+
+An array of options and groups to show in the select. Details below
+
+### outline `bool`
+
+Sets `$outline`
+### value
+`any`
+
+The value currently selected. Can be bound to react to selections or
+change the current selection.
 
 ## Options
 Each object in the options provided should be in one of 2 forms:
@@ -34,22 +46,23 @@ array) is put into the optgroup defined by the group item.
 
 Labels and group names should be strings, but values can be any type.
 
-## Usage
-```js
-// Results in:
-// <option>first</option>
-// <optgroup label="Not Numbers">
-//     <option>second</option>
-//     <option>third</option>
-// </optgroup>
-const options = [
-    { label: "first", value: 1 },
-    { group: "Not numbers" },
-    { label: "second", value: "two" },
-    { label: "third", value: [3] },
-]
-```
+## Example
 ```svelte
+<script>
+    // Results in:
+    // <option>first</option>
+    // <optgroup label="Not Numbers">
+    //     <option>second</option>
+    //     <option>third</option>
+    // </optgroup>
+    const options = [
+        { label: "first", value: 1 },
+        { group: "Not numbers" },
+        { label: "second", value: "two" },
+        { label: "third", value: [3] },
+    ]
+</script>
+
 <Select {options} bind:value label="Blep" />
 <Select {options} bind:value color="warning" label="Why" />
 ```
