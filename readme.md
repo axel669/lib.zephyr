@@ -28,10 +28,15 @@ Windstorm theme is usable, including custom ones.
 ```svelte
 <script>
     //  individual import for tree shaking
-    import { Button } from "@axel669/zephyr"
+    import {
+        Button,
+        wsx
+    } from "@axel669/zephyr"
 
     //  bring the whole thing to keep it simple
     import * as Wind from "@axel669/zephyr"
+
+    const theme = "dark"
 </script>
 
 <!-- the wsx action can be used to setup the ws-x needed for the body -->
