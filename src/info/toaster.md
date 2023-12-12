@@ -12,6 +12,10 @@ for values.
 
 ## Example
 ```svelte
+<script>
+    import { Toaster, Notification, Icon } from "@axel669/zephyr"
+</script>
+
 <Toaster position="$tc">
     <Notification>
         <Icon name="info">

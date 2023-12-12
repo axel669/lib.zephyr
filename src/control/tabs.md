@@ -34,6 +34,8 @@ changes and set to control which tab is selected.
 ## Example
 ```svelte
 <script>
+    import { Tabs } from "@axel669/zephyr"
+
     const options = [
         { label: "Left", value: "left" },
         { label: "Right", value: 2 },

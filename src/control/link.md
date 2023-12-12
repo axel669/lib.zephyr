@@ -37,6 +37,10 @@ is true, or `$flat` if neither is true.
 
 ## Example
 ```svelte
+<script>
+    import { Link } from "@axel669/zephyr"
+</script>
+
 <Link color="primary" href="test" target="_blank">
     Test
 </Link>

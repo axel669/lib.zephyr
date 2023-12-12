@@ -49,6 +49,8 @@ Labels and group names should be strings, but values can be any type.
 ## Example
 ```svelte
 <script>
+    import { Select } from "@axel669/zephyr"
+
     // Results in:
     // <option>first</option>
     // <optgroup label="Not Numbers">

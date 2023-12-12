@@ -49,7 +49,11 @@ Sets `gr.rows.a`
 
 ## Example
 ```svelte
-<Grid cross="stretch">
+<script>
+    import { Grid, Text } from "@axel669/zephyr"
+</script>
+
+<Grid cols="1fr 1fr">
     <Text>Content</Text>
     <Text>More content</Text>
     <Text>Event more content</Text>

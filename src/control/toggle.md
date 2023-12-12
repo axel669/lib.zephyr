@@ -48,6 +48,12 @@ Only used in conjunction with bind:group, see Svelte docs
 
 ## Example
 ```svelte
+<script>
+    import { Toggle } from "@axel669/zephyr"
+
+    let checked = false
+</script>
+
 <Toggle label="Active" bind:checked />
 <Toggle label="Active" checkbox bind:checked />
 <Toggle label="Active" checkbox reverse bind:checked />

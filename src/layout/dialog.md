@@ -14,6 +14,10 @@ and passes the props to a `Paper`.
 ## Example
 `cool-dialog.svelte`
 ```svelte
+<script>
+    import { Dialog, Titlebar, Text } from "@axel669/zephyr"
+</script>
+
 <Dialog>
     <Titlebar slot="header">
         <Text slot="title" title>
@@ -27,6 +31,11 @@ and passes the props to a `Paper`.
 
 `app.svelte`
 ```svelte
+<script>
+    import { Modal, EntryButton } from "@axel669/zephyr"
+    import CoolDialog from "./cool-dialog.svelte"
+</script>
+
 <Modal component={CoolDialog} />
 <EntryButton this={Modal} component={CoolDialog}>
     Open Cool Dialog

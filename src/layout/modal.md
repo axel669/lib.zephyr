@@ -33,6 +33,9 @@ Shows the given component and passes any props provided.
 ## Example
 ```svelte
 <script>
+    import { Modal, Button } from "@axel669/zephyr"
+    import CoolDialog from "./cool-dialog.svelte"
+
     let dialog = null
     const dialogThing = async () => {
         const value = await dialog.show({ a: 10, b: 12 })

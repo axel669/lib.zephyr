@@ -25,6 +25,10 @@ If true, sets $fill on the chip. If false $outline is set instead.
 
 ## Example
 ```svelte
+<script>
+    import { Chip } from "@axel669/zephyr"
+</script>
+
 Emails:
 <Chip clickable>admin@site.com</Chip>
 <Chip clickable color="warning">weirdge@site.com</Chip>

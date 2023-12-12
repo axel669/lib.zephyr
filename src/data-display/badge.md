@@ -15,10 +15,16 @@ The badge text.
 
 ## Example
 ```svelte
-<Badge text="100">
+<script>
+    import { Badge } from "@axel669/zephyr"
+
+    let count = 10
+</script>
+
+<Badge text={count}>
     Unread Messages
 </Badge>
 <Badge text="1k+" color="warning">
-    <button>Clickable Content</button>
+    <button on:click={() => count += 1}>Clickable Content</button>
 </Badge>
 ```

@@ -38,6 +38,10 @@ Sets the button variant of the label when `button` is `true`.
 ## Example
 
 ```svelte
+<script>
+    import { Label } from "@axel669/zephyr"
+</script>
+
 <Label for="checkbox">Toggle Checkbox</Label>
 <Label for="checkbox" button color="primary" fill>
     Open Menu

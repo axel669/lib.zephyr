@@ -15,6 +15,10 @@ Sets `$color` and uses the fill style for coloration.
 
 ## Example
 ```svelte
+<script>
+    import { Notification, Button, Icon } from "@axel669/zephyr"
+</script>
+
 <Notification>
     <Icon name="info-hexagon">
         Some kind of information

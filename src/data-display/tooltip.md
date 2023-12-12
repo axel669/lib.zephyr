@@ -16,6 +16,10 @@ If true, the tooltip will be shown under the content instead of over.
 
 ## Example
 ```svelte
+<script>
+    import { Tooltip, Button } from "@axel669/zephyr"
+</script>
+
 <Tooltip text="This is a button">
     <Button>Do Thing</Button>
 </Tooltip>

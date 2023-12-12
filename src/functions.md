@@ -11,6 +11,8 @@ not pass the event into final function call.
 ### Example
 ```svelte
 <script>
+    import { handler$ } from "@axel669/zephyr"
+
     const clicked = handler$(
         (buttonName) => console.log(buttonName)
     )
@@ -35,6 +37,8 @@ function, the event is passed to the curried function.
 
 ```svelte
 <script>
+    import { eventHandler$ } from "@axel669/zephyr"
+
     const clicked = eventHandler$(
         (event, buttonName) => console.log(event, buttonName)
     )
@@ -63,6 +67,8 @@ directly.
 ### Example
 ```svelte
 <script>
+    import { wsx } from "@axel669/zephyr"
+
     // will generate ws-x="grid gr-col[1fr 1fr]"
     const wsxProps = {
         grid: true,

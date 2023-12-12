@@ -41,6 +41,10 @@ the top of the screen
 ## Example
 `cool-drawer.svelte`
 ```svelte
+<script>
+    import { Drawer, Titlebar, Text } from "@axel669/zephyr"
+</script>
+
 <Drawer>
     <Titlebar slot="header">
         <Text slot="title" title>
@@ -54,6 +58,11 @@ the top of the screen
 
 `app.svelte`
 ```svelte
+<script>
+    import { Modal, EntryButton } from "@axel669/zephyr"
+    import CoolDrawer from "./cool-drawer.svelte"
+</script>
+
 <Modal component={CoolDrawer} />
 <EntryButton this={Modal} component={CoolDrawer}>
     Open Cool Dialog

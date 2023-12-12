@@ -15,8 +15,13 @@ required to get stacking screens to have the effect.
 The width of the screen before stack-based padding is applied
 
 ## Example
-`cool-screen.svelte`
 ```svelte
+<script>
+    import { Scren, Button, Paper } from "@axel669/zephyr"
+
+    export let close
+</script>
+
 <Screen width="70%">
     <Paper>
         This screen is pretty cool I swear

@@ -12,6 +12,10 @@ The name of the icon. Use the tabler icon class name without the "ti-".
 
 ## Example
 ```svelte
+<script>
+    import { Icon } from "@axel669/zephyr"
+</script>
+
 <Icon name="hexagon" />
 <Icon name="hexagons">Are the bestagons</Icon>
 ```

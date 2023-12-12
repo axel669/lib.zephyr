@@ -57,6 +57,10 @@ papers for example)
 
 ## Example
 ```svelte
+<script>
+    import { Paper, Tabs, Text, Titlebar } from "@axel669/zephyr"
+</script>
+
 <Paper>
     <Titlebar slot="header">
         <Text slot="title" title>

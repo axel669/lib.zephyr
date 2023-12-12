@@ -31,6 +31,10 @@ Sets `fl.main`, default is `"start"`
 
 ## Example
 ```svelte
+<script>
+    import { Flex, Text } from "@axel669/zephyr"
+</script>
+
 <Flex cross="stretch">
     <Text>Content</Text>
     <Text>More content</Text>

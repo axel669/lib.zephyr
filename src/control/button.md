@@ -25,6 +25,10 @@ is true, or `$flat` if neither is true.
 
 ## Example
 ```svelte
+<script>
+    import { Button } from "@axel669/zephyr"
+</script>
+
 <Button on:click={action}>
     Flat Button
 </Button>

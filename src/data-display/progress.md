@@ -37,6 +37,10 @@ filled the bar is.
 
 ## Example
 ```svelte
+<script>
+    import { Progress } from "@axel669/zephyr"
+</script>
+
 <Progress color="primary" value={0.1} />
 <Progress color="primary" value={5} max={10} />
 ```

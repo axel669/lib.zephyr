@@ -44,6 +44,8 @@ unique in the list.
 ## Example
 ```svelte
 <script>
+    import { Radio, Grid } from "@axel669/zephyr"
+
     const options = [
         { label: "first", value: 1 },
         { label: "second", value: [] },
@@ -52,5 +54,5 @@ unique in the list.
 </script>
 
 <Radio {options} bind:value />
-<Radio {options} bind:value={other} layout={Grid} gr-col="1fr 1fr" />
+<Radio {options} bind:value={other} layout={Grid} gr.cols="1fr 1fr" />
 ```

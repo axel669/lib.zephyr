@@ -26,6 +26,10 @@ Text to show in the avatar area if image is not used.
 
 ## Example
 ```svelte
+<script>
+    import { Avatar } from "@axel669/zephyr"
+</script>
+
 <Avatar image="url" />
 <Avatar image="url" alt="text" />
 <Avatar text="Hi" color="primary" />

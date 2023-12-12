@@ -15,6 +15,10 @@ content without needing to bind to the parent.
 
 ## Example
 ```svelte
+<script>
+    import { Popover, Button } from "@axel669/zephyr"
+</script>
+
 <Popover let:show>
     <Button on:click={show}>
         Show
