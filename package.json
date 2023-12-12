@@ -15,7 +15,7 @@
     "@axel669/windstorm": "0.2.3"
   },
   "devDependencies": {
-    "@axel669/ipsen": "0.4.0-beta.6",
+    "@axel669/ipsen": "0.4.0-beta.7",
     "@axel669/rollup-html-input": "^0.1.2",
     "@rollup/plugin-node-resolve": "^15.0.2",
     "@rollup/plugin-terser": "^0.4.0",

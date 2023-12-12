@@ -11,8 +11,8 @@ dependencies:
 
 devDependencies:
   '@axel669/ipsen':
-    specifier: 0.4.0-beta.6
-    version: 0.4.0-beta.6
+    specifier: 0.4.0-beta.7
+    version: 0.4.0-beta.7
   '@axel669/rollup-html-input':
     specifier: ^0.1.2
     version: 0.1.2
@@ -45,8 +45,8 @@ packages:
       '@jridgewell/trace-mapping': 0.3.20
     dev: true
 
-  /@axel669/ipsen@0.4.0-beta.6:
-    resolution: {integrity: sha512-LTEFPhfT6rQkyHVh+51z6tbv2XbNvLORqomhOxaY0tSmEcDfMTi0onFYjBt0OOTJyw4yvy7ipsXc9v7mnGHDqQ==}
+  /@axel669/ipsen@0.4.0-beta.7:
+    resolution: {integrity: sha512-f10Xp/XtOMgJhMfZyUYWSKS2FwnwZ+tEjLsP3Rjd2ABcFwTk5zSm3FUetRV4A6gjiubAw0drVo3VPvMSrPEH0w==}
     hasBin: true
     dependencies:
       fs-jetpack: 5.1.0
