@@ -29,7 +29,6 @@ export { default as Modal } from "./layout/modal.svelte"
 export { default as Paper } from "./layout/paper.svelte"
 export { default as Screen } from "./layout/screen.svelte"
 
-// export { default as InlineDialog } from "./inline-dialog.svelte"
 export { default as Text } from "./text.svelte"
 
 export { default as CircleSpinner } from "./spinner/circle-spinner.svelte"
@@ -38,18 +37,13 @@ export { default as HexagonSpinner } from "./spinner/hexagon-spinner.svelte"
 export { default as Alert } from "./dialogs/alert.svelte"
 export { default as Confirm } from "./dialogs/confirm.svelte"
 
+export { default as DataTable } from "./composed/data-table.svelte"
+export { default as Th } from "./composed/data-table/th.svelte"
 export { default as EntryButton } from "./composed/entry-button.svelte"
 export { default as Toast } from "./composed/toast.svelte"
 
 export { default as AsyncButton } from "./async/button.svelte"
 export { default as LoadZone } from "./async/load-zone.svelte"
-
-import DataTable from "./composed/data-table.svelte"
-import th from "./composed/data-table/th.svelte"
-DataTable.th = th
-
-export { DataTable, th }
-// export { default as DataTable } from "./composed/data-table.svelte"
 
 export { default as wsx } from "./wsx.mjs"
 
