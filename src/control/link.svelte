@@ -16,7 +16,7 @@
     $: type = variant({ fill, outline, flat })
 
     $: wind = {
-        "@button": button,
+        "$button": button,
         [type]: true,
         "$color": color,
         ...$$restProps
