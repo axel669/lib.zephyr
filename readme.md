@@ -37,16 +37,19 @@ Windstorm theme is usable, including custom ones.
     import * as Wind from "@axel669/zephyr"
 
     const theme = "dark"
+    const handler = () => {
+        console.log("button clicked!")
+    }
 </script>
 
 <!-- the wsx action can be used to setup the ws-x needed for the body -->
 <svelte:body use:wsx={{"$theme": theme, "$app": true}} />
 
-<Button on:click={stuff}>
+<Button on:click={handler}>
     I'm a button!
 </Button>
 
-<Wind.Button on:click={stuff}>
+<Wind.Button on:click={handler}>
     I'm also button!
 </Wind.Button>
 ```
