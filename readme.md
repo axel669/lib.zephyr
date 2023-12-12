@@ -8,7 +8,7 @@ library, with some additional parts to make it look nice in the markup.
 Zephyr can be installed through npm (or the variants like yarn, pnpm, etc).
 
 ```bash
-npm install @axel669/zephyr
+npm install @axel669/zephyr@0.2.0-beta.1
 ```
 
 ## Components
