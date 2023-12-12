@@ -1,6 +1,4 @@
 <script>
-    import asuid from "@labyrinthos/asuid"
-
     import wsx from "../wsx.mjs"
     import { handler$ } from "../handler$.mjs"
 
@@ -15,7 +13,7 @@
         (newValue) => value = newValue
     )
 
-    const name = asuid()
+    const name = `${Math.random().toString(16)}-${Date.now()}`
 </script>
 
 <svelte:component this={layout} {...$$restProps}>
