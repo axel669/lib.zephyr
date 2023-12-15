@@ -1,3 +1,5 @@
+<svelte:options immutable />
+
 <script>
     import Flex from "./flex.svelte"
     import wsx from "../wsx.mjs"

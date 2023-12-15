@@ -1,3 +1,5 @@
+<svelte:options immutable />
+
 <script context="module">
     const sortIcons = {
         "asc": "arrow-narrow-up",

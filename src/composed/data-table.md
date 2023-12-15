@@ -1,3 +1,5 @@
+NOTE: include Th as its own component
+
 # DataTable
 
 The DataTable is a more advanced way to show data on screen. Underneath is

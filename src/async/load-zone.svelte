@@ -1,3 +1,5 @@
+<svelte:options immutable />
+
 <script>
     import Spinner from "../spinner/hexagon-spinner.svelte"
     export let source = null

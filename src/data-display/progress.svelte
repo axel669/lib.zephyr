@@ -1,3 +1,5 @@
+<svelte:options immutable />
+
 <script>
     import wsx from "../wsx.mjs"
 
@@ -9,7 +11,7 @@
     export let label = null
 
     $: wind = {
-        "@progress": true,
+        "$progress": true,
         "$outline": outline,
         "$color": color,
         $row: row,

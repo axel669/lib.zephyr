@@ -1,3 +1,5 @@
+<svelte:options immutable />
+
 <script>
     import { fade } from "svelte/transition"
     import wsx from "../wsx.mjs"

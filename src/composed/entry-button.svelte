@@ -1,3 +1,5 @@
+<svelte:options immutable />
+
 <script>
     import { createEventDispatcher } from "svelte"
 

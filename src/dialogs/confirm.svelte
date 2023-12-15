@@ -1,3 +1,5 @@
+<svelte:options immutable />
+
 <script>
     import Button from "../control/button.svelte"
     import Dialog from "../layout/dialog.svelte"

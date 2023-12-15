@@ -1,3 +1,5 @@
+<svelte:options immutable />
+
 <script context="module">
     const genID = () => `${Date.now()}:${Math.random().toString(16)}`
 

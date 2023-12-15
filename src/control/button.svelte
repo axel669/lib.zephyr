@@ -1,3 +1,5 @@
+<svelte:options immutable />
+
 <script>
     import wsx from "../wsx.mjs"
     import variant from "../variant.mjs"

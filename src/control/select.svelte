@@ -1,3 +1,5 @@
+<svelte:options immutable />
+
 <script context="module">
     const groupOptions = (options) => options.reduce(
         ({grouped, target = grouped}, item, pos) => {

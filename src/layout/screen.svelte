@@ -1,3 +1,5 @@
+<svelte:options immutable />
+
 <script context="module">
     const ctxStack = Symbol("stack context")
     const ctxClose = Symbol("close context")
