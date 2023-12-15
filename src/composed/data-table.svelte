@@ -2,16 +2,31 @@
 
 <script context="module">
     // find the first filter in the list that returns false
-    const applyFilters = (data, filters) => data.filter(
-        (row) => {
-            for (const [filter, value] of filters) {
-                if (filter(row, value) === false) {
-                    return false
-                }
-            }
-            return true
+    const applyFilters = (data, filters) => {
+        if (Array.isArray(data) === false) {
+            return null
         }
-    )
+        return data.filter(
+            (row) => {
+                for (const [filter, value] of filters) {
+                    if (filter(row, value) === false) {
+                        return false
+                    }
+                }
+                return true
+            }
+        )
+    }
+    const sliceData = (data, page, pageSize, sortFunc) => {
+        if (data === null) {
+            return []
+        }
+        const sorted = data.sort(sortFunc)
+        return Array.from(
+            { length: pageSize },
+            (_, i) => sorted[page * pageSize + i]
+        )
+    }
     const noSort = {
         direction: null,
         func: (a, b) => 0,
@@ -38,26 +53,24 @@
 
     export let color = false
     export let fillHeader = true
-    export let data = []
+    export let data
     export let pageSize = 10
     export let page = 0
     export let rowHeight = "40px"
-
-    $: rows = Array.from(
-        { length: pageSize },
-        (_, i) => filteredData[page * pageSize + i]
-    )
-    $: rowCount = filteredData.length
-    $: pageCount = Math.ceil(rowCount / pageSize)
-    $: maxPage = Math.max(pageCount - 1, 0)
 
     let sorting = noSort
     let filters = new Map()
     let filterFunctions = []
 
-    $: filteredData =
-        applyFilters(data, filterFunctions)
-        .sort(sorting.func)
+    $: filteredData = applyFilters(data, filterFunctions)
+    $: rows = sliceData(filteredData, page, pageSize, sorting.func)
+    $: rowCount = filteredData?.length ?? 0
+    $: pageCount = Math.ceil(rowCount / pageSize)
+    $: maxPage = Math.max(pageCount - 1, 0)
+
+    $: if (filteredData === null) {
+        console.warn("DataTable: data is not an array")
+    }
 
     const prev = () => page = Math.max(0, page - 1)
     const next = () => page = Math.min(maxPage, page + 1)
