@@ -30,7 +30,6 @@
         p: "0px",
         sel: "none"
     }
-    $: console.log($context.sorting)
     $: sortIcon =
         ($context.sorting.base === sort)
         ? sortIcons[$context.sorting.direction]
