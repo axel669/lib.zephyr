@@ -9,7 +9,7 @@
 {#if source !== null}
     {#await source}
         <slot name="loading">
-            <ws-flex ws-x="fl.cross[center] fl.main[center]">
+            <ws-flex ws-x="[fl.cross center] [fl.main center]">
                 <span>{message}</span>
                 <Spinner size="100px" />
             </ws-flex>
