@@ -67,6 +67,7 @@
     $: rowCount = filteredData?.length ?? 0
     $: pageCount = Math.ceil(rowCount / pageSize)
     $: maxPage = Math.max(pageCount - 1, 0)
+    $: page = Math.min(page, maxPage)
 
     $: if (filteredData === null) {
         console.warn("DataTable: data is not an array")
