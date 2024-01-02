@@ -16,5 +16,7 @@
         </slot>
     {:then result}
         <slot {result} />
+    {:catch error}
+        <slot name="error" {error} />
     {/await}
 {/if}
