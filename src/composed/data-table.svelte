@@ -145,6 +145,10 @@
             <Text adorn t.ws="nowrap">
                 Page {page + 1} / {pageCount}
             </Text>
+        {:else}
+            <div ws-x="[col span 4] [p.l 4px] [t.lh 31px]">
+                No data to show
+            </div>
         {/if}
     </Grid>
 </Paper>
