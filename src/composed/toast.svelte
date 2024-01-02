@@ -59,7 +59,7 @@
 
 <Toaster {position} {...$$restProps}>
     {#each items as {props, id} (id)}
-        <zephyr-toast-wrapper ws-x="grid" transition:fade={{duration: 200}}>
+        <zephyr-toast-wrapper ws-x="[grid]" transition:fade={{duration: 200}}>
             <svelte:component
             this={component}
             {...props}

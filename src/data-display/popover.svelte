@@ -18,7 +18,7 @@
 <ws-popover use:wsx={wind}>
     <slot {show} />
     {#if visible}
-        <wind-content slot="content" ws-x="inset[0px]" transition:fade={anim}>
+        <wind-content slot="content" ws-x="[inset 0px]" transition:fade={anim}>
             <slot name="content" {hide} />
         </wind-content>
     {/if}

@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@axel669/windstorm':
-    specifier: 0.2.3
-    version: 0.2.3
+    specifier: 0.3.0
+    version: 0.3.0
 
 devDependencies:
   '@axel669/ipsen':
@@ -63,8 +63,8 @@ packages:
       node-html-parser: 5.4.2
     dev: true
 
-  /@axel669/windstorm@0.2.3:
-    resolution: {integrity: sha512-UovJNXF1nm1crSr8+VzPuTYUtBVIiIqNk3BjDYdd4rmwphXm4PpaLuwje8NSLCo7NgEKxzv8bjmWLY/0pRWpFQ==}
+  /@axel669/windstorm@0.3.0:
+    resolution: {integrity: sha512-T9+Kdk4WlPlRrvYCIr3XvGLpf07LW63zwwv13Nu0ssdmkI2YrOHlIChOCWiIagGvYYT7d3lV/M5rCB0gehPmkQ==}
     dev: false
 
   /@jridgewell/gen-mapping@0.3.2:

@@ -22,7 +22,7 @@
 </script>
 
 <Button {...props} on:click={asyncHandler}>
-    <div ws-x="h[20px] m.r:not(:empty)[4px]">
+    <div ws-x="[h 20px] [m.r:not(:empty) 4px]">
         {#if running === true}
             <Spinner size="20px" />
         {/if}

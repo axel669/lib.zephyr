@@ -15,16 +15,18 @@
     export let outline = false
     export let flat = false
 
+    export let disabled = null
+
     $: type = variant({ fill, outline, flat })
 
     $: wind = {
-        "$button": button,
+        "@button": button,
         [type]: true,
         "$color": color,
         ...$$restProps
     }
 </script>
 
-<a {href} {target} {rel} use:wsx={wind}>
+<a {href} {target} {rel} {disabled} use:wsx={wind}>
     <slot />
 </a>

@@ -121,17 +121,17 @@
 
 <Paper card {color} l-fl.cross="stretch" l-p="0px">
     <Table data={rows} {color} {fillHeader} {...$$restProps}>
-        <tr ws-x="h.min[{rowHeight}]" slot="header">
+        <tr ws-x="[h.min {rowHeight}]" slot="header">
             <slot name="header">
                 <th>No Header Defined</th>
             </slot>
         </tr>
-        <tr ws-x="h[{rowHeight}]" slot="row" let:row>
+        <tr ws-x="[h {rowHeight}]" slot="row" let:row>
             <slot name="row" {row}>
                 <th>No Row Defined</th>
             </slot>
         </tr>
-        <tr ws-x="h[{rowHeight}]" slot="empty-row" />
+        <tr ws-x="[h {rowHeight}]" slot="empty-row" />
     </Table>
     <Grid slot="footer" gr.cols="min-content min-content min-content 1fr">
         {#if pageCount > 0}

@@ -42,7 +42,7 @@
 
 <label use:wsx={wind}>
     {#if label}
-        <span ws-x="$text">{label}</span>
+        <span ws-x="[$label-text]">{label}</span>
     {/if}
     <select value={indexValue} on:input={update} {disabled}>
         {#each grouped as item, index}

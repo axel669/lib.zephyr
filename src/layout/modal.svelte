@@ -44,7 +44,7 @@
     let visible = null
 </script>
 
-<input type="checkbox" bind:this={visible} ws-x="disp[none]" />
+<input type="checkbox" bind:this={visible} ws-x="[disp none]" />
 {#if resolver !== null}
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->

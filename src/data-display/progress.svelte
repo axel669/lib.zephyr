@@ -21,7 +21,7 @@
 
 <label use:wsx={wind}>
     {#if label}
-        <span ws-x="$text t-ws[nowrap]">{label}</span>
+        <span ws-x="[$progress-text] [t-ws nowrap]">{label}</span>
     {/if}
     <progress {value} {max} />
 </label>

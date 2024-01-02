@@ -82,7 +82,7 @@
 
 <label use:wsx={wind} ws-error={error}>
     {#if label}
-        <span ws-x="$text" ws-hint={hint}>{label}</span>
+        <span ws-x="[$label-text]" ws-hint={hint}>{label}</span>
     {/if}
     <svelte:element
         this={tag}

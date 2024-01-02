@@ -1,6 +1,6 @@
 import ws from "@axel669/windstorm"
 
-ws.custom("outline", (o) => ws.prop("outline", o))
+// ws.custom("outline", (o) => ws.prop("outline", o))
 
 export default (node, props) => {
     const update = (props) => {

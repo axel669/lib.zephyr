@@ -16,7 +16,7 @@
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-<wind-wrapper transition:trick ws-x="$dialog grid" on:click|stopPropagation
+<wind-wrapper transition:trick ws-x="@dialog [grid]" on:click|stopPropagation
 role="dialog">
     <Paper {...$$props}>
         <slot name="header" slot="header" />
