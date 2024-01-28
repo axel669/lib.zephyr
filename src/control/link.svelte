@@ -27,6 +27,6 @@
     }
 </script>
 
-<a {href} {target} {rel} {disabled} use:wsx={wind}>
+<a {href} {target} {rel} {disabled} use:wsx={wind} on:click>
     <slot />
 </a>
