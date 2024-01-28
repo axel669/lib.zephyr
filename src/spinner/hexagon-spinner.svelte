@@ -4,10 +4,10 @@
     import wsx from "../wsx.mjs"
 
     export let size = "100px"
-    export let color = "primary"
+    export let color = "@primary"
 
     $: wind = {
-        "&size": size,
+        "@size": size,
         "$color": color,
     }
 </script>

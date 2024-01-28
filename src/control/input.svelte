@@ -23,7 +23,7 @@
 
     export let flat = false
     export let label
-    export let color = "default"
+    export let color = "@default"
     export let error = null
     export let hint = null
     export let disabled
@@ -72,7 +72,7 @@
 
     $: wind = {
         "$flat": flat,
-        "$control": true,
+        "@control": true,
         "$color": color,
         ...props.wind,
     }
@@ -82,7 +82,7 @@
 
 <label use:wsx={wind} ws-error={error}>
     {#if label}
-        <span ws-x="[$label-text]" ws-hint={hint}>{label}</span>
+        <span use:wsx={{ slot: "label-text" }} ws-hint={hint}>{label}</span>
     {/if}
     <svelte:element
         this={tag}

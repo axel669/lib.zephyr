@@ -4,7 +4,7 @@
     import wsx from "../wsx.mjs"
     import variant from "../variant.mjs"
 
-    export let color = "default"
+    export let color = "@default"
     export let clickable = false
 
     export let fill = false

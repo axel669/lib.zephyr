@@ -22,8 +22,8 @@
     setContext(ctxStack, stack + 1)
 
     $: wind = {
-        "&stack": stack.toString(),
-        "&screen-width": width,
+        "@stack": stack.toString(),
+        "@screen-width": width,
         "bg.c": "transparent",
         ...$$restProps
     }

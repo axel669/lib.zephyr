@@ -20,7 +20,7 @@
     $: baseStyles =
         (button === true)
         ? {
-            $button: true,
+            "@button": true,
             [type]: true,
             "$color": color,
             $compact: compact,

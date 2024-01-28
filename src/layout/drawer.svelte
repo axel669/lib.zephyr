@@ -3,16 +3,16 @@
 <script context="module">
     const defs = {
         select: {
-            "$select": true,
+            "@select": true,
             "w.min": "35vw",
             grid: true,
             over: "hidden"
         },
         menu: {
-            "$menu": true,
+            "@menu": true,
         },
         action: {
-            "$action": true,
+            "@action": true,
         }
     }
 </script>

@@ -12,7 +12,7 @@
     export let icon
     export let message
     export let okText = "OK"
-    export let color = "primary"
+    export let color = "@primary"
 </script>
 
 <Dialog card {color}>

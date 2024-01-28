@@ -11,7 +11,7 @@
     export let label = null
 
     $: wind = {
-        "$progress": true,
+        "@progress": true,
         "$outline": outline,
         "$color": color,
         $row: row,
@@ -21,7 +21,7 @@
 
 <label use:wsx={wind}>
     {#if label}
-        <span ws-x="[$progress-text] [t-ws nowrap]">{label}</span>
+        <span ws-x="[$progress-label] [t-ws nowrap]">{label}</span>
     {/if}
     <progress {value} {max} />
 </label>

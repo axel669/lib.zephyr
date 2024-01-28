@@ -33,7 +33,7 @@
     $: grouped = groupOptions(options)
 
     $: wind = {
-        "$control": true,
+        "@control": true,
         "$outline": outline,
         "$color": color,
         ...$$restProps,

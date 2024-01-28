@@ -4,7 +4,7 @@
     import wsx from "../wsx.mjs"
 
     export let label = ""
-    export let color = "default"
+    export let color = "@default"
     export let checked = false
     export let flat = false
     export let value
@@ -13,14 +13,14 @@
     export let reverse = false
 
     $: container = {
-        "$toggle": true,
+        "@toggle": true,
         "$flat": flat,
         "$color": color,
         "fl.dir": reverse ? "row-reverse" : false,
         ...$$restProps,
     }
     $: input = {
-        "$switch": checkbox === false
+        "@switch": checkbox === false
     }
 
     const updateGroup = (checked) => {

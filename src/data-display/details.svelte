@@ -5,7 +5,7 @@
 
     export let label
     export let outline
-    export let color = "default"
+    export let color = "@default"
     export let open = false
 
     $: wind = {

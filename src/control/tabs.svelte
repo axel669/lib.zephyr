@@ -4,7 +4,7 @@
     import wsx from "../wsx.mjs"
     import { handler$ } from "../handler$.mjs"
 
-    export let color = "primary"
+    export let color = "@primary"
     export let options = []
     export let vertical = false
     export let solid = false
