@@ -47,6 +47,7 @@ export { default as LoadZone } from "./async/load-zone.svelte"
 
 export { default as wsx } from "./wsx.mjs"
 
+export { hash } from "./hash.js"
 
 export * from "./handler$.mjs"
 export * from "./composed/table-functions.js"
