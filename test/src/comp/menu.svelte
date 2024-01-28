@@ -11,10 +11,10 @@
 
     export let close
 
-    // export const cancel = () => close(null)
+    export const cancel = () => close(null)
 </script>
 
-<Drawer type="menu" height="250px">
+<Drawer>
     <Titlebar slot="header">
         <Text slot="title" title>Menu?</Text>
         <Button slot="action" on:click={close}>

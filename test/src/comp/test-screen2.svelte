@@ -9,7 +9,7 @@
         EntryButton,
     } from "@axel669/svelte-wind"
 
-    import TestDialog from "./test-screen2.svelte"
+    import TestDialog from "./test-dialog.svelte"
 
     export let close
     export let closeToTop

@@ -5,12 +5,9 @@
         Icon,
         Text,
         Titlebar,
-        EntryButton,
 
         Flex,
     } from "@axel669/svelte-wind"
-
-    import TestDialog2 from "./test-dialog2.svelte"
 
     export let close
     export let closeToTop
@@ -35,7 +32,4 @@
     <Button on:click={closeToTop}>
         Close All
     </Button>
-    <EntryButton component={TestDialog2} props={{}}>
-        Please WOrk?
-    </EntryButton>
 </Dialog>

@@ -9,7 +9,7 @@ export default {
     input: "test/src/index.html",
     output: {
         file: "test/build/app.mjs",
-        format: "esm",
+        format: "iife",
         sourcemap: true,
     },
     plugins: [

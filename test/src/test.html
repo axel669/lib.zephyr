@@ -8,11 +8,20 @@
         <link rel="icon" type="image/png" href="https://axel669.net/images/megaman-rounded.png">
     </head>
     <body>
-        <style ws-root>
-            .ws-style {
-                --outline: "outline: {$}";
+        <style>
+            :where([ws-x*="test"]) {
+                background-color: var(--test\.x);
             }
         </style>
-        <script data-main src="main.mjs"></script>
+        <div>
+            content
+        </div>
+        <div ws-x="test">
+            more content
+        </div>
+        <script>
+            const div = document.querySelector("div[ws-x]")
+            div.style.setProperty("--test.x", "teal")
+        </script>
     </body>
 </html>
