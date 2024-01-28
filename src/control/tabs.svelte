@@ -35,7 +35,9 @@
         <!-- svelte-ignore a11y-interactive-supports-focus -->
         <ws-tab use:wsx={{"$tab-selected": index === i}}
         on:click={set(tab.value)} role="tab">
-            {tab.label}
+            <slot {tab} selected={index === i}>
+                {tab.label}
+            </slot>
         </ws-tab>
     {/each}
 </ws-tabs>
