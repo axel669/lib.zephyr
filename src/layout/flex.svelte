@@ -8,6 +8,7 @@
     export let gap = false
     export let cross = "stretch"
     export let main = "start"
+    export let scrollable = false
 
     $: wind = {
         "fl.dir": direction,
@@ -15,6 +16,7 @@
         "fl.main": main,
         p: pad,
         gap: gap,
+        over: (scrollable === true) ? "auto" : null,
         ...$$restProps
     }
 </script>

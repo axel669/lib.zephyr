@@ -10,6 +10,7 @@
     export let rows = null
     export let autoCol = false
     export let autoRow = false
+    export let scrollable = false
 
     $: wind = {
         "gr.flow": direction,
@@ -19,6 +20,7 @@
         "gr.rows.a": autoRow,
         p: pad,
         gap: gap,
+        over: (scrollable === true) ? "auto" : null,
         ...$$restProps
     }
 </script>
