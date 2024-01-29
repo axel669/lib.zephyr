@@ -8,14 +8,14 @@ library, with some additional parts to make it look nice in the markup.
 Zephyr can be installed through npm (or the variants like yarn, pnpm, etc).
 
 ```bash
-npm install @axel669/zephyr@0.2.0-beta.1
+npm install @axel669/zephyr
 ```
 
 ## Components
 Components can be imported individually from the library for tree-shaking, or
 the entire lib can imported at once, but I dunno how big that bundle will be.
-Components can also take any windstorm function as a prop, using the same rules
-as the `wsx` action.
+Components can also take any windstorm macro as a prop, including custom macros,
+using the same rules as the `wsx` covered in [Functions](./src/functions.md).
 
 ### Theming
 Windstorm expects a theme to be defined on an ancestor of the html elements
@@ -43,7 +43,7 @@ Windstorm theme is usable, including custom ones.
 </script>
 
 <!-- the wsx action can be used to setup the ws-x needed for the body -->
-<svelte:body use:wsx={{"$theme": theme, "$app": true}} />
+<svelte:body use:wsx={{"@theme": theme, "@app": true}} />
 
 <Button on:click={handler}>
     I'm a button!

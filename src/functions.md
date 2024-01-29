@@ -81,3 +81,28 @@ directly.
     <span>Content</span>
 </div>
 ```
+
+## hash store
+A svelte store that has the current value of the browser page hash. It uses
+polling to check the value several times a second (it's a cheap check) so the
+weird browser issues around hash change events don't affect it. Can also be used
+to set the browser hash.
+
+### Example
+```svelte
+<script>
+    import { hash } from "@axel669/zephyr"
+</script>
+
+<div>
+    Browser hash: {$hash}
+</div>
+```
+
+## sorts
+A collection fo sorting functions for use with the DataTable. Currently only
+has natural sort as `sorts.natural(colProp)`.
+
+## filters
+A collection of filter functions for use with the DataTable. Currently only has
+a text filter function as `filter.text(colProp)`.

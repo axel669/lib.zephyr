@@ -1,5 +1,4 @@
 # Label
-
 The label component is a wrapper around a `<label>` element.
 
 ## Props
