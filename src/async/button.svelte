@@ -4,7 +4,6 @@
 
     export let handler = null
     export let disabled
-    export let inactiveProps = null
 
     let running = false
     const asyncHandler = async (evt) => {
@@ -13,10 +12,9 @@
         running = false
     }
 
-    $: inactive = (typeof disabled === "boolean") ? disabled : running
+    $: inactive = disabled || running
     $: props = {
         ...$$restProps,
-        ...(running === false ? null : inactiveProps),
         disabled: inactive,
     }
 </script>
