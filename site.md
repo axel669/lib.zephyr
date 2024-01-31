@@ -21,6 +21,7 @@
         - [Badge](src/data-display/badge.md)
         - [Chip](src/data-display/chip.md)
         - [DataTable](src/composed/data-table.md)
+        - [DataTable/TH](src/composed/data-table/th.md)
         - [Details](src/data-display/details.md)
         - [Popover](src/data-display/popover.md)
         - [Progress](src/data-display/progress.md)
