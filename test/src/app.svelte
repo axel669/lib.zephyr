@@ -13,108 +13,49 @@
         DataTable,
         Input,
         Link,
-        Th,
+        TH,
         Toggle,
         Tabs,
 
         wsx,
         filters,
         sorts,
+
+        hash,
     } from "#lib"
 
     import Menu from "./comp/menu.svelte"
+    import data2 from "./data.js"
 
     let theme = "tron"
 
-    const wait = (time) => new Promise(
-        resolve => setTimeout(resolve, time)
-    )
-    const loader = async () => {
-        await wait(2000)
-        const n = Math.random()
-        if (n < 0.5) {
-            throw new Error("sadge")
-        }
-        return n
-    }
+    // const wait = (time) => new Promise(
+    //     resolve => setTimeout(resolve, time)
+    // )
+    // const loader = async () => {
+    //     await wait(2000)
+    //     const n = Math.random()
+    //     if (n < 0.5) {
+    //         throw new Error("sadge")
+    //     }
+    //     return n
+    // }
 
-    let asyncThing = loader()
-
-    // const dx = (a) => ({
-    //     first: a[0],
-    //     second: a[1],
-    //     third: a[2],
-    //     another: a[3],
-    // })
-    // const data = [
-    //     dx(Array.from({ length: 4 }, (_, i) => `Cell ${i}`)),
-    //     dx(Array.from({ length: 4 }, (_, i) => `Row 2,${i}`)),
-    //     dx(Array.from({ length: 4 }, (_, i) => `Sq ${i ** 2}`)),
-    //     dx(Array.from({ length: 4 }, (_, i) => `Sub ${i - 2}`)),
-    //     dx(Array.from({ length: 4 }, (_, i) => `Cell ${i}`)),
-    //     dx(Array.from({ length: 4 }, (_, i) => `Row 2,${i}`)),
-    //     dx(Array.from({ length: 4 }, (_, i) => `Sq ${i ** 2}`)),
-    //     dx(Array.from({ length: 4 }, (_, i) => `Sub ${i - 2}`)),
-    // ]
-    // console.log(JSON.stringify(data, null, 4))
-    const data2 = [
-        {
-            "first": "Cell 0",
-            "second": "Cell 1",
-            "third": "Cell 2",
-            "another": "Cell 3"
-        },
-        {
-            "first": "Row 2,0",
-            "second": "Row 2,1",
-            "third": "Row 2,2",
-            "another": "Row 2,3"
-        },
-        {
-            "first": "Sq 0",
-            "second": "Sq 1",
-            "third": "Sq 4",
-            "another": "Sq 9"
-        },
-        {
-            "first": "Sub -2",
-            "second": "Sub -1",
-            "third": "Sub 0",
-            "another": "Sub 1"
-        },
-        {
-            "first": "Cell 0",
-            "second": "Cell 1",
-            "third": "Cell 2",
-            "another": "Cell 3"
-        },
-        {
-            "first": "Row 2,0",
-            "second": "Row 2,1",
-            "third": "Row 2,2",
-            "another": "Row 2,3"
-        },
-        {
-            "first": "Sq 0",
-            "second": "Sq 1",
-            "third": "Sq 4",
-            "another": "Sq 9"
-        },
-        {
-            "first": "Sub -2",
-            "second": "Sub -1",
-            "third": "Sub 0",
-            "another": "Sub 1"
-        }
-    ]
+    // let asyncThing = loader()
     const data = [].concat(data2, data2, data2)
 
     const options = [
-        { label: "First", value: 1 },
-        { label: "Second", value: 2 },
-        { label: "Default", value: null },
+        { label: "First", value: "/games" },
+        { label: "Second", value: "/features" },
+        { label: "Default", value: "/boobs" },
     ]
-    let activeTab = 1
+    let activeTab = $hash
+
+    window.hash = hash
+    $: console.log($hash)
+
+    $: activeTab = $hash
+    $: hash.set(activeTab)
 </script>
 
 <svelte:head>
@@ -135,29 +76,19 @@
             </EntryButton>
         </Titlebar>
 
+        <Tabs {options} bind:value={activeTab} let:tab let:selected>
+            <div>
+                Active: {selected.toString()}<br />
+                {tab.label}
+            </div>
+        </Tabs>
+
         <DataTable pageSize={10} color="@primary" {data} scrollable height="320px">
             <svelte:fragment slot="header">
-                <Th filter={filters.text("first")}>1st</Th>
-                <Th>Second</Th>
-                <Th sort={sorts.natural("third")}>III</Th>
-                <Th>d.</Th>
-            </svelte:fragment>
-            <svelte:fragment slot="row" let:row>
-                <td>{row.first}</td>
-                <td>{row.second}</td>
-                <td>{row.third}</td>
-                <td>{row.another}</td>
-            </svelte:fragment>
-            <div slot="action">
-                <Button color="@default">Test?</Button>
-            </div>
-        </DataTable>
-        <DataTable pageSize={10} color="@primary" {data}>
-            <svelte:fragment slot="header">
-                <Th filter={filters.text("first")}>1st</Th>
-                <Th>Second</Th>
-                <Th sort={sorts.natural("third")}>III</Th>
-                <Th>d.</Th>
+                <TH filter={filters.text("first")}>1st</TH>
+                <TH>Second</TH>
+                <TH sort={sorts.natural("third")}>III</TH>
+                <TH>d.</TH>
             </svelte:fragment>
             <svelte:fragment slot="row" let:row>
                 <td>{row.first}</td>
@@ -170,7 +101,7 @@
             </div>
         </DataTable>
 
-        <Button on:click={() => asyncThing = loader()}>
+        <!-- <Button on:click={() => asyncThing = loader()}>
             Reload Async
         </Button>
         <LoadZone source={asyncThing} let:result>
@@ -184,7 +115,7 @@
             <div slot="error">
                 :(
             </div>
-        </LoadZone>
+        </LoadZone> -->
 
         <!-- <Link button href="#" color="@primary" fill>Working?</Link>
         <Link button href="#" color="@primary" fill disabled>Working?</Link>
