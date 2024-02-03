@@ -54,7 +54,7 @@
         {#if filter !== null}
             <Grid gap="0px" p="0px" cols="min-content 1fr">
                 <Icon name="filter" />
-                <input type="text" ws-x="[w.min 20px] [outline:focus none]" bind:value />
+                <input type="text" ws-x="[w.min 20px] [outln:focus none]" bind:value />
             </Grid>
         {/if}
     </Grid>
