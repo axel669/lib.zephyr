@@ -1,150 +1,199 @@
+<svelte:options immutable />
+
+<script context="module">
+    // find the first filter in the list that returns false
+    const applyFilters = (data, filters) => {
+        if (Array.isArray(data) === false) {
+            return null
+        }
+        return data.filter(
+            (row) => {
+                for (const [filter, value] of filters) {
+                    if (filter(row, value) === false) {
+                        return false
+                    }
+                }
+                return true
+            }
+        )
+    }
+    const sliceData = (data, page, pageSize, sortFunc) => {
+        if (data === null) {
+            return []
+        }
+        const sorted = data.sort(sortFunc)
+        return Array.from(
+            { length: pageSize },
+            (_, i) => sorted[page * pageSize + i]
+        )
+    }
+    const noSort = {
+        direction: null,
+        func: (a, b) => 0,
+        base: null,
+    }
+
+    export const dtContext = Symbol("table key")
+</script>
+
 <script>
-    /*md
-    [@] Components/Data Display/DataTable
+    import { createEventDispatcher, setContext } from "svelte"
+    import { writable } from "svelte/store"
 
-    # DataTable
-
-    The DataTable is a more advanced way to show data on screen. Underneath is
-    a table element like the Table component, but the DataTable supports
-    more fine-grained control over how data is passed, how rows are displayed,
-    and pagination.
-
-    > If pagination is not needed, the DataTable may not be necessary as it will
-    > only be shortcutting data formatting at that point.
-
-    ## Props
-    All [windstorm functions](https://axel669.github.io/lib.windstorm/#css-shorthands)
-    are supported.
-
-    - ### color
-        Sets `$color`
-    - ### cols `Array`
-        The columns that should be displayed. Should be in the format of
-        `{ label, width?, format?, prop? }`. If a format function is provided,
-        it is called on each cell to determine a cells value as
-        `format(rowItem)`, otherwise the property defined in prop will be used
-        as the cell value.
-    - ### data `Array`
-        The data to display. Each item in the array can be in either the same
-        format as the Table, or any kind of object if column format functions
-        are used.
-    - ### cellWSX `function`
-        If given, this function will be called for each cell, and should return
-        an object that will be passed to the `wsx` action for each <td>
-        generated. The function is passed `(rowvalue, rowNum, col)`.
-    - ### rowWSX `function`
-        If given, this function will be called for each row, and should return
-        an object that will be passed to the `wsx` action for each <tr>
-        generated. The function is passed `(rowValue, rowNum)`.
-    - ### page
-        The current page of data being viewed. Can be bound, or set to control
-        which page is displayed
-    - ### pageSize
-        The number of items to show on each page. Default is 10
-    - ### rowHeight
-        The height of each row. Can be set individually through rowWSX, but
-        that may lead to a degraded user experience if the rows change size
-        while paging through the data
-
-    ## Usage
-    ```js
-    let page
-    const cols = [
-        { label: "N", prop: "a" },
-        { label: "Squared", prop: "b" },
-        { label: "Cubed", format: row => `^3 = ${row.c}` },
-    ]
-    const data = [
-        { a: 1, b: 1 ** 2, c: 1 ** 3 },
-        { a: 2, b: 2 ** 2, c: 2 ** 3 },
-        { a: 3, b: 3 ** 2, c: 3 ** 3 },
-        { a: 4, b: 4 ** 2, c: 4 ** 3 },
-        { a: 5, b: 5 ** 2, c: 5 ** 3 },
-        { a: 6, b: 6 ** 2, c: 6 ** 3 },
-        { a: 7, b: 7 ** 2, c: 7 ** 3 },
-        { a: 8, b: 8 ** 2, c: 8 ** 3 },
-        { a: 9, b: 9 ** 2, c: 9 ** 3 },
-        { a: 10, b: 10 ** 2, c: 10 ** 3 },
-        { a: 11, b: 11 ** 2, c: 11 ** 3 },
-        { a: 12, b: 12 ** 2, c: 12 ** 3 },
-        { a: 13, b: 13 ** 2, c: 13 ** 3 },
-    ]
-    ```
-    ```svelte
-    <DataTable {cols} {data} color="warning" pageSize={3} bind:page />
-    ```
-    */
-
-    import Button from "../button.svelte"
-    import Icon from "../icon.svelte"
-    import Paper from "../paper.svelte"
+    import Button from "../control/button.svelte"
+    import Icon from "../info/icon.svelte"
+    import Paper from "../layout/paper.svelte"
+    import Table from "../data-display/table.svelte"
     import Text from "../text.svelte"
 
-    import Grid from "../grid.svelte"
+    import Grid from "../layout/grid.svelte"
 
     import wsx from "../wsx.mjs"
+    import { handler$, eventHandler$ } from "../handler$.mjs"
 
     export let color = false
-    export let data = []
-    export let cols = []
-    export let rowWSX = null
-    export let cellWSX = null
+    export let fillHeader = true
+    export let data
     export let pageSize = 10
     export let page = 0
     export let rowHeight = "40px"
+    export let scrollable = false
+    export let height = null
 
-    $: wind = {
-        $color: color,
-        ...$$restProps,
+    let sorting = noSort
+    let filters = new Map()
+    let filterFunctions = []
+    let jumpTarget = "1"
+
+    $: filteredData = applyFilters(data, filterFunctions)
+    $: rows = sliceData(filteredData, page, pageSize, sorting.func)
+    $: rowCount = filteredData?.length ?? 0
+    $: pageCount = Math.ceil(rowCount / pageSize)
+    $: maxPage = Math.max(pageCount - 1, 0)
+    $: jumpTarget = (page + 1).toString()
+
+    $: if (filteredData === null) {
+        console.warn("DataTable: data is not an array")
     }
 
-    $: rows = Array.from(
-        { length: pageSize },
-        (_, i) => data[page * pageSize + i]
-    )
-    $: pageCount = Math.ceil(data.length / pageSize)
-
     const prev = () => page = Math.max(0, page - 1)
-    const next = () => page = Math.min(pageCount - 1, page + 1)
+    const next = () => page = Math.min(maxPage, page + 1)
+
+    const updateSort = (func) => {
+        if (sorting.base === func) {
+            if (sorting.direction === "desc") {
+                sorting = noSort
+                return
+            }
+            sorting = {
+                func: (a, b) => -func(a, b),
+                base: func,
+                direction: "desc"
+            }
+            return
+        }
+        sorting = {
+            func,
+            base: func,
+            direction: "asc",
+        }
+    }
+    const updateFilter = (func, value) => {
+        if (func === null) {
+            return
+        }
+        filters.set(func, value)
+        filterFunctions = [
+            ...filters.entries()
+        ]
+    }
+
+    const context = writable({})
+    $: $context = {
+        updateSort,
+        fillHeader,
+        sorting,
+        updateFilter,
+    }
+    setContext(dtContext, context)
+
+    const fire = createEventDispatcher()
+    const pass = handler$(
+        (row) => fire("row-click", row)
+    )
+
+    let scroller = null
+    $: if (scroller !== null && isNaN(page) === false) {
+        scroller.scrollTop = 0
+    }
+    const jump = (evt) => {
+        if (evt.type === "keypress" && evt.key !== "Enter") {
+            return
+        }
+        const target = parseInt(evt.target.value)
+        if (isNaN(target) === true) {
+            jumpTarget = (page + 1).toString()
+            return
+        }
+        page = Math.max(
+            Math.min(jumpTarget - 1, maxPage),
+            0
+        )
+        jumpTarget = (page + 1).toString()
+    }
+
+    $: content = {
+        "fl.cross": "stretch",
+        p: "0px",
+        gap: "0px",
+        over: (scrollable === true) ? "auto" : null,
+    }
+    $: header = {
+        "h.min": rowHeight,
+        y: "0px",
+        z: "+10",
+        pos: (scrollable === true) ? "sticky" : null,
+    }
 </script>
 
-<Paper card {color} lprops={{ "fl-cr-a": "stretch", p: "0px" }}>
-    <table use:wsx={wind}>
-        <thead>
-            <tr>
-                {#each cols as col}
-                    <th use:wsx={{ w: col.width, h: rowHeight }}>{col.label}</th>
-                {/each}
+<Paper {color} h={height}>
+    <ws-flex use:wsx={content} slot="content" bind:this={scroller}>
+        <Table data={rows} {color} {fillHeader} {...$$restProps} b.t.w="0px">
+            <tr use:wsx={header} slot="header">
+                <slot name="header">
+                    <th>No Header Defined</th>
+                </slot>
             </tr>
-        </thead>
-        <tbody>
-            {#each rows as row, rowNum}
-                {#if row === undefined}
-                    <tr use:wsx={{ h: rowHeight }}></tr>
-                {:else}
-                    <tr use:wsx={{ h: rowHeight, ...rowWSX?.(row, rowNum) }}>
-                        {#each cols as col, colNum}
-                            <td use:wsx={cellWSX?.(row, rowNum, col)}>
-                                {(col.format !== undefined)
-                                    ? col.format?.(row)
-                                    : row[col.prop]
-                                }
-                            </td>
-                        {/each}
-                    </tr>
-                {/if}
-            {/each}
-        </tbody>
-    </table>
-    <Grid slot="footer" gr-col="min-content min-content min-content 1fr">
-        <Button on:click={prev}>
-            <Icon name="arrow-big-left" />
-        </Button>
-        <Button on:click={next}>
-            <Icon name="arrow-big-right" />
-        </Button>
-        <Text adorn t-ws="nowrap">
-            Page {page + 1} / {pageCount}
-        </Text>
+            <tr ws-x="[h {rowHeight}]" slot="row" let:row>
+                <slot name="row" {row}>
+                    <th>No Row Defined</th>
+                </slot>
+            </tr>
+            <tr ws-x="[h {rowHeight}]" slot="empty-row" />
+        </Table>
+    </ws-flex>
+    <Grid slot="footer" gr.cols="min-content min-content min-content 1fr"
+    rows="32px" b="1px solid @color" b.b.w="4px">
+        {#if pageCount > 0}
+            <Button on:click={prev} disabled={page === 0}>
+                <Icon name="arrow-big-left" />
+            </Button>
+            <Button on:click={next} disabled={page === maxPage}>
+                <Icon name="arrow-big-right" />
+            </Button>
+            <Text adorn t.ws="nowrap">
+                Page
+                <input ws-x="[b 1px solid @text-color-normal] [w 36px] [r 4px]
+                [h 24px] [bg.c transaprent] [t.a center] [m.l 4px] [m.r 4px]"
+                type="text" bind:value={jumpTarget}
+                on:keypress={jump} on:blur={jump} />
+                / {pageCount}
+            </Text>
+        {:else}
+            <div ws-x="[col span 3] [p.l 4px]">
+                No data to show
+            </div>
+        {/if}
+        <slot name="action" />
     </Grid>
 </Paper>

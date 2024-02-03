@@ -1,0 +1,15 @@
+source: site.md
+dest: site
+parsers: {}
+template: "@basic"
+langPlugins:
+- prism-svelte
+options:
+  theme: dark
+  repo: https://github.com/axel669/lib.zephyr
+  favicon: https://axel669.net/images/megaman-rounded.png
+  opengraph:
+    title: Zephyr
+    description: Svelte bindings for Windstorm
+    image: https://axel669.net/images/megaman-rounded.png
+    themeColor: "#00EEEE"

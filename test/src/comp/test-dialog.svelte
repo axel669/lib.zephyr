@@ -5,11 +5,15 @@
         Icon,
         Text,
         Titlebar,
+        EntryButton,
 
         Flex,
     } from "@axel669/svelte-wind"
 
+    import TestDialog2 from "./test-dialog2.svelte"
+
     export let close
+    export let closeToTop
     export let message
     export const cancel = () => close(null)
 </script>
@@ -28,4 +32,10 @@
     <Text>Second line</Text>
     <Text>{Math.random()}</Text>
     <Text>{message}</Text>
+    <Button on:click={closeToTop}>
+        Close All
+    </Button>
+    <EntryButton component={TestDialog2} props={{}}>
+        Please WOrk?
+    </EntryButton>
 </Dialog>

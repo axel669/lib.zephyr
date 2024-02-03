@@ -7,22 +7,34 @@
     The default component for Toast to show messages with
 
     ## Props
-    - ### actionText `string`
+
+### actionText
+`string`
+
         If given, the message will have a button that can be clicked and will
         use this text for the button text
-    - ### color `string`
+
+### color
+`string`
+
         Sets `$color`
-    - ### icon `string`
+
+### icon
+`string`
+
         An icon to show with the message
-    - ### message `string`
+
+### message
+`string`
+
         The message to show
     */
 
     import { createEventDispatcher } from "svelte"
 
-    import Button from "../../button.svelte"
-    import Icon from "../../icon.svelte"
-    import Notification from "../../notification.svelte"
+    import Button from "../../control/button.svelte"
+    import Icon from "../../info/icon.svelte"
+    import Notification from "../../info/notification.svelte"
 
     export let message = ""
     export let icon = ""

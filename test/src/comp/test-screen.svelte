@@ -6,9 +6,17 @@
         Screen,
         Titlebar,
         Text,
+        EntryButton,
     } from "@axel669/svelte-wind"
 
+    import TestDialog from "./test-screen2.svelte"
+
     export let close
+    export let closeToTop
+
+    const testDialog = () => ({
+        message: Math.random().toString(16)
+    })
 </script>
 
 <Screen>
@@ -23,5 +31,11 @@
         <Text>
             Wat
         </Text>
+        <Button on:click={closeToTop}>
+            Close All
+        </Button>
+        <EntryButton component={TestDialog} on:entry={console.log} props={testDialog}>
+            Test Dialog
+        </EntryButton>
     </Paper>
 </Screen>

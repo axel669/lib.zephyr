@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+
+        <meta charset="utf-8" />
+        <meta name="viewport" content="initial-scale=1,maximum-scale=1,minimum-scale=1,width=device-width" />
+        <link rel="icon" type="image/png" href="https://axel669.net/images/megaman-rounded.png">
+    </head>
+    <body>
+        <style>
+            :where([ws-x*="test"]) {
+                background-color: var(--test\.x);
+            }
+        </style>
+        <div>
+            content
+        </div>
+        <div ws-x="test">
+            more content
+        </div>
+        <script>
+            const div = document.querySelector("div[ws-x]")
+            div.style.setProperty("--test.x", "teal")
+        </script>
+    </body>
+</html>

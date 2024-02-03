@@ -1,236 +1,125 @@
+<svelte:options immutable />
+
 <script>
     import {
-        Avatar,
-        Badge,
         Button,
-        Chip,
-        Details,
+        EntryButton,
         Icon,
-        InlineDialog,
-        Input,
-        Link,
-        Modal,
-        Notification,
+        LoadZone,
         Paper,
-        Popover,
-        Progress,
-        Radio,
         Screen,
-        Select,
-        Table,
-        Tabs,
         Text,
         Titlebar,
-        Toaster,
-        Toggle,
-        Tooltip,
-
-        CircleSpinner,
-        HexagonSpinner,
-
         DataTable,
-        EntryButton,
-        Toast,
-
-        Alert,
-        Confirm,
-
-        Flex,
-        Grid,
+        Input,
+        Link,
+        TH,
+        Toggle,
+        Tabs,
 
         wsx,
-        handler$,
-    } from "@axel669/svelte-wind"
+        filters,
+        sorts,
 
-    import TestDialog from "./comp/test-dialog.svelte"
-    import TestScreen from "./comp/test-screen.svelte"
+        hash,
+    } from "#lib"
+
     import Menu from "./comp/menu.svelte"
+    import data2 from "./data.js"
 
-    import NewRequest from "./comp/new-request.svelte"
-
-    // const reverse = {
-    //     dark: "tron",
-    //     tron: "dark"
-    // }
     let theme = "tron"
-    // const toggle = () => theme = reverse[theme]
 
-    let clicks = 0
-    const inc = () => clicks += 1
+    // const wait = (time) => new Promise(
+    //     resolve => setTimeout(resolve, time)
+    // )
+    // const loader = async () => {
+    //     await wait(2000)
+    //     const n = Math.random()
+    //     if (n < 0.5) {
+    //         throw new Error("sadge")
+    //     }
+    //     return n
+    // }
 
-    let bind = {}
-
-    const openDialog = async () => {
-        console.log(
-            await bind.dialog.show()
-        )
-    }
-
-    const openSubscreen = async () => {
-        console.log(
-            await bind.subscreen.show()
-        )
-    }
-
-    const notify = handler$(
-        () => bind.notify.show(
-            50000,
-            {
-                message: `Test? ${Math.random()}`,
-                icon: "info-hexagon",
-                color: "secondary",
-                actionText: "Sure",
-            }
-        )
-    )
-
-    const action = (evt) => {
-        console.log(evt.detail)
-    }
-
-    $: console.log(bind)
+    // let asyncThing = loader()
+    const data = [].concat(data2, data2, data2)
 
     const options = [
-        { label: "1st", value: { a: 1 } },
-        { label: "2nd", value: { a: 2 }, $color: "primary" },
-        { label: "3rd", value: { a: 3 } },
+        { label: "First", value: "/games" },
+        { label: "Second", value: "/features" },
+        { label: "Default", value: "/boobs" },
     ]
-    let radio = options[0].value
-    // $: console.log(radio)
+    let activeTab = $hash
 
-    const selectOpts = [options[0], { group: "blep" }, options[1], options[2]]
-    let select = radio
-    // $: console.log(select)
+    window.hash = hash
+    $: console.log($hash)
 
-    let tab = radio
-    $: console.log(tab)
-
-    const data = [
-        Array.from({ length: 4 }, (_, i) => `Cell ${i}`),
-        Array.from({ length: 4 }, (_, i) => `Row 2,${i}`),
-        Array.from({ length: 4 }, (_, i) => `Sq ${i ** 2}`),
-        Array.from({ length: 4 }, (_, i) => `Sub ${i - 2}`),
-        Array.from({ length: 4 }, (_, i) => `Cell ${i}`),
-        Array.from({ length: 4 }, (_, i) => `Row 2,${i}`),
-        Array.from({ length: 4 }, (_, i) => `Sq ${i ** 2}`),
-        Array.from({ length: 4 }, (_, i) => `Sub ${i - 2}`),
-    ]
-    const cols = [
-        { label: "1st" },
-        { label: "second" },
-        { label: "Third" },
-        { label: "4th" },
-    ]
-    let page = 0
-    $: console.log("page:", page)
-
-    const testDialog = () => ({
-        message: Math.random().toString(16)
-    })
-
-    let open = false
-    $: console.log("open", open)
+    $: activeTab = $hash
+    $: hash.set(activeTab)
 </script>
 
 <svelte:head>
     <title>Zephyr</title>
 </svelte:head>
-<svelte:body use:wsx={{theme, "@app": true}} />
+<svelte:body use:wsx={{"@theme": theme, "@app": true}} />
 
 <Screen>
     <Paper square card l-pad="12px">
-        <Titlebar slot="header" fill color="primary">
-            <Flex slot="title">
-                <Text title>Zephyr</Text>
+        <Titlebar slot="header" fill color="@primary">
+            <Text title slot="title">
+                Zephyr
                 <Text subtitle>Oh god please work for me and look good</Text>
-            </Flex>
+            </Text>
+
+            <EntryButton component={Menu} slot="menu">
+                <Icon name="menu-2" />
+            </EntryButton>
         </Titlebar>
 
-        <div>
-            <Chip color="primary">Blep</Chip>
-            <Chip color="primary" fill>Blep</Chip>
-        </div>
-
-        <Toggle>
-            Wat
-        </Toggle>
-        <Toggle label="test" flat />
-
-        <Details label="Wat">
-            Test
-        </Details>
-        <Details label="Wat" outline>
-            Test
-        </Details>
-        <Details label="Wat" color="primary" bind:open>
-            Test
-        </Details>
-        <Details>
-            <Icon name="menu" slot="label">Something</Icon>
-            Test
-        </Details>
-
-        <Button outline color="accent">
-            Blep
-        </Button>
-        <Button outline>
-            Blep
-        </Button>
-
-        <Link color="primary" href="#">
-            Test
-        </Link>
-
-        <EntryButton component={TestScreen} on:entry={console.log}>
-            Test Dialog
-        </EntryButton>
-
-        <EntryButton component={Menu} on:entry={console.log}>
-            Test Menu
-        </EntryButton>
-
-        <EntryButton component={TestDialog} on:entry={console.log} props={testDialog}>
-            Test Dialog
-        </EntryButton>
-
-        <EntryButton component={Alert} props={{ message: "Hi", color: "primary" }} color="secondary">
-            Alert
-        </EntryButton>
-        <EntryButton
-        component={Confirm}
-        props={{ message: "Hi", color: "accent" }}
-        color="warning"
-        on:entry={e => console.log(e.detail)}
-        >
-            Confirm
-        </EntryButton>
-
-        <Popover let:show let:hide>
-            <Button on:click={show}>
-                Pls
-            </Button>
-            <div ws-x="inset-x[0px] y[0px] h[100px] bg[teal]" slot="content">
-                <Button on:click={hide}>
-                    Close
-                </Button>
+        <Tabs {options} bind:value={activeTab} let:tab let:selected>
+            <div>
+                Active: {selected.toString()}<br />
+                {tab.label}
             </div>
-        </Popover>
+        </Tabs>
 
-        <CircleSpinner />
-        <HexagonSpinner />
+        <DataTable pageSize={10} color="@primary" {data} scrollable height="320px">
+            <svelte:fragment slot="header">
+                <TH filter={filters.text("first")}>1st</TH>
+                <TH>Second</TH>
+                <TH sort={sorts.natural("third")}>III</TH>
+                <TH>d.</TH>
+            </svelte:fragment>
+            <svelte:fragment slot="row" let:row>
+                <td>{row.first}</td>
+                <td>{row.second}</td>
+                <td>{row.third}</td>
+                <td>{row.another}</td>
+            </svelte:fragment>
+            <div slot="action">
+                <Button color="@default">Test?</Button>
+            </div>
+        </DataTable>
 
-        <!-- <EntryButton this={Modal} component={TestDialog} on:entry={console.log}>
-            Test Dialog
-        </EntryButton>
-        <EntryButton this={Modal} component={Menu} on:entry={console.log}>
-            Test Menu
-        </EntryButton>
-
-        <DataTable {cols} {data} color="warning" pageSize={3} bind:page />
-        <Button on:click={() => page = 0}>
-            Blep
+        <!-- <Button on:click={() => asyncThing = loader()}>
+            Reload Async
         </Button>
-        <Table {cols} {data} />
-        <Table {cols} {data} color="primary" /> -->
+        <LoadZone source={asyncThing} let:result>
+            <div>
+                content
+            </div>
+            <div>
+                {JSON.stringify(result)}
+            </div>
+
+            <div slot="error">
+                :(
+            </div>
+        </LoadZone> -->
+
+        <!-- <Link button href="#" color="@primary" fill>Working?</Link>
+        <Link button href="#" color="@primary" fill disabled>Working?</Link>
+
+        <Input label="Pls" /> -->
     </Paper>
 </Screen>

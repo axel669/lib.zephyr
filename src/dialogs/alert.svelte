@@ -1,16 +1,18 @@
+<svelte:options immutable />
+
 <script>
-    import Button from "../button.svelte"
-    import Dialog from "../dialog.svelte"
-    import Icon from "../icon.svelte"
+    import Button from "../control/button.svelte"
+    import Dialog from "../layout/dialog.svelte"
+    import Icon from "../info/icon.svelte"
     import Text from "../text.svelte"
-    import Titlebar from "../titlebar.svelte"
+    import Titlebar from "../info/titlebar.svelte"
 
     export let close
     export let title = "Alert"
     export let icon
     export let message
     export let okText = "OK"
-    export let color = "primary"
+    export let color = "@primary"
 </script>
 
 <Dialog card {color}>

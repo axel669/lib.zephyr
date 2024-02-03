@@ -1,7 +1,0 @@
-export { default as Area } from "./area.svelte"
-export { default as Email } from "./email.svelte"
-export { default as File } from "./file.svelte"
-export { default as Number } from "./number.svelte"
-export { default as Password } from "./password.svelte"
-export { default as Search } from "./search.svelte"
-export { default as Text } from "./text.svelte"
