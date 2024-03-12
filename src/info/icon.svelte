@@ -4,6 +4,6 @@
     export let name
 </script>
 
-<ws-icon class="ti-{name}" use:wsx={$$restProps}>
+<ws-icon class="bi-{name}" use:wsx={$$restProps}>
     <slot />
 </ws-icon>

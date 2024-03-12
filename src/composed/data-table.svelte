@@ -176,10 +176,10 @@
     rows="32px" b="1px solid @color" b.b.w="4px">
         {#if pageCount > 0}
             <Button on:click={prev} disabled={page === 0}>
-                <Icon name="arrow-big-left" />
+                <Icon name="caret-left" />
             </Button>
             <Button on:click={next} disabled={page === maxPage}>
-                <Icon name="arrow-big-right" />
+                <Icon name="caret-right" />
             </Button>
             <Text adorn t.ws="nowrap">
                 Page

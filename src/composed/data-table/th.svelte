@@ -2,8 +2,8 @@
 
 <script context="module">
     const sortIcons = {
-        "asc": "arrow-narrow-up",
-        "desc": "arrow-narrow-down",
+        "asc": "arrow-up",
+        "desc": "arrow-down",
     }
 </script>
 
@@ -35,7 +35,7 @@
     $: sortIcon =
         ($context.sorting.base === sort)
         ? sortIcons[$context.sorting.direction]
-        : "arrows-up-down"
+        : "arrow-down-up"
 </script>
 
 <th use:wsx={wind} style="vertical-align: top;">

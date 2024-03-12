@@ -1,6 +1,6 @@
 {
   "name": "@axel669/zephyr",
-  "version": "0.3.6",
+  "version": "0.3.8",
   "description": "",
   "main": "src/index.mjs",
   "type": "module",
@@ -12,7 +12,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@axel669/windstorm": "0.3.6"
+    "@axel669/windstorm": "0.3.8"
   },
   "devDependencies": {
     "@axel669/ipsen": "0.4.0-beta.7",
