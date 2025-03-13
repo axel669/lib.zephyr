@@ -5,6 +5,8 @@
         color = "@default",
         data = [],
         fillHeader = false,
+        stickyHeader = false,
+        cols = "1fr",
         header,
         row,
         emptyRow,
@@ -13,7 +15,9 @@
 
     const wind = $derived({
         "$color": color,
-        "$header-fill": fillHeader,
+        "$fill-header": fillHeader,
+        "$sticky-header": stickyHeader,
+        "gr.cols": cols,
         ...rest,
     })
 </script>
