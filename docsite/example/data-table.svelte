@@ -46,3 +46,23 @@
     </tr>
     {/snippet}
 </ze.DataTable>
+
+<div style="height: 360px; display: grid;">
+    <ze.DataTable {data} color="@secondary" cols="1fr 1fr 1fr" fillHeader>
+        {#snippet header()}
+        <tr>
+            <th>A</th>
+            <th>B</th>
+            <th>C</th>
+        </tr>
+        {/snippet}
+
+        {#snippet row(row)}
+        <tr>
+            <td>{row.a}</td>
+            <td>{row.b}</td>
+            <td>{row.c}</td>
+        </tr>
+        {/snippet}
+    </ze.DataTable>
+</div>
