@@ -5,6 +5,10 @@ Instead of trying to make pagination and deal with weird heights of things, the
 DataTable opts to provide a virtual scrolling area to render content in an
 efficient way.
 
+The DataTable also tracks its own content area to adjust the virtual scrolling
+during runtime to ensure it always looks good, regardless of whether or not the
+component has its height set directly, or has it determined by the parent.
+
 > This version doesn't have sorting and filtering, but those are being planned
 > for a future release. Attempting to make the interfacing with those features
 > much more streamlined than before.
