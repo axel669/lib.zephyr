@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@axel669/windstorm':
-        specifier: 0.5.0
-        version: 0.5.0
+        specifier: 0.5.4
+        version: 0.5.4
       svelte:
         specifier: ^5.9.0
         version: 5.9.0
@@ -72,8 +72,8 @@ packages:
   '@axel669/rollup-html-input@0.1.2':
     resolution: {integrity: sha512-oecFl6axi6nZaIebi6vo0igA9FZnisxP4SZOEo4i24J9lQuaTyuMrPbcN7WFYzR9TGBOvuMpmCcti1ePmWu5Fg==}
 
-  '@axel669/windstorm@0.5.0':
-    resolution: {integrity: sha512-rxTFPM4xe9Qb8KgYGUsYbLVtPvgW0OnSYr97eOMbT4v+yh3GWE1nCO9XL9vJlgyUlaUq/RLRr4htlgVPaOGtYw==}
+  '@axel669/windstorm@0.5.4':
+    resolution: {integrity: sha512-tR8j4Mi5CmsmFEPo48wwGRI+1qdPRta/K11UWSusGiXg8vDp1yqp5iHdnTXOhZVnlN1F5AMp0LYshymS34ZqIQ==}
 
   '@jridgewell/gen-mapping@0.3.2':
     resolution: {integrity: sha512-mh65xKQAzI6iBcFzwv28KVWSmCkdRBWoOh+bYQGW3+6OZvbbN3TqMGo5hqYxQniRcH9F2VZIoJCm4pa3BPDK/A==}
@@ -593,7 +593,7 @@ snapshots:
     dependencies:
       node-html-parser: 5.4.2
 
-  '@axel669/windstorm@0.5.0': {}
+  '@axel669/windstorm@0.5.4': {}
 
   '@jridgewell/gen-mapping@0.3.2':
     dependencies:

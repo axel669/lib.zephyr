@@ -13,7 +13,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@axel669/windstorm": "0.5.0",
+    "@axel669/windstorm": "0.5.4",
     "svelte": "^5.9.0"
   },
   "devDependencies": {
