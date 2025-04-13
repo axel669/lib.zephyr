@@ -15,7 +15,8 @@ npm install @axel669/zephyr
 Components can be imported individually from the library for tree-shaking, or
 the entire lib can imported at once, but I dunno how big that bundle will be.
 Components can also take any windstorm macro as a prop, including custom macros,
-using the same rules as the `wsx` covered in [Functions](./src/functions.md).
+using the same rules as the `wsx` covered in
+[Functions](./docsite/docs/functions.md).
 
 ### Theming
 Windstorm expects a theme to be defined on an ancestor of the html elements

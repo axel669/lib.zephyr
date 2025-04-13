@@ -11,7 +11,28 @@ import copy from "@axel669/rollup-copy-static"
 
 import { marked } from "marked"
 import Prism from "prismjs"
+import loadLang from "prismjs/components/index.js"
 import "prism-svelte"
+
+const loadLanguage = (name) => {
+    if (Prism.languages[name] !== undefined) {
+        return
+    }
+    loadLang(name)
+}
+const prismMarked = marked.use({
+    renderer: {
+        code(code, lang) {
+            loadLanguage(lang)
+            const hl = Prism.highlight(
+                code,
+                Prism.languages[lang],
+                lang
+            )
+            return `<pre class="language-${lang}"><code class="language-${lang}">${hl}</code></pre>`
+        }
+    }
+})
 
 const root = path.resolve("docsite/example")
 const docsroot = path.resolve("docsite/docs")
@@ -138,6 +159,22 @@ export default {
                 ].join("\n")
 
                 return output
+            }
+        },
+        {
+            async load(id) {
+                const filename = path.basename(id)
+                if (filename !== "readme.md") {
+                    return
+                }
+                const md = await fs.readFile(id, "utf8")
+                // extremely hacky replace to make it work nice on the site
+                // until i come back and make this more reliable
+                const html = prismMarked.parse(md).replace(
+                    "./docsite/docs/functions.md\"",
+                    "https://github.com/axel669/lib.zephyr/tree/live/docsite/docs/functions.md\" target=\"_blank\""
+                )
+                return `export default ${JSON.stringify(html)}`
             }
         },
         html(),

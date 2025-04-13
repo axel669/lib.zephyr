@@ -1,28 +1,11 @@
 <script>
-    // import {
-    //     EntryButton,
-    //     Icon,
-    //     Link,
-    //     Paper,
-    //     Screen,
-    //     Select,
-    //     Text,
-    //     Titlebar,
-
-    //     Flex,
-    //     Grid,
-
-    //     Route,
-    //     Title,
-
-    //     wsx,
-    //     stackStore,
-    // } from "#lib"
     import * as ze from "#lib"
 
     import Docs from "#comp/docs"
     import SideMenu from "#comp/side-menu"
     import { theme } from "#state/theme"
+
+    import README from "#README"
 
     import examples from "$examples"
 
@@ -63,7 +46,9 @@
 
         <ze.Flex w="min(100%, 720px)">
             <ze.Route exact path="/">
-                Home Screen?
+                <ze.Text>
+                    {@html README}
+                </ze.Text>
             </ze.Route>
             {#each examples as example}
                 <ze.Route path={example.id} component={Docs} props={{...example, page}} />

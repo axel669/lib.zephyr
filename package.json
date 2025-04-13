@@ -36,6 +36,7 @@
   "imports": {
     "#lib": "./src/index.js",
     "#comp/*": "./docsite/comp/*.svelte",
-    "#state/*": "./docsite/state/*.js"
+    "#state/*": "./docsite/state/*.js",
+    "#README": "./readme.md"
   }
 }

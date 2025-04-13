@@ -46,7 +46,7 @@
 
 <Drawer w="200px">
     {#snippet content()}
-    <Grid rows="auto 48px auto auto 1fr" p="0px" gap="0px" h="100%"
+    <Grid rows="auto 48px 48px auto auto 1fr" p="0px" gap="0px" h="100%"
     scrollable={false}>
         <Titlebar fill color="@primary">
             {#snippet title()}
@@ -55,6 +55,9 @@
         </Titlebar>
         <Link href="#" button ground r="0px">
             <Icon name="home-filled" t.sz="20px" />
+        </Link>
+        <Link href="https://github.com/axel669/lib.zephyr" button ground r="0px" target="_blank">
+            <Icon name="brand-github" t.sz="20px" />
         </Link>
         <Paper $ground r="0px">
             {#snippet header()}
