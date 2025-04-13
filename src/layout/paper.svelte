@@ -16,17 +16,6 @@
         ...rest
     } = $props()
 
-    // $: props = Object.entries($$restProps).reduce(
-    //     (p, [key, value]) => {
-    //         const [target, name] =
-    //             (key.startsWith("l!") === true)
-    //             ? [ p.layout, key.slice(2) ]
-    //             : [ p.paper, key ]
-    //         target[name] = value
-    //         return p
-    //     },
-    //     { layout: {}, paper: {} }
-    // )
     const props = $derived(
         splitProps(rest, "l!")
     )

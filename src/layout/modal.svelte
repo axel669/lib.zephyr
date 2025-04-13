@@ -23,7 +23,6 @@
         resolver = null
         modalProps = null
         Component = null
-        // visible.checked = false
         if (topClose !== close) {
             return
         }
@@ -47,7 +46,6 @@
         }
     )
 
-    // let visible = null
     const animationTime = writable(animTime)
     const wind = $derived({
         "@anim-time": $animationTime,

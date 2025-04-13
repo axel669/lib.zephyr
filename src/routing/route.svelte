@@ -58,8 +58,5 @@
         {:else}
             {@render (content ?? children)?.(routeInfo, props)}
         {/if}
-        <!-- <slot {routeInfo}>
-            <svelte:component this={component} {...props} {routeInfo} />
-        </slot> -->
     {/key}
 {/if}

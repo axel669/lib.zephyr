@@ -47,8 +47,6 @@
         content,
         ...rest
     } = $props()
-    // export let height
-    // export let type = "menu"
 
     const animTime = getContext(modalContext)
 

@@ -12,7 +12,6 @@
         message,
         okText = "OK",
         titleText = "Alert",
-        ...rest
     } = $props()
 </script>
 
