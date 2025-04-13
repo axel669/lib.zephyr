@@ -83,6 +83,12 @@ export default {
         format: "iife",
         sourcemap: true,
     },
+    onwarn: (msg, next) => {
+        if (msg.code === "CIRCULAR_DEPENDENCY" && msg.message.includes("svelte")) {
+            return
+        }
+        next(msg)
+    },
     plugins: [
         del({
             targets: ["site/*.js", "site/*.js.map"],
@@ -140,6 +146,7 @@ export default {
             compilerOptions: {
                 generate: "client",
                 runes: true,
+                dev: true,
             }
         }),
         resolve({ browser: true }),
