@@ -1,23 +1,24 @@
 <script>
-    import {
-        EntryButton,
-        Icon,
-        Link,
-        Paper,
-        Screen,
-        Select,
-        Text,
-        Titlebar,
+    // import {
+    //     EntryButton,
+    //     Icon,
+    //     Link,
+    //     Paper,
+    //     Screen,
+    //     Select,
+    //     Text,
+    //     Titlebar,
 
-        Flex,
-        Grid,
+    //     Flex,
+    //     Grid,
 
-        Route,
-        Title,
+    //     Route,
+    //     Title,
 
-        wsx,
-        stackStore,
-    } from "#lib"
+    //     wsx,
+    //     stackStore,
+    // } from "#lib"
+    import * as ze from "#lib"
 
     import Docs from "#comp/docs"
     import SideMenu from "#comp/side-menu"
@@ -25,7 +26,7 @@
 
     import examples from "$examples"
 
-    const page = stackStore("Home")
+    const page = ze.stackStore("Home")
 
     const options = [
         { label: "Theme: Light", value: "light" },
@@ -34,39 +35,39 @@
     ]
 </script>
 
-<Title format={data => `Zephyr - ${data}`} data="Home" />
+<ze.Title format={data => `Zephyr - ${data}`} data="Home" />
 
 <svelte:head>
     <link href="https://cdn.jsdelivr.net/npm/prismjs@v1.29.0/themes/prism-twilight.css" rel="stylesheet" />
     <link href="./md-fix.css" rel="stylesheet" />
 </svelte:head>
-<svelte:body use:wsx={{"@@theme": $theme, "@@app": true}} />
+<svelte:body use:ze.wsx={{"@@theme": $theme, "@@app": true}} />
 
-<Screen alignLeft width="100%">
-    <Paper square l!p="0px">
+<ze.Screen alignLeft width="100%">
+    <ze.Paper square l!p="0px">
         {#snippet header()}
-        <Titlebar fill color="@primary">
+        <ze.Titlebar fill color="@primary">
             {#snippet title()}
-            <Text title>
+            <ze.Text title>
                 Zephyr Docs - {$page}
-            </Text>
+            </ze.Text>
             {/snippet}
 
             {#snippet menu()}
-            <EntryButton component={SideMenu} ground w!props={{animTime: "100ms"}}>
-                <Icon name="menu-2" />
-            </EntryButton>
+            <ze.EntryButton component={SideMenu} ground w!props={{animTime: "100ms"}}>
+                <ze.Icon name="menu-2" />
+            </ze.EntryButton>
             {/snippet}
-        </Titlebar>
+        </ze.Titlebar>
         {/snippet}
 
-        <Flex w="min(100%, 720px)">
-            <Route exact path="/">
+        <ze.Flex w="min(100%, 720px)">
+            <ze.Route exact path="/">
                 Home Screen?
-            </Route>
+            </ze.Route>
             {#each examples as example}
-                <Route path={example.id} component={Docs} props={{...example, page}} />
+                <ze.Route path={example.id} component={Docs} props={{...example, page}} />
             {/each}
-        </Flex>
-    </Paper>
-</Screen>
+        </ze.Flex>
+    </ze.Paper>
+</ze.Screen>
