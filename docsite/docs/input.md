@@ -32,13 +32,16 @@ bound in Svelte.
 ### focus
 Focuses the input.
 
-## Slots
+## Snippets
 
-### end
+### end()
 Puts an element at the end of the input.
 
-### start
+### start()
 Puts an element at the start of the input.
 
-### extra
+### extra()
 Puts an element under the input.
+
+## Events
+- input

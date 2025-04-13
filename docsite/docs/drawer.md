@@ -25,3 +25,7 @@ Makes a drawer that slides in on the right side of the screen
 #### "select"
 Makes a drawer that is centered horizontally and slides in from
 the top of the screen
+
+## Snippets
+The drawer uses a [Paper](#/paper) to display the drawer contents, so the
+snippets used by that element are also used here.

@@ -1,5 +1,4 @@
 # Library Functions/Actions
-
 Zephyr has a few functions to make some tasks easier for working with the
 library.
 

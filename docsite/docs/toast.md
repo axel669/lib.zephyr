@@ -1,5 +1,4 @@
 # Notification
-
 Displays a piece of content that stands out from the surrounding content and
 can also be used for toast messages. Optionally has some interactable
 elements embedded.
@@ -13,10 +12,13 @@ of the child nodes will flip which sides they appear on.
 ### color
 Sets `$color` and uses the fill style for coloration.
 
-## Slots
+## Snippets
 
-### start
+### start()
 Content that goes before the notification text, in the border.
 
-### end
+### end()
 Content that goes after the notification text, in the border.
+
+## Events
+- click

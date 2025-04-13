@@ -17,11 +17,11 @@ Controls whether the Details is showing the extended content. Can be bound to.
 If true, will put an outline around the component, including the extended
 content.
 
-## Slots
+## Snippets
 
-### default
+### default()
 The content to show when the Details is open.
 
-### label
+### label()
 Can be used for more complex labels (things that need nested elements). If used,
 the label prop will be ignored.

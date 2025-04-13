@@ -15,11 +15,10 @@ any of the props.
 ### !component _Component_
 The component that should be rendered once the promises have resolved.
 
-## Slots
+## Snippets
 
-### error
-Content to display when any of the promises reject. This slot is given the error
-in the `error` prop.
+### error(errorDetails)
+Content to display when any of the promises reject.
 
-### loading
+### loading()
 Content to display while the promises are pending.
