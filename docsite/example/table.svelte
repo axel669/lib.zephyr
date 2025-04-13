@@ -7,7 +7,7 @@
     )
 </script>
 
-<Table {data}>
+<Table {data} cols="1fr 1fr 1fr">
     {#snippet header()}
         <tr>
             <th>N</th>
@@ -25,7 +25,7 @@
     {/snippet}
 </Table>
 
-<Table {data} color="@secondary" fillHeader>
+<Table {data} color="@secondary" fillHeader cols="1fr 1fr 1fr">
     {#snippet header()}
         <tr slot="header">
             <th>N</th>
