@@ -80,7 +80,10 @@
     }
     const range = $derived(
         itemRange({
-            scrollPos, scrollMax, containerHeight, rowSize,
+            scrollPos,
+            scrollMax,
+            containerHeight,
+            rowSize: rowSize + rowGap,
             length: data.length,
         })
     )
@@ -107,7 +110,7 @@
     const tbodyHeight = $derived(displayRows.length * rowSize)
 
     const tableWSX = $derived({
-        fillHeader,
+        "$fill-header": fillHeader,
         $color: color,
         "gr.cols": cols,
         "gap.col": `${colGap}px`,
@@ -127,6 +130,14 @@
         row: `span ${displayed}`,
         tf: `translateY(${range[0] * rowPx}px)`,
     })
+    const footerWSX = $derived({
+        h: "40px",
+        bg: "@background-element",
+        $color: color,
+        "b.y": "2px solid @ripple-base-color",
+        disp: "flex",
+        "fl-center": true,
+    })
 
     const show = $derived({
         start: Math.max(1, range[0] + 2),
@@ -135,7 +146,7 @@
     })
 </script>
 
-<Grid cols="1fr" rows="1fr 40px" pos="relative" {...rest}>
+<Grid cols="1fr" rows="1fr min-content" pos="relative" {...rest} gap="0px">
     <div ws-x="[over auto]" bind:this={container}>
         <table use:wsx={tableWSX}>
             <thead>
@@ -157,7 +168,7 @@
         </table>
     </div>
 
-    <div>
+    <div use:wsx={footerWSX}>
         Showing: {show.start} - {show.end} of {show.total}
     </div>
 </Grid>
