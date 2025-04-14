@@ -1,7 +1,7 @@
 <script>
     import { Select, Paper, Button, wsx } from "@axel669/zephyr"
 
-    let theme = "dark"
+    let theme = $state("dark")
 
     const options = [
         { label: "Light", value: "light" },

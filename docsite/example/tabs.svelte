@@ -6,9 +6,9 @@
         { label: "Right", value: 2 },
         { label: "Array", value: ["wat"] },
     ]
-    let value = "left"
+    let value = $state("left")
 </script>
 
 <pre>Value: {JSON.stringify(value)}</pre>
 <Tabs {options} bind:value color="@primary" />
-<Tabs {options} bind:value color="@secondary" fill vertical />
+<Tabs {options} bind:value color="@secondary" fill vertical t!b.l.w="4px" />

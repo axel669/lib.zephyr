@@ -1,4 +1,4 @@
-import ws from "@axel669/windstorm"
+import ws from "./wind.js"
 
 export const none = Symbol("none")
 export default (node, props) => {

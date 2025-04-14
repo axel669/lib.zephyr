@@ -1,5 +1,4 @@
 # Library Functions/Actions
-
 Zephyr has a few functions to make some tasks easier for working with the
 library.
 
@@ -19,11 +18,11 @@ not pass the event into final function call.
 </script>
 
 <!-- logs "first" when clicked -->
-<Button on:click={clicked("first")}>
+<Button onclick={clicked("first")}>
     First
 </Button>
 <!-- logs "second" when clicked -->
-<Button on:click={clicked("second")}>
+<Button onclick={clicked("second")}>
     Second
 </Button>
 ```
@@ -45,11 +44,11 @@ function, the event is passed to the curried function.
 </script>
 
 <!-- logs the event and "first" when clicked -->
-<Button on:click={clicked("first")}>
+<Button onclick={clicked("first")}>
     First
 </Button>
 <!-- logs the event and "second" when clicked -->
-<Button on:click={clicked("second")}>
+<Button onclick={clicked("second")}>
     Second
 </Button>
 ```
@@ -69,7 +68,7 @@ directly.
 <script>
     import { wsx } from "@axel669/zephyr"
 
-    // will generate ws-x="grid gr-col[1fr 1fr]"
+    // will generate ws-x="[grid] [gr.cols 1fr 1fr]"
     const wsxProps = {
         grid: true,
         "gr.cols": "1fr 1fr",
@@ -98,11 +97,3 @@ to set the browser hash.
     Browser hash: {$hash}
 </div>
 ```
-
-## sorts
-A collection fo sorting functions for use with the DataTable. Currently only
-has natural sort as `sorts.natural(colProp)`.
-
-## filters
-A collection of filter functions for use with the DataTable. Currently only has
-a text filter function as `filter.text(colProp)`.

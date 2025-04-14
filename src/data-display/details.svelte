@@ -1,25 +1,33 @@
-<svelte:options immutable />
-
 <script>
-    import wsx from "../wsx.mjs"
+    import wsx from "../wsx.js"
+    import { splitProps } from "../props.js"
 
-    export let label
-    export let outline
-    export let color = "@default"
-    export let open = false
+    let {
+        label,
+        outline,
+        color = "@default",
+        open = false,
+        children,
+        ...rest
+    } = $props()
 
-    $: wind = {
+    const props = $derived(
+        splitProps(rest, "s!")
+    )
+    const wind = $derived({
         "$color": color,
         "$outline": outline,
-        ...$$restProps,
-    }
+        ...props.rest,
+    })
 </script>
 
 <details use:wsx={wind} bind:open>
-    <summary>
-        <slot name="label">
+    <summary use:wsx={props["s!"]}>
+        {#if typeof label === "string"}
             {label}
-        </slot>
+        {:else}
+            {@render label?.()}
+        {/if}
     </summary>
-    <slot />
+    {@render children?.()}
 </details>

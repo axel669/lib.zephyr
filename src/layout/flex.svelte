@@ -1,22 +1,24 @@
-<svelte:options immutable />
-
 <script>
-    import wsx from "../wsx.mjs"
+    import wsx from "../wsx.js"
 
-    export let direction = false
-    export let cross = "stretch"
-    export let main = "start"
-    export let scrollable = false
+    const {
+        direction = false,
+        cross = "stretch",
+        main = "start",
+        scrollable = false,
+        children,
+        ...rest
+    } = $props()
 
-    $: wind = {
+    const wind = $derived({
         "fl.dir": direction,
         "fl.cross": cross,
         "fl.main": main,
         over: (scrollable === true) ? "auto" : null,
-        ...$$restProps
-    }
+        ...rest
+    })
 </script>
 
 <ws-flex use:wsx={wind}>
-    <slot />
+    {@render children?.()}
 </ws-flex>

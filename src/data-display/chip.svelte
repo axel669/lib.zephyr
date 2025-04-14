@@ -1,28 +1,38 @@
-<svelte:options immutable />
-
 <script>
-    import wsx from "../wsx.mjs"
-    import variant from "../variant.mjs"
+    import wsx from "../wsx.js"
+    import variant from "../variant.js"
 
-    export let color = "@default"
-    export let clickable = false
+    let {
+        color = "@default",
+        clickable = false,
 
-    export let fill = false
-    export let outline = false
-    export let flat = false
+        fill = false,
+        outline = false,
+        flat = false,
+        children,
+        onclick,
+        ...rest
+    } = $props()
 
-    $: type = variant({ fill, flat, outline }, "$outline")
+    const type = $derived(
+        variant(
+            "$outline",
+            { fill },
+            { outline },
+            { flat },
+        )
+    )
 
-    $: wind = {
+    const wind = $derived({
         [type]: true,
         "$color": color,
         "@@click": clickable,
-        ...$$restProps
-    }
+        ...rest
+    })
 </script>
 
-<!-- svelte-ignore a11y-click-events-have-key-events -->
-<!-- svelte-ignore a11y-interactive-supports-focus -->
-<ws-chip use:wsx={wind} on:click role="button">
-    <slot />
+<!-- svelte-ignore a11y_interactive_supports_focus -->
+<!-- svelte-ignore a11y_click_events_have_key_events -->
+<ws-chip use:wsx={wind} {onclick} role="button">
+    {@render children?.()}
 </ws-chip>

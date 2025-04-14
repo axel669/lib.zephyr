@@ -1,31 +1,35 @@
-<svelte:options immutable />
-
 <script>
     import { writable } from "svelte/store"
 
-    import wsx from "../wsx.mjs"
-    import { handler$ } from "../handler$.mjs"
+    import wsx from "../wsx.js"
+    import { handler$ } from "../handler$.js"
+    import { splitProps } from "../props.js"
 
-    export let color = "@default"
-    export let options = []
-    export let vertical = false
-    export let fill = false
-    export let value
+    let {
+        color = "@default",
+        fill = false,
+        options = [],
+        value = $bindable(),
+        vertical = false,
+        ...rest
+    } = $props()
 
-    $: wind = {
+    const props = $derived(
+        splitProps(rest, "t!")
+    )
+    const wind = $derived({
         "$fill": fill,
         "$color": color,
         $vert: vertical,
-        ...$$restProps,
-    }
+        ...props.rest,
+    })
 </script>
 
-<!-- svelte-ignore a11y-click-events-have-key-events -->
 <ws-tabs use:wsx={wind} role="tablist">
     {#each options as tab, i}
         <label>
             <input type="radio" value={tab.value} bind:group={value} />
-            <ws-tab>{tab.label}</ws-tab>
+            <ws-tab use:wsx={props["t!"]}>{tab.label}</ws-tab>
         </label>
     {/each}
 </ws-tabs>

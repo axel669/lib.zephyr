@@ -1,5 +1,3 @@
-<svelte:options immutable />
-
 <script>
     import Button from "../control/button.svelte"
     import Dialog from "../layout/dialog.svelte"
@@ -7,28 +5,36 @@
     import Text from "../text.svelte"
     import Titlebar from "../info/titlebar.svelte"
 
-    export let close
-    export let title = "Alert"
-    export let icon
-    export let message
-    export let okText = "OK"
-    export let color = "@primary"
+    const {
+        close,
+        color = "@primary",
+        icon,
+        message,
+        okText = "OK",
+        titleText = "Alert",
+    } = $props()
 </script>
 
 <Dialog card {color}>
-    <Titlebar slot="header" {color}>
-        <Text title slot="title">
+    {#snippet header()}
+    <Titlebar {color}>
+        {#snippet title()}
+        <Text title>
             <Icon name={icon}>
-                {title}
+                {titleText}
             </Icon>
         </Text>
+        {/snippet}
     </Titlebar>
+    {/snippet}
 
     <Text>
         {message}
     </Text>
 
-    <Button slot="footer" on:click={close} {color}>
+    {#snippet footer()}
+    <Button onclick={close} {color} ground>
         {okText}
     </Button>
+    {/snippet}
 </Dialog>

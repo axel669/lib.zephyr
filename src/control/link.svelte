@@ -1,41 +1,47 @@
-<svelte:options immutable />
-
 <script>
-    import wsx from "../wsx.mjs"
-    import variant from "../variant.mjs"
+    import wsx from "../wsx.js"
+    import variant from "../variant.js"
 
-    export let button = false
-    export let color = false
-    export let compact = false
-    export let ground = false
+    const {
+        button = false,
+        color = false,
+        compact = false,
+        ground = false,
 
-    export let href = ""
-    export let rel = "noreferrer"
-    export let target = null
+        href = "",
+        rel = "noreferrer",
+        target = null,
 
-    export let fill = false
-    export let outline = false
-    export let flat = false
+        fill = false,
+        outline = false,
+        flat = false,
 
-    export let disabled = null
+        disabled = null,
 
-    $: type = variant(
-        "$flat",
-        { fill },
-        { outline },
-        { flat }
+        onclick,
+        children,
+        ...rest
+    } = $props()
+
+    const type = $derived(
+        variant(
+            "$flat",
+            { fill },
+            { outline },
+            { flat }
+        )
     )
 
-    $: wind = {
+    const wind = $derived({
         "@@button": button,
         [type]: true,
         "$color": color,
         $compact: compact,
         $ground: ground,
-        ...$$restProps
-    }
+        ...rest
+    })
 </script>
 
-<a {href} {target} {rel} disabled={disabled || null} use:wsx={wind} on:click>
-    <slot />
+<a {href} {target} {rel} disabled={disabled || null} use:wsx={wind} {onclick}>
+    {@render children?.()}
 </a>

@@ -1,24 +1,25 @@
-<svelte:options immutable />
-
 <script>
-    import wsx from "../wsx.mjs"
+    import wsx from "../wsx.js"
 
-    export let alt = ""
-    export let image = null
+    let {
+        alt = "",
+        image = null,
 
-    export let text = ""
+        text = "",
 
-    export let color = false
+        color = false,
+        ...rest
+    } = $props()
 
-    $: wind = {
+    const wind = $derived({
         "$color": color,
-        ...$$restProps
-    }
+        ...rest
+    })
 </script>
 
 <ws-avatar use:wsx={wind}>
     {#if image !== null}
-        <!-- svelte-ignore a11y-missing-attribute -->
+        <!-- svelte-ignore a11y_missing_attribute -->
         <object data={image} type="image/png">
             {alt}
         </object>

@@ -1,25 +1,63 @@
 <script>
-    import { Toast, Button } from "@axel669/zephyr"
-
-    let toast = [null, null]
-    const notify = () => {
-        toast[0].show(
-            5000,
-            { message: "Toast Message!", icon: "exclamation-triangle" }
-        )
-        toast[1].show(
-            5000,
-            {
-                message: "Toast Message!",
-                color: "@secondary",
-                actionText: "Click!"
-            }
-        )
-    }
+    import {
+        Toast,
+        Button,
+        Text,
+        Icon,
+        Grid
+    } from "@axel669/zephyr"
 </script>
 
-<Toast bind:this={toast[0]} position="tc" on:action={console.log} />
-<Toast bind:this={toast[1]} position="tl" on:action={console.log} />
-<Button on:click={notify}>
-    Show a Notif
-</Button>
+<Grid cols="1fr 1fr">
+    <Toast>
+        <Icon name="hexagon">
+            Icon with the notif text
+        </Icon>
+    </Toast>
+    <Toast>
+        {#snippet start()}
+        <Text adorn>
+            <Icon name="hexagon" />
+        </Text>
+        {/snippet}
+
+        <Text>
+            Icon outside the notif text
+        </Text>
+    </Toast>
+
+    <Toast color="@danger">
+        {#snippet start()}
+        <Text adorn>
+            <Icon name="hexagon" />
+        </Text>
+        {/snippet}
+
+        <Text>
+            Danger!
+        </Text>
+
+        {#snippet end()}
+        <Button ground>
+            Fix!
+        </Button>
+        {/snippet}
+    </Toast>
+    <Toast color="@primary">
+        {#snippet start()}
+        <Button ground>
+            Fix!
+        </Button>
+        {/snippet}
+
+        <Text>
+            Reverse the slots
+        </Text>
+
+        {#snippet end()}
+        <Text adorn>
+            <Icon name="hexagon" />
+        </Text>
+        {/snippet}
+    </Toast>
+</Grid>

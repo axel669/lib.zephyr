@@ -1,35 +1,24 @@
-# Toast
-Displays toast notifications along the edge of the screen. Unlike the Toaster
-component, this has functions for interacting with and generating toast
-messages, where the Toaster component has the programmer manage the content.
+# Notification
+Displays a piece of content that stands out from the surrounding content and
+can also be used for toast messages. Optionally has some interactable
+elements embedded.
+
+Expects 1-2 child nodes and will display them on the sides of the
+notification with space between them. This means that reversing the order
+of the child nodes will flip which sides they appear on.
 
 ## Props
-See the Toaster component. The Toast component is wrapper around it that
-also controls the children being shown for convenience.
 
-### component _Component_
-The component to use as a wrapper for the messages. Defaults to the
-ToastMessage component.
+### color
+Sets `$color` and uses the fill style for coloration.
 
-### position _string_
-The position to show modals in. Uses the same positions as the Windstorm
-toaster.
+## Snippets
 
-## Functions
+### start()
+Content that goes before the notification text, in the border.
 
-### show(duration, props)
-Shows a toast notification that will disappear after the specified
-duration (time in milliseconds). The props provided are passed to an
-instance of the component specified in the props.
+### end()
+Content that goes after the notification text, in the border.
 
 ## Events
-
-### action
-Fired when a toast message is clicked. The info argument contains a
-value property that is provided by the message component, and a copy
-of the props passed to that instace.
-
-For the default messages, the value will be `null` if no button was
-clicked, and `true` if the action button was clicked. This allows
-actions to be taken against interactions in the message without having
-to bind all kinds of events or callbacks.
+- click

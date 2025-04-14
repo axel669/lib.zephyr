@@ -12,15 +12,15 @@ Sets `$color`
 ### fill _bool_
 Sets `$fill`
 
-## Slots
+## Snippets
 
-### title
+### title()
 The center of the titlebar, where the text usually goes. Elements can be nested
 in different ways within a parent element for different visual effects in this
 slot.
 
-### menu
+### menu()
 The area on the left of the titlebar (where drawer menus tend to open)
 
-### action
+### action()
 The area on the right of the titlebar

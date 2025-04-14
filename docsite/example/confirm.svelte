@@ -1,7 +1,7 @@
 <script>
     import { Confirm, Button, EntryButton, Modal } from "@axel669/zephyr"
 
-    let confirmModal = null
+    let confirmModal = $state(null)
     const confirmProps = {
         title: "Confirm Example",
         message: "This is an confirm!"
@@ -17,7 +17,7 @@
 </script>
 
 <Modal component={Confirm} bind:this={confirmModal} />
-<Button on:click={show} color="@primary" outline>
+<Button onclick={show} color="@primary" outline>
     Show Confirm
 </Button>
 

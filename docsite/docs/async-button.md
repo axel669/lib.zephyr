@@ -9,5 +9,6 @@ The AsyncButton supports all of the [Button](#/button) props.
 ### handler _Function_
 The async function to call when the button is clicked.
 
-### spincolor _string_
-The color for the load spinner to use. Defaults to `@primary`.
+### sp!<prop>
+Any props starting with `"sp!"` will be passed to the spinner directly (without
+the "sp!" in the name).

@@ -1,20 +1,16 @@
-<svelte:options immutable />
-
 <script>
-    import wsx from "./wsx.mjs"
+    import wsx from "./wsx.js"
 
-    export let title = false
-    export let subtitle = false
-    export let adorn = false
+    const { adorn, subtitle, title, children, ...rest } = $props()
 
-    $: wind = {
+    const wind = $derived({
         "$title-text": title,
         "$subtitle-text": subtitle,
         "$adorn": adorn,
-        ...$$restProps
-    }
+        ...rest
+    })
 </script>
 
 <span use:wsx={wind}>
-    <slot />
+    {@render children?.()}
 </span>

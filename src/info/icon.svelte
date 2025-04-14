@@ -1,9 +1,9 @@
 <script>
-    import wsx from "../wsx.mjs"
+    import wsx from "../wsx.js"
 
-    export let name
+    const { name, children, ...rest } = $props()
 </script>
 
-<ws-icon class="bi-{name}" use:wsx={$$restProps}>
-    <slot />
+<ws-icon data-icon={name} use:wsx={rest}>
+    {@render children?.()}
 </ws-icon>

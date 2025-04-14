@@ -1,19 +1,25 @@
 <script>
     import { Button, Dialog, Titlebar, Text } from "@axel669/zephyr"
 
-    export let close
+    const { close } = $props()
 </script>
 
 <Dialog>
-    <Titlebar slot="header">
-        <Text slot="title" title>
-            Some Title
-        </Text>
-    </Titlebar>
+    {#snippet header()}
+        <Titlebar>
+            {#snippet title()}
+                <Text title>
+                    Some Title
+                </Text>
+            {/snippet}
+        </Titlebar>
+    {/snippet}
 
     <Text>Content</Text>
 
-    <Button slot="footer" color="@secondary" on:click={() => close()}>
-        Close
-    </Button>
+    {#snippet footer()}
+        <Button color="@secondary" onclick={() => close()}>
+            Close
+        </Button>
+    {/snippet}
 </Dialog>

@@ -1,21 +1,24 @@
-<svelte:options immutable />
-
 <script>
-    import wsx from "../wsx.mjs"
-    import { handler$ } from "../handler$.mjs"
+    import wsx from "../wsx.js"
+    import { handler$ } from "../handler$.js"
 
     import Flex from "../layout/flex.svelte"
 
-    export let options = []
-    export let layout = Flex
-    export let value
+    let {
+        layout = Flex,
+        options = [],
+        value = $bindable(),
+        ...rest
+    } = $props()
+
+    const Layout = $derived(layout)
 </script>
 
-<svelte:component this={layout} {...$$restProps}>
-    {#each options as {value: itemValue, label, disabled, ...wind}, index (value)}
+<Layout {...rest}>
+    {#each options as {value: itemValue, label, disabled, ...wind}, index (itemValue)}
         <label use:wsx={{"@@toggle": true, ...wind}} {disabled}>
             <span>{label}</span>
             <input type="radio" value={itemValue} bind:group={value} />
         </label>
     {/each}
-</svelte:component>
+</Layout>

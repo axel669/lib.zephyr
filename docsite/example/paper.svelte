@@ -4,11 +4,15 @@
 
 <Grid cols="1fr 1fr">
     <Paper l-gap="12px">
-        <Titlebar slot="header">
-            <Text slot="title" title>
+        {#snippet header()}
+        <Titlebar>
+            {#snippet title()}
+            <Text title>
                 Some Title
             </Text>
+            {/snippet}
         </Titlebar>
+        {/snippet}
 
         <div>Content 1</div>
         <div>Content 2</div>
@@ -16,29 +20,41 @@
     </Paper>
 
     <Paper card>
-        <Titlebar slot="header">
-            <Text slot="title" title>
+        {#snippet header()}
+        <Titlebar>
+            {#snippet title()}
+            <Text title>
                 Some Other Title
             </Text>
+            {/snippet}
         </Titlebar>
+        {/snippet}
 
-        <Paper slot="content">
+        {#snippet content()}
+        <Paper>
             <div>Content 1</div>
             <div>Content 2</div>
             <div>Content 3</div>
         </Paper>
+        {/snippet}
 
-        <div slot="footer" ws-x="[b 2px solid @text-color-normal] [p 4px]">
+        {#snippet footer()}
+        <div ws-x="[b 2px solid @text-color-normal] [p 4px]">
             Wat
         </div>
+        {/snippet}
     </Paper>
 
     <Paper card color="@primary">
-        <Titlebar slot="header" fill color="@primary">
-            <Text slot="title" title>
+        {#snippet header()}
+        <Titlebar fill color="@primary">
+            {#snippet title()}
+            <Text title>
                 Some Title
             </Text>
+            {/snippet}
         </Titlebar>
+        {/snippet}
 
         <div>Content</div>
     </Paper>

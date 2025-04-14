@@ -1,15 +1,25 @@
 <script>
-    import { Toaster, Notification, Text, Icon } from "@axel669/zephyr"
+    import { Toaster, Button } from "@axel669/zephyr"
+
+    let toaster = $state([null, null])
+    const notify = () => {
+        toaster[0].show(
+            5000,
+            { message: "Toast Message!", icon: "exclamation-triangle" }
+        )
+        toaster[1].show(
+            5000,
+            {
+                message: "Toast Message!",
+                color: "@secondary",
+                actionText: "Click!"
+            }
+        )
+    }
 </script>
 
-<Text>
-    See the notification component in the bottom-right corner of the window
-</Text>
-<Toaster position="br">
-    <Notification color="@accent">
-        <Icon slot="start" -adorn name="info-circle" />
-        <Text>
-            Some kind of notification of things
-        </Text>
-    </Notification>
-</Toaster>
+<Toaster bind:this={toaster[0]} position="br" onaction={console.log} />
+<Toaster bind:this={toaster[1]} position="tl" onaction={console.log} />
+<Button onclick={notify}>
+    Show a Notif
+</Button>

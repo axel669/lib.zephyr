@@ -1,9 +1,8 @@
-<script context="module">
+<script module>
     import { writable } from "svelte/store"
 
-    import { stackStore } from "./routing.js"
+    import { stackStore } from "./routing.svelte.js"
 
-    // const stack = writable([])
     const stack = stackStore()
 
     const updateTitle = (format, data) => {
@@ -17,10 +16,13 @@
 
 <script>
     import { onMount } from "svelte"
-    export let data = ""
-    export let format = null
+
+    const {
+        data = "",
+        format = null,
+    } = $props()
 
     stack.push(data)
 
-    $: updateTitle(format, $stack)
+    $effect(() => updateTitle(format, $stack))
 </script>

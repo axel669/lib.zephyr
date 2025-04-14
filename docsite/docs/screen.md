@@ -8,5 +8,8 @@ required to get stacking screens to have the effect.
 
 ## Props
 
+### alignLeft _bool_
+Sets $left
+
 ### width _string_
 The width of the screen before stack-based padding is applied

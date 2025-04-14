@@ -1,8 +1,7 @@
 <script>
-    import { DataTable, TH, sorts } from "@axel669/zephyr"
+    import * as ze from "@axel669/zephyr"
 
-    let page
-    const data = [
+    const dataSource = [
         { a: 1, b: 1 ** 2, c: 1 ** 3 },
         { a: 2, b: 2 ** 2, c: 2 ** 3 },
         { a: 3, b: 3 ** 2, c: 3 ** 3 },
@@ -17,34 +16,53 @@
         { a: 12, b: 12 ** 2, c: 12 ** 3 },
         { a: 13, b: 13 ** 2, c: 13 ** 3 },
     ]
+    const data = Array.from(
+        { length: 100 },
+        (_, n) => {
+            const i = n + 1
+            return {
+                a: i,
+                b: i ** 2,
+                c: i ** 3,
+            }
+        }
+    )
 </script>
 
-<DataTable {data} color="@primary" pageSize={3} bind:page fillHeader={false}>
-    <svelte:fragment slot="header">
-        <TH sort={sorts.number("a")}>N</TH>
-        <th>Squared</th>
-        <th>Cubed</th>
-    </svelte:fragment>
+<ze.DataTable {data} color="@primary" h="410px" cols="2fr 1fr 1fr">
+    {#snippet header()}
+    <tr>
+        <th>A</th>
+        <th>B</th>
+        <th>C</th>
+    </tr>
+    {/snippet}
 
-    <svelte:fragment slot="row" let:row>
+    {#snippet row(row)}
+    <tr>
         <td>{row.a}</td>
         <td>{row.b}</td>
-        <td>^3 = {row.c}</td>
-    </svelte:fragment>
-</DataTable>
+        <td>{row.c}</td>
+    </tr>
+    {/snippet}
+</ze.DataTable>
 
-<div ws-x="[h 4px]" />
+<div style="height: 360px; display: grid;">
+    <ze.DataTable {data} color="@secondary" cols="1fr 1fr 1fr" fillHeader>
+        {#snippet header()}
+        <tr>
+            <th>A</th>
+            <th>B</th>
+            <th>C</th>
+        </tr>
+        {/snippet}
 
-<DataTable {data} color="@primary" pageSize={3} bind:page>
-    <svelte:fragment slot="header">
-        <TH sort={sorts.number("a")}>N</TH>
-        <th>Squared</th>
-        <th>Cubed</th>
-    </svelte:fragment>
-
-    <svelte:fragment slot="row" let:row>
-        <td>{row.a}</td>
-        <td>{row.b}</td>
-        <td>^3 = {row.c}</td>
-    </svelte:fragment>
-</DataTable>
+        {#snippet row(row)}
+        <tr>
+            <td>{row.a}</td>
+            <td>{row.b}</td>
+            <td>{row.c}</td>
+        </tr>
+        {/snippet}
+    </ze.DataTable>
+</div>

@@ -13,7 +13,7 @@
         { label: "second", value: "two" },
         { label: "third", value: [3] },
     ]
-    let value = 1
+    let value = $state(1)
 </script>
 
 <pre>Value: {JSON.stringify(value)}</pre>

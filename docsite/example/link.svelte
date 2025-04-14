@@ -3,9 +3,11 @@
 </script>
 
 <Titlebar col="span 3">
-    <Text slot="title">
+    {#snippet title()}
+    <Text>
         <Text title>Normal Link</Text>
     </Text>
+    {/snippet}
 </Titlebar>
 <Grid cols="1fr 1fr 1fr" gap="8px">
     <Link href="#">Home</Link>
@@ -17,10 +19,12 @@
 </Grid>
 <Grid cols="1fr 1fr 1fr" gap="8px">
     <Titlebar col="span 3">
-        <Text slot="title">
+        {#snippet title()}
+        <Text>
             <Text title>Button Link</Text>
             <Text subtitle>with _blank target</Text>
         </Text>
+        {/snippet}
     </Titlebar>
 
     <Link href="#" target="_blank" button fill>Home</Link>

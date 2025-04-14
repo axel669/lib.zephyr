@@ -1,18 +1,20 @@
-<svelte:options immutable />
-
 <script>
-    import wsx from "../wsx.mjs"
+    import wsx from "../wsx.js"
 
-    export let direction = false
-    export let cols = null
-    export let rows = null
-    export let autoCol = false
-    export let autoRow = false
-    export let colsFit = false
-    export let colsFill = false
-    export let scrollable = false
+    const {
+        direction = false,
+        cols = null,
+        rows = null,
+        autoCol = false,
+        autoRow = false,
+        colsFit = false,
+        colsFill = false,
+        scrollable = false,
+        children,
+        ...rest
+    } = $props()
 
-    $: wind = {
+    const wind = $derived({
         "gr.flow": direction,
         "gr.cols": cols?.join?.(" ") ?? cols ?? false,
         "gr.rows": rows?.join?.(" ") ?? rows ?? false,
@@ -21,10 +23,10 @@
         "gr.cols-fit": colsFit,
         "gr.cols-fill": colsFill,
         over: (scrollable === true) ? "auto" : null,
-        ...$$restProps
-    }
+        ...rest
+    })
 </script>
 
 <ws-grid use:wsx={wind}>
-    <slot />
+    {@render children?.()}
 </ws-grid>

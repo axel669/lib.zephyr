@@ -1,14 +1,16 @@
-<svelte:options immutable />
-
 <script>
-    import wsx from "../wsx.mjs"
+    import wsx from "../wsx.js"
 
-    export let color = null
-    export let text = ""
+    let {
+        color = null,
+        text = "",
+        children,
+        ...rest
+    } = $props()
 
-    $: wind = { "$color": color, ...$$restProps }
+    const wind = $derived({ "$color": color, ...rest })
 </script>
 
 <ws-badge ws-text={text} use:wsx={wind}>
-    <slot />
+    {@render children?.()}
 </ws-badge>

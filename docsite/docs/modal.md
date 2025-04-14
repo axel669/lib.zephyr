@@ -1,5 +1,4 @@
 # Modal
-
 The Modal component is used to control when content should be shown that
 sits over the current content and prevents interaction with the content it
 covers. It is primarily used to show drawers, dialogs, and sub screens.
@@ -20,9 +19,7 @@ Because the Modal does not render content of its own, it does not support
 any wind functions.
 
 
-### component
-`Component`
-
+### component _Component_
 The component to display when `show` is called
 
 ## Functions

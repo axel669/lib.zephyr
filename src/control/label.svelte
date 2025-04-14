@@ -1,29 +1,32 @@
-<svelte:options immutable />
-
 <script>
-    import wsx from "../wsx.mjs"
-    import variant from "../variant.mjs"
+    import wsx from "../wsx.js"
+    import variant from "../variant.js"
 
-    export let color = false
-    export let compact = false
-    export let ground = false
-    export let disabled
+    const {
+        color = false,
+        compact = false,
+        ground = false,
+        disabled,
 
-    export let fill = false
-    export let outline = false
-    export let flat = false
+        button = false,
+        fill = false,
+        outline = false,
+        flat = false,
+        for:_for = "",
 
-    let _for = ""
-    export { _for as for }
-    export let button = false
+        children,
+        ...rest
+    } = $props()
 
-    $: type = variant(
-        "$flat",
-        { fill },
-        { outline },
-        { flat }
+    const type = $derived(
+        variant(
+            "$flat",
+            { fill },
+            { outline },
+            { flat }
+        )
     )
-    $: baseStyles =
+    const baseStyles = $derived(
         (button === true)
         ? {
             "@@button": true,
@@ -33,13 +36,14 @@
             $ground: ground,
         }
         : {}
+    )
 
-    $: wind = {
+    const wind = $derived({
         ...baseStyles,
-        ...$$restProps
-    }
+        ...rest
+    })
 </script>
 
 <label use:wsx={wind} {disabled} for={_for}>
-    <slot />
+    {@render children?.()}
 </label>

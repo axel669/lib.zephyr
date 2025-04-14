@@ -11,7 +11,28 @@ import copy from "@axel669/rollup-copy-static"
 
 import { marked } from "marked"
 import Prism from "prismjs"
+import loadLang from "prismjs/components/index.js"
 import "prism-svelte"
+
+const loadLanguage = (name) => {
+    if (Prism.languages[name] !== undefined) {
+        return
+    }
+    loadLang(name)
+}
+const prismMarked = marked.use({
+    renderer: {
+        code(code, lang) {
+            loadLanguage(lang)
+            const hl = Prism.highlight(
+                code,
+                Prism.languages[lang],
+                lang
+            )
+            return `<pre class="language-${lang}"><code class="language-${lang}">${hl}</code></pre>`
+        }
+    }
+})
 
 const root = path.resolve("docsite/example")
 const docsroot = path.resolve("docsite/docs")
@@ -28,7 +49,7 @@ const exampleFiles = (await fs.readdir(
 )
 
 const componentList = exampleFiles.filter(
-    file => file.includes("/") === false
+    file => file.includes("/") === false && file.startsWith("--") === false
 )
 const exampleGroups = await Promise.all(
     componentList.map(
@@ -83,6 +104,12 @@ export default {
         format: "iife",
         sourcemap: true,
     },
+    onwarn: (msg, next) => {
+        if (msg.code === "CIRCULAR_DEPENDENCY" && msg.message.includes("svelte")) {
+            return
+        }
+        next(msg)
+    },
     plugins: [
         del({
             targets: ["site/*.js", "site/*.js.map"],
@@ -94,7 +121,7 @@ export default {
                     return id
                 }
                 if (id === "@axel669/zephyr") {
-                    return path.resolve("src/index.mjs")
+                    return path.resolve("src/index.js")
                 }
                 return undefined
             },
@@ -134,9 +161,30 @@ export default {
                 return output
             }
         },
+        {
+            async load(id) {
+                const filename = path.basename(id)
+                if (filename !== "readme.md") {
+                    return
+                }
+                const md = await fs.readFile(id, "utf8")
+                // extremely hacky replace to make it work nice on the site
+                // until i come back and make this more reliable
+                const html = prismMarked.parse(md).replace(
+                    "./docsite/docs/functions.md\"",
+                    "https://github.com/axel669/lib.zephyr/tree/live/docsite/docs/functions.md\" target=\"_blank\""
+                )
+                return `export default ${JSON.stringify(html)}`
+            }
+        },
         html(),
         svelte({
-            emitCss: false
+            emitCss: false,
+            compilerOptions: {
+                generate: "client",
+                runes: true,
+                dev: true,
+            }
         }),
         resolve({ browser: true }),
         terser(),

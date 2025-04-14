@@ -1,16 +1,18 @@
-<svelte:options immutable />
-
 <script>
-    import wsx from "../wsx.mjs"
+    import wsx from "../wsx.js"
 
-    export let size = "100px"
-    export let color = "@primary"
+    const {
+        size = "100px",
+        color = "@primary",
+        ...rest
+    } = $props()
 
-    $: wind = {
-        ...$$restProps,
+    const wind = $derived({
+        ...rest,
         "@size": size,
         "$color": color,
-    }
+    })
 </script>
 
+<!-- svelte-ignore element_invalid_self_closing_tag -->
 <ws-hexagon-spinner use:wsx={wind} style="aspect-ratio: 1 / 1;" />

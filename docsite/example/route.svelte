@@ -21,8 +21,10 @@
         <Link href={relpath("huzzah.message!")}>
             Deeper, Path param = huzzah.message!
         </Link>
-        <Route path=":deeper" let:routeInfo>
+        <Route path=":deeper">
+            {#snippet children(routeInfo)}
             <Text>Path Param: {routeInfo.params.deeper}</Text>
+            {/snippet}
         </Route>
     </Route>
     <Route path="/nesting/">
@@ -33,7 +35,9 @@
             Deeper
         </Route>
     </Route>
-    <Route path="/nesting/:thing" let:routeInfo>
+    <Route path="/nesting/:thing">
+        {#snippet children(routeInfo)}
         <pre>{JSON.stringify(routeInfo, null, 2)}</pre>
+        {/snippet}
     </Route>
 </Flex>

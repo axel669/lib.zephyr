@@ -1,17 +1,19 @@
-<svelte:options immutable />
-
 <script>
-    import wsx from "../wsx.mjs"
+    import wsx from "../wsx.js"
 
-    export let text = ""
-    export let bottom = false
+    const {
+        text = "",
+        bottom = false,
+        children,
+        ...rest
+    } = $props()
 
-    $: wind = {
+    const wind = $derived({
         $bottom: bottom,
-        ...$$restProps,
-    }
+        ...rest,
+    })
 </script>
 
 <ws-tooltip ws-text={text} use:wsx={wind}>
-    <slot />
+    {@render children?.()}
 </ws-tooltip>

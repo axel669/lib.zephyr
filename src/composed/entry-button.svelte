@@ -1,31 +1,28 @@
-<svelte:options immutable />
-
 <script>
-    import { createEventDispatcher } from "svelte"
-
     import Button from "../control/button.svelte"
     import Modal from "../layout/modal.svelte"
-    import { handler$ } from "../handler$.mjs"
+    import { handler$ } from "../handler$.js"
 
-    export let component
-    export let props
-    let wrapper = Modal
-    export { wrapper as this }
-
-    const send = createEventDispatcher()
+    const {
+        component,
+        props,
+        this:Wrapper = Modal,
+        "w!props":wrapperProps = {},
+        children,
+        onentry,
+        ...rest
+    } = $props()
 
     let element = null
     const open = handler$(
         async (props) => {
             const elemProps = (typeof props === "function") ? props() : props
             const result = await element.show(elemProps)
-            send("entry", result)
+            onentry?.(result)
         }
     )
 </script>
 
-<Button {...$$restProps} on:click={open(props)}>
-    <slot />
-</Button>
+<Button {...rest} onclick={open(props)} {children} />
 
-<svelte:component this={wrapper} {component} bind:this={element} />
+<Wrapper bind:this={element} {...rest} {component} />

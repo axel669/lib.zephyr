@@ -1,4 +1,4 @@
-<script context="module">
+<script module>
     const urlChars = "[\\w\\-\\%\\(\\)\\.@!\\*\\^\\$]"
     const urlPattern = (path, exact) => {
         const regexSource = path.replace(
@@ -15,35 +15,48 @@
 <script>
     import { getContext, setContext } from "svelte"
 
-    import { ctx, resolve, route } from "./routing.js"
+    import { ctx, resolve, route } from "./routing.svelte.js"
 
-    export let path = ""
-    export let component = null
-    export let props = {}
-    export let exact = false
+    const {
+        path = "",
+        component = null,
+        props = {},
+        exact = false,
+        content,
+        children,
+    } = $props()
 
     const parent = getContext(ctx.parent) ?? "/"
     const fullPath = resolve(parent, path)
 
     setContext(ctx.parent, fullPath)
-    $: pattern = urlPattern(fullPath, exact)
-    $: match = $route.match(pattern)
-    $: routeParams = Object.fromEntries(
-        Object.entries({ ...match?.groups }).map(
-            ([key, value]) => [key, decodeURIComponent(value)]
+    const pattern = $derived(
+        urlPattern(fullPath, exact)
+    )
+    const match = $derived(
+        $route.match(pattern)
+    )
+    const routeParams = $derived(
+        Object.fromEntries(
+            Object.entries({ ...match?.groups }).map(
+                ([key, value]) => [key, decodeURIComponent(value)]
+            )
         )
     )
-    $: routeInfo = {
+    const routeInfo = $derived({
         params: routeParams,
         match: routeParams._path,
         route: $route,
-    }
+    })
+    const Content = $derived(component)
 </script>
 
 {#if match !== null}
     {#key routeParams._path}
-        <slot {routeInfo}>
-            <svelte:component this={component} {...props} {routeInfo} />
-        </slot>
+        {#if Content !== null}
+            <Content {...props} {routeInfo} />
+        {:else}
+            {@render (content ?? children)?.(routeInfo, props)}
+        {/if}
     {/key}
 {/if}

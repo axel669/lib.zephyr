@@ -8,6 +8,7 @@
 <HexagonSpinner size="140px" color="@warning" />
 <HexagonSpinner size="160px" color="@danger" />
 
+<!-- svelte-ignore element_invalid_self_closing_tag -->
 <div />
 
 <CircleSpinner size="80px" />

@@ -7,29 +7,39 @@
         Button,
     } from "@axel669/zephyr"
 
-    export let close
+    const { close } = $props()
 </script>
 
 <Screen>
     <Paper card square>
-        <Titlebar slot="header">
-            <Text title slot="title">
+        {#snippet header()}
+        <Titlebar>
+            {#snippet title()}
+            <Text title>
                 Subscreen Demo
             </Text>
+            {/snippet}
 
-            <Button slot="action" on:click={() => close("done")}>
+            {#snippet action()}
+            <Button onclick={() => close("done")}>
                 Close
             </Button>
+            {/snippet}
         </Titlebar>
+        {/snippet}
 
         <Text>
             This is area intentially left blank
         </Text>
 
-        <Titlebar slot="footer">
-            <Text subtitle slot="title">
+        {#snippet footer()}
+        <Titlebar>
+            {#snippet title()}
+            <Text subtitle>
                 This area was an accident
             </Text>
+            {/snippet}
         </Titlebar>
+        {/snippet}
     </Paper>
 </Screen>

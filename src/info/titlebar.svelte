@@ -1,34 +1,40 @@
 <script>
-    import wsx from "../wsx.mjs"
+    import wsx from "../wsx.js"
 
-    export let color
-    export let fill = false
+    const {
+        color,
+        fill = false,
+        title,
+        menu,
+        action,
+        ...rest
+    } = $props()
 
-    $: titleProps = {
+    const titleProps = $derived({
         "$color": color,
         "$fill": fill,
         $title: true,
-    }
-    $: wind = {
-        ...$$restProps,
-    }
+    })
+    const wind = $derived({
+        ...rest,
+    })
 </script>
 
 <ws-titlebar use:wsx={wind}>
-    {#if $$slots.title}
+    {#if title}
         <div use:wsx={titleProps}>
-            <slot name="title" />
+            {@render title()}
         </div>
     {/if}
 
-    {#if $$slots.menu}
+    {#if menu}
         <div ws-x="[$menu] [grid] [p 0px]">
-            <slot name="menu" />
+            {@render menu()}
         </div>
     {/if}
-    {#if $$slots.action}
+    {#if action}
         <div ws-x="[$action] [grid] [p 0px]">
-            <slot name="action" />
+            {@render action()}
         </div>
     {/if}
 </ws-titlebar>

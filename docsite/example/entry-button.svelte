@@ -11,9 +11,9 @@
     })
 </script>
 
-<EntryButton component={Confirm} props={alertProps} on:entry={console.log}>
+<EntryButton component={Confirm} props={alertProps} onentry={console.log}>
     Show Confirm
 </EntryButton>
-<EntryButton component={Alert} props={propsFunc} on:entry={console.log}>
+<EntryButton component={Alert} props={propsFunc} onentry={console.log}>
     Show Dynamic Alert
 </EntryButton>

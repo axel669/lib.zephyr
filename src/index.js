@@ -17,9 +17,10 @@ export { default as Progress } from "./data-display/progress.svelte"
 export { default as Table } from "./data-display/table.svelte"
 export { default as Tooltip } from "./data-display/tooltip.svelte"
 
+export { default as ElementToaster } from "./info/element-toaster.svelte"
 export { default as Icon } from "./info/icon.svelte"
-export { default as Notification } from "./info/notification.svelte"
 export { default as Titlebar } from "./info/titlebar.svelte"
+export { default as Toast } from "./info/toast.svelte"
 export { default as Toaster } from "./info/toaster.svelte"
 
 export { default as Dialog } from "./layout/dialog.svelte"
@@ -39,26 +40,25 @@ export { default as Alert } from "./dialogs/alert.svelte"
 export { default as Confirm } from "./dialogs/confirm.svelte"
 
 export { default as DataTable } from "./composed/data-table.svelte"
-export { default as TH } from "./composed/data-table/th.svelte"
-export { default as ElementToast } from "./composed/element-toast.svelte"
+// export { default as TH } from "./composed/data-table/th.svelte"
 export { default as EntryButton } from "./composed/entry-button.svelte"
-export { default as Form } from "./composed/form.svelte"
-export { default as Toast } from "./composed/toast.svelte"
+// export { default as Form } from "./composed/form.svelte"
 
 export { default as AsyncButton } from "./async/button.svelte"
-export { default as LoadZone } from "./async/load-zone.svelte"
+export { default as Suspend } from "./async/suspend.svelte"
 
 export { default as Route } from "./routing/route.svelte"
 export { default as Title } from "./routing/title.svelte"
 
-export { default as wsx } from "./wsx.mjs"
+export { default as wsx } from "./wsx.js"
 
-export { hash } from "./hash.js"
+export { hash } from "./hash.svelte.js"
 
 export {
     route,
     stackStore,
     relpath,
-} from "./routing/routing.js"
-export * from "./handler$.mjs"
+} from "./routing/routing.svelte.js"
+export * from "./handler$.js"
 export * from "./composed/table-functions.js"
+export * from "./changed.js"

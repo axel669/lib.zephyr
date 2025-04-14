@@ -1,5 +1,3 @@
-<svelte:options immutable />
-
 <script>
     import Button from "../control/button.svelte"
     import Dialog from "../layout/dialog.svelte"
@@ -8,38 +6,46 @@
     import Text from "../text.svelte"
     import Titlebar from "../info/titlebar.svelte"
 
-    import { handler$ } from "../handler$.mjs"
+    import { handler$ } from "../handler$.js"
 
-    export let close
-    export let title = "Confirm"
-    export let icon
-    export let message
-    export let okText = "OK"
-    export let cancelText = "Cancel"
-    export let color = "@primary"
+    const {
+        close,
+        titleText = "Confirm",
+        icon,
+        message,
+        okText = "OK",
+        cancelText = "Cancel",
+        color = "@primary",
+    } = $props()
 
     const cls = handler$(close)
 </script>
 
 <Dialog card {color}>
-    <Titlebar slot="header" {color}>
-        <Text title slot="title">
+    {#snippet header()}
+    <Titlebar {color}>
+        {#snippet title()}
+        <Text title>
             <Icon name={icon}>
-                {title}
+                {titleText}
             </Icon>
         </Text>
+        {/snippet}
     </Titlebar>
+    {/snippet}
 
     <Text>
         {message}
     </Text>
 
-    <Grid cols="1fr 1fr" slot="footer" p="0px">
-        <Button on:click={cls(false)} color="@danger">
+    {#snippet footer()}
+    <Grid cols="1fr 1fr" p="0px">
+        <Button onclick={cls(false)} color="@danger" ground>
             {cancelText}
         </Button>
-        <Button on:click={cls(true)} color="@secondary">
+        <Button onclick={cls(true)} color="@secondary" ground>
             {okText}
         </Button>
     </Grid>
+    {/snippet}
 </Dialog>

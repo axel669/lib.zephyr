@@ -1,6 +1,4 @@
-<svelte:options immutable />
-
-<script context="module">
+<script module>
     const groupOptions = (options) => options.reduce(
         ({grouped, target = grouped}, item, pos) => {
             const opt = { ... item, pos }
@@ -17,34 +15,41 @@
 </script>
 
 <script>
-    import wsx from "../wsx.mjs"
+    import wsx from "../wsx.js"
 
-    export let options = []
-    export let value
-    export let color = "@default"
-    export let flat = false
-    export let label = null
-    export let disabled = false
+    let {
+        disabled = false,
+        color = "@default",
+        flat = false,
+        label = null,
+        options = [],
+        value = $bindable(),
+        ...rest
+    } = $props()
 
     const update = (evt) => value = options[evt.target.value].value
 
-    $: indexValue = options.findIndex(item => item.value === value)
+    const indexValue = $derived(
+        options.findIndex(item => item.value === value)
+    )
 
-    $: grouped = groupOptions(options)
+    const grouped = $derived(
+        groupOptions(options)
+    )
 
-    $: wind = {
+    const wind = $derived({
         "@@control": true,
         "$flat": flat,
         "$color": color,
-        ...$$restProps,
-    }
+        ...rest,
+    })
 </script>
 
 <label use:wsx={wind}>
     {#if label}
         <span ws-x="[$label]">{label}</span>
     {/if}
-    <select value={indexValue} on:input={update} {disabled}>
+    <select value={indexValue} oninput={update} {disabled}>
         {#each grouped as item, index}
             {#if Array.isArray(item) === false}
                 <option value={item.pos}>

@@ -1,25 +1,28 @@
-<svelte:options immutable />
-
 <script>
     import { fade } from "svelte/transition"
-    import wsx from "../wsx.mjs"
+    import wsx from "../wsx.js"
 
-    let visible = false
+    let {
+        visible = $bindable(false),
+        content,
+        popover,
+        ...rest
+    } = $props()
     const show = () => visible = true
     const hide = () => visible = false
     const anim = { duration: 250 }
 
-    $: wind = {
+    const wind = $derived({
         $show: true,
-        ...$$restProps,
-    }
+        ...rest,
+    })
 </script>
 
 <ws-popover use:wsx={wind}>
-    <slot {show} />
+    {@render content?.(show)}
     {#if visible}
         <wind-content ws-x="[$content] [inset 0px]" transition:fade={anim}>
-            <slot name="content" {hide} />
+            {@render popover?.(hide)}
         </wind-content>
     {/if}
 </ws-popover>

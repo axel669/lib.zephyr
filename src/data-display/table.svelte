@@ -1,37 +1,49 @@
-<svelte:options immutable />
-
 <script>
-    import wsx from "../wsx.mjs"
+    import wsx from "../wsx.js"
 
-    export let color = "@default"
-    export let fillHeader = false
-    export let data = []
+    const {
+        color = "@default",
+        data = [],
+        fillHeader = false,
+        stickyHeader = false,
+        cols = "1fr",
+        header,
+        row,
+        emptyRow,
+        ...rest
+    } = $props()
 
-    $: wind = {
+    const wind = $derived({
         "$color": color,
-        "$header-fill": fillHeader,
-        ...$$restProps,
-    }
+        "$fill-header": fillHeader,
+        "$sticky-header": stickyHeader,
+        "gr.cols": cols,
+        ...rest,
+    })
 </script>
 
 <table use:wsx={wind}>
     <thead>
-        <slot name="header">
+        {#if header}
+            {@render header()}
+        {:else}
             <tr>
                 <th>No Header Template</th>
             </tr>
-        </slot>
+        {/if}
     </thead>
     <tbody>
-        {#each data as row, rowNum}
-            {#if row === undefined}
-                <slot name="empty-row" {rowNum} />
+        {#each data as rowValue, rowNum}
+            {#if rowValue === undefined}
+                {@render emptyRow(rowNum)}
             {:else}
-                <slot name="row" {row} {rowNum}>
+                {#if row}
+                    {@render row(rowValue, rowNum)}
+                {:else}
                     <tr>
                         <td>No Row Template</td>
                     </tr>
-                </slot>
+                {/if}
             {/if}
         {/each}
     </tbody>

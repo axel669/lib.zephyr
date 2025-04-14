@@ -4,6 +4,12 @@ library, with some additional parts to make it look nice in the markup.
 
 [Docs Here](https://zephyr.axel669.net)
 
+## Todo
+These are things that I plan to do, but didn't want to hold up the 0.5.x major
+changes for svelte 5/runes/improvements.
+- Add filter/sort back into data table
+- Form element
+
 ## Installation
 Zephyr can be installed through npm (or the variants like yarn, pnpm, etc).
 
@@ -15,7 +21,8 @@ npm install @axel669/zephyr
 Components can be imported individually from the library for tree-shaking, or
 the entire lib can imported at once, but I dunno how big that bundle will be.
 Components can also take any windstorm macro as a prop, including custom macros,
-using the same rules as the `wsx` covered in [Functions](./src/functions.md).
+using the same rules as the `wsx` covered in
+[Functions](./docsite/docs/functions.md).
 
 ### Theming
 Windstorm expects a theme to be defined on an ancestor of the html elements

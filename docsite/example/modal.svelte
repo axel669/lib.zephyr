@@ -1,14 +1,14 @@
 <script>
     import { Alert, Button, Modal } from "@axel669/zephyr"
 
-    let alertModal = null
+    let alertModal = $state(null)
     const show = () => alertModal.show({
-        title: "Alert Example",
+        titleText: "Alert Example",
         message: "This is an alert!"
     })
 </script>
 
 <Modal component={Alert} bind:this={alertModal} />
-<Button on:click={show} outline color="@primary">
+<Button onclick={show} outline color="@primary">
     Alert Modal
 </Button>

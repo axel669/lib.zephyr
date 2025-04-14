@@ -1,7 +1,7 @@
 <script>
     import { Badge, Button } from "@axel669/zephyr"
 
-    let count = 1
+    let count = $state(1)
     const inc = () => count += 1
 </script>
 
@@ -9,5 +9,5 @@
     Unread Messages
 </Badge>
 <Badge text="1k+" color="@warning">
-    <Button on:click={inc} color="@primary">Clickable Content</Button>
+    <Button onclick={inc} color="@primary">Clickable Content</Button>
 </Badge>

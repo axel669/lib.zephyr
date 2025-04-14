@@ -14,7 +14,7 @@
     import Grid from "../../layout/grid.svelte"
     import Icon from "../../info/icon.svelte"
 
-    import wsx from "../../wsx.mjs"
+    import wsx from "../../wsx.js"
     import { dtContext } from "../data-table.svelte"
 
     export let sort = null
@@ -46,7 +46,7 @@
             </div>
         {:else}
             <Button compact r="0px" fill={$context.fillHeader}
-            t.wt="inherit" on:click={setSort} color={$context.color}>
+            t.wt="inherit" on:click={setSort} color={$context.color} ground>
                 <slot />
                 <Icon name={sortIcon} m.l="4px" t.sz="16px" />
             </Button>

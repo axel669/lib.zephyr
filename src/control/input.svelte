@@ -1,23 +1,31 @@
-<svelte:options immutable />
-
 <script>
-    import wsx, { none } from "../wsx.mjs"
-    import variant from "../variant.mjs"
+    import wsx, { none } from "../wsx.js"
+    import variant from "../variant.js"
+    import { splitProps } from "../props.js"
 
-    export let type = "text"
+    let {
+        type = "text",
 
-    export let flat = false
-    export let lined = false
-    export let linedFill = false
-    export let outline = false
-    export let label
-    export let color = "@default"
-    export let disabled
+        flat = false,
+        lined = false,
+        linedFill = false,
+        outline = false,
+        label,
+        color = "@default",
+        disabled,
 
-    export let value = ""
-    export let autocompleteOptions = null
+        value = $bindable(""),
+        autocompleteOptions = null,
 
-    let input = null
+        start,
+        end,
+        extra,
+
+        oninput,
+        ...rest
+    } = $props()
+
+    let input = $state(null)
     export const focus = () => input.focus()
 
     const id =
@@ -25,37 +33,33 @@
         ? null
         : `${Math.random().toString(16)}_${Date.now()}`
 
-    const update = (evt) => value = evt.target.value
+    const prop = splitProps(rest, "i!")
 
-    $: restKeys = Object.keys($$restProps)
-    $: props = restKeys.reduce(
-        (props, key) => {
-            const [target, name] =
-                (key.startsWith("i-") === true)
-                ? [props.input, key.slice(2)]
-                : [props.wind, key]
-            target[name] = $$restProps[key]
-            return props
-        },
-        {wind: {}, input: {}}
+    const variantStyle = $derived(
+        variant(
+            none,
+            { outline },
+            { linedFill },
+            { lined },
+            { flat }
+        )
     )
 
-    $: variantStyle = variant(
-        none,
-        { outline },
-        { linedFill },
-        { lined },
-        { flat }
-    )
-
-    $: wind = {
+    const wind = $derived({
         [variantStyle]: true,
         "@@control": true,
         "$color": color,
-        ...props.wind,
-    }
+        ...prop.rest,
+    })
 
-    $: tag = (type === "area") ? "textarea" : "input"
+    const tag = $derived(
+        (type === "area") ? "textarea" : "input"
+    )
+
+    const update = (evt) => {
+        value = evt.target.value
+        oninput?.(evt)
+    }
 </script>
 
 <label use:wsx={wind}>
@@ -64,37 +68,35 @@
     {/if}
     <svelte:element
         this={tag}
-        {...props.input}
+        {...prop.input}
         {disabled}
         {type}
         {value}
+        oninput={update}
         list={id}
-        on:focus
-        on:blur
-        on:input={update}
         bind:this={input}
     />
 
-    {#if $$slots.start}
+    {#if start}
         <span use:wsx={{ "$start": true }}>
-            <slot name="start" />
+            {@render start()}
         </span>
     {/if}
-    {#if $$slots.end}
+    {#if end}
         <span use:wsx={{ "$end": true }}>
-            <slot name="end" />
+            {@render end()}
         </span>
     {/if}
-    {#if $$slots.extra}
+    {#if extra}
         <span use:wsx={{ "$extra": true }}>
-            <slot name="extra" />
+            {@render extra()}
         </span>
     {/if}
 
     {#if autocompleteOptions !== null}
         <datalist {id}>
             {#each autocompleteOptions as value}
-                <option {value} />
+                <option {value}>{value}</option>
             {/each}
         </datalist>
     {/if}

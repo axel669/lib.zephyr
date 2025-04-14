@@ -1,13 +1,16 @@
 <script>
     import { Title } from "#lib"
 
-    export let code
-    export let component
-    export let docs
-    export let name
-    export let page
+    const {
+        code,
+        component,
+        docs,
+        name,
+        page,
+    } = $props()
 
     page.push(name)
+    const Component = $derived(component)
 </script>
 
 <Title data={name} />
@@ -17,7 +20,7 @@
 
     <h2>Example</h2>
 
-    <svelte:component this={component} />
+    <Component />
     {#each code as [filename, codeHTML]}
         <h3>{filename}</h3>
         <pre class="language-svelte"><code class="language-svelte">{@html codeHTML}</code></pre>

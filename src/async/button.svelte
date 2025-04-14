@@ -1,29 +1,33 @@
 <script>
     import Button from "../control/button.svelte"
     import Spinner from "../spinner/circle-spinner.svelte"
+    import { splitProps } from "../props.js"
 
-    export let handler = null
-    export let disabled
-    export let spincolor = "@primary"
+    const {
+        handler = null,
+        disabled,
+        ...rest
+    } = $props()
 
-    let running = false
-    const asyncHandler = async (evt) => {
+    let running = $state(false)
+    const onclick = async (evt) => {
         running = true
         await handler(evt)
         running = false
     }
 
-    $: inactive = disabled || running
-    $: props = {
-        ...$$restProps,
+    const inactive = $derived(disabled || running)
+    const prop = $derived(
+        splitProps(rest, "sp!")
+    )
+    const buttonProps = $derived({
+        ...prop.rest,
         disabled: inactive,
-    }
+    })
 </script>
 
 <async-button ws-x="[disp inline-grid] [gr.cols 1fr] [pos relative]">
-    <Button {...props} on:click={asyncHandler}>
-        <slot />
-    </Button>
+    <Button {...buttonProps} {onclick} />
     {#if running === true}
         <Spinner
             size="unset"
@@ -31,7 +35,7 @@
             x="50%" y="0px"
             tf="translateX(-50%)"
             h="100%"
-            color={spincolor}
+            {...prop["sp!"]}
         />
     {/if}
 </async-button>

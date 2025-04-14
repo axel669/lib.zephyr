@@ -10,33 +10,45 @@
 </script>
 
 <Titlebar>
-    <Text title slot="title">
+    {#snippet title()}
+    <Text title>
         Some Title
     </Text>
+    {/snippet}
 
-    <Button slot="menu">
+    {#snippet menu()}
+    <Button>
         <Icon name="list" />
     </Button>
+    {/snippet}
 </Titlebar>
 
 <Paper card color="@secondary">
-    <Titlebar color="@secondary" slot="header">
-        <Text title slot="title">
+    {#snippet header()}
+    <Titlebar color="@secondary">
+        {#snippet title()}
+        <Text title>
             Paper Title
             <Text subtitle>
                 Indented Subtitle
             </Text>
         </Text>
+        {/snippet}
 
-        <Button slot="menu">
+        {#snippet menu()}
+        <Button>
             <Icon name="list" />
         </Button>
+        {/snippet}
     </Titlebar>
+    {/snippet}
 </Paper>
 
 <Paper card color="@secondary">
-    <Titlebar color="@secondary" slot="header" fill>
-        <Flex p="0px" slot="title">
+    {#snippet header()}
+    <Titlebar color="@secondary" fill>
+        {#snippet title()}
+        <Flex p="0px">
             <Text title>
                 Paper Title
             </Text>
@@ -44,9 +56,13 @@
                 Aligned Subtitle
             </Text>
         </Flex>
+        {/snippet}
 
-        <Button slot="action">
+        {#snippet action()}
+        <Button>
             Save
         </Button>
+        {/snippet}
     </Titlebar>
+    {/snippet}
 </Paper>

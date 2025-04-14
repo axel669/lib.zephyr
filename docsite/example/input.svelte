@@ -1,8 +1,7 @@
 <script>
-    import { writable } from "svelte/store"
     import { Input, Button, Grid } from "@axel669/zephyr"
 
-    let values = {
+    let values = $state({
         "color": "",
         "file": "",
         "number": "",
@@ -16,8 +15,8 @@
         "time": "",
         "month": "",
         "week": "",
-    }
-    let areaValue = ""
+    })
+    let areaValue = $state("")
 
     const colors = [
         "@primary",
@@ -44,7 +43,7 @@
 
 <Grid cols="1fr 1fr 1fr" p="0px">
     {#each colors as color}
-        <Input {color} label="{color}" />
+        <Input {color} label={color} />
         <Input outline {color} label="outline" />
         <Input linedFill {color} label="linedFill" />
         <Input lined {color} label="lined" />

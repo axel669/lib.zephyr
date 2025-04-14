@@ -1,7 +1,7 @@
 <script>
     import { Details, Icon } from "@axel669/zephyr"
 
-    let open = false
+    let open = $state(false)
 </script>
 
 <div>Open: {open}</div>
@@ -10,8 +10,11 @@
 </Details>
 
 <Details bind:open outline color="@primary">
-    <div slot="label">
+    {#snippet label()}
+    <div>
         Slotted labels allowed! <Icon name="hexagon" />
     </div>
+    {/snippet}
+
     Another one!
 </Details>

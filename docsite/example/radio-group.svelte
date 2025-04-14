@@ -7,21 +7,25 @@
         { label: "String", value: "3", "$color": "@warning" },
         { label: "Really any value", value: new Date() },
     ]
-    let value = null
+    let value = $state(null)
 </script>
 
 <pre>Value: {JSON.stringify(value)}</pre>
 
 <Titlebar>
-    <Text title slot="title">
+    {#snippet title()}
+    <Text title>
         Flex Layout (default)
     </Text>
+    {/snippet}
 </Titlebar>
 <RadioGroup {options} bind:value />
 
 <Titlebar>
-    <Text title slot="title">
+    {#snippet title()}
+    <Text title>
         Grid Layout Example
     </Text>
+    {/snippet}
 </Titlebar>
 <RadioGroup {options} bind:value layout={Grid} gr.cols="1fr 1fr" />

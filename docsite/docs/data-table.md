@@ -1,42 +1,48 @@
 # DataTable
+The DataTable is a more advanced way to show data on screen. It uses a windstorm
+table under the hood, and has a similar interface to the [Table](#/table).
+Instead of trying to make pagination and deal with weird heights of things, the
+DataTable opts to provide a virtual scrolling area to render content in an
+efficient way.
 
-The DataTable is a more advanced way to show data on screen. Underneath is
-a [Table](#/table) component, but with additional functionality
-for pagination, sorting, and fitering.
+The DataTable also tracks its own content area to adjust the virtual scrolling
+during runtime to ensure it always looks good, regardless of whether or not the
+component has its height set directly, or has it determined by the parent.
 
-> If pagination is not needed, the DataTable may not be necessary as it will
-> only be shortcutting data formatting at that point.
+> This version doesn't have sorting and filtering, but those are being planned
+> for a future release. Attempting to make the interfacing with those features
+> much more streamlined than before.
 
 ## Props
+
+### cols _string_
+Sets the column sizes for the table. Uses grid-template-columns.
 
 ### color _string_
 Sets `$color`
 
-### data _Array_
-The data to display. Each item in the array can be in either the same
-format as the Table, or any kind of object if column format functions
-are used.
+### rowSize _number_
+The height of each row. Each row is rendered at the specified height so that
+the virtual scrolling can look good.
 
-### page _Number_
-The current page of data being viewed. Can be bound, or set to control
-which page is displayed
+### headerSize _number_
+The height of the header. Defaults to `rowSize`.
 
-### pageSize _Number_
-The number of items to show on each page. Default is 10.
+### gap / colGap / rowGap
+Sets the gap between cells in each direction, with `gap` setting both at the
+same time.
 
-### rowHeight _string_
-The height of each row. The component uses this to make empty rows the same
-height as rows with data so that the pagination doesnt randomly resize the
-visual area of the table.
+### fillHeader _bool_
+If true, the header will be filled with color.
 
-## Slots
+## Snippets
 
-### header
+### header()
 A fragment that should contain the header cells for the table header. A standard
-`th` can be used, but the [TH](#/th) element from zephyr has
-additional configuration to handle more complex header-related actions.
+`th` can be used, but the `TH` element from zephyr has additional configuration
+to handle more complex header-related actions.
 
-### row
+### row(rowData)
 A fragment that should use regular `td` elements to define how a row should be
 layed out. The fragment will need `let:row` to access each row's data for
 displaying it.

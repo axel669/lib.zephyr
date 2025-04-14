@@ -1,56 +1,54 @@
-<svelte:options immutable />
-
 <script>
     import Flex from "./flex.svelte"
-    import wsx from "../wsx.mjs"
+    import wsx from "../wsx.js"
+    import { splitProps } from "../props.js"
 
-    export let color
-    export let card = false
-    export let square = false
-    export let layout = Flex
-    export let scrollable = true
+    const {
+        color,
+        card = false,
+        square = false,
+        layout = Flex,
+        scrollable = true,
+        children,
+        content,
+        header,
+        footer,
+        ...rest
+    } = $props()
 
-    $: props = Object.entries($$restProps).reduce(
-        (p, [key, value]) => {
-            const [target, name] =
-                (key.startsWith("l-") === true)
-                ? [ p.layout, key.slice(2) ]
-                : [ p.paper, key ]
-            target[name] = value
-            return p
-        },
-        { layout: {}, paper: {} }
+    const props = $derived(
+        splitProps(rest, "l!")
     )
 
-    $: layoutProps = {
+    const layoutProps = $derived({
         over: scrollable ? "auto" : false,
         $content: true,
-        ...props.layout,
-    }
-    $: wind = {
+        ...props["l!"],
+    })
+    const wind = $derived({
         "$color": color,
         "$outline": card,
         r: square && "0px",
-        ...props.paper,
-    }
+        ...props.rest,
+    })
 </script>
 
 <ws-paper use:wsx={wind}>
-    {#if $$slots.header}
+    {#if header}
         <div ws-x="[$header] [grid] [p 0px]">
-            <slot name="header" />
+            {@render header()}
         </div>
     {/if}
-    {#if $$slots.content}
-        <slot name="content" />
+    {#if content}
+        {@render content()}
     {:else}
-        <svelte:component this={layout} {...layoutProps}>
-            <slot />
-        </svelte:component>
+        <Flex {...layoutProps}>
+            {@render children?.()}
+        </Flex>
     {/if}
-    {#if $$slots.footer}
+    {#if footer}
         <div ws-x="[$footer] [grid] [p 0px]">
-            <slot name="footer" />
+            {@render footer()}
         </div>
     {/if}
 </ws-paper>

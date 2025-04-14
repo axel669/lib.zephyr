@@ -1,6 +1,4 @@
-<svelte:options immutable />
-
-<script context="module">
+<script module>
     const genID = () => `${Date.now()}:${Math.random().toString(16)}`
 
     const delays = {}
@@ -18,40 +16,59 @@
 
     const macros = {
         top: {
+            x: "50%",
+            tf: "translateX(-50%)",
             "-y": "100%",
             flex: "column-reverse",
         },
         bottom: {
+            x: "50%",
+            tf: "translateX(-50%)",
             "y": "100%",
             flex: "column"
+        },
+        left: {
+            y: "50%",
+            tf: "translateY(-50%)",
+            "-x": "100%",
+            flex: "row-reverse"
+        },
+        right: {
+            y: "50%",
+            tf: "translateY(-50%)",
+            "x": "100%",
+            flex: "row"
         },
     }
 </script>
 
 <script>
-    import { createEventDispatcher } from "svelte"
     import { fade } from "svelte/transition"
 
-    import { eventHandler$ } from "../handler$.mjs"
-    import wsx from "../wsx.mjs"
+    import { eventHandler$ } from "../handler$.js"
+    import wsx from "../wsx.js"
 
-    import Toaster from "../info/toaster.svelte"
+    import ToastMessage from "./toaster/message.svelte"
 
-    import ToastMessage from "./toast/message.svelte"
+    const {
+        component = ToastMessage,
+        position = "top",
+        content,
+        onaction,
+        ...rest
+    } = $props()
 
-    export let component = ToastMessage
-    export let position = "top"
+    let items = $state([])
 
-    let items = []
-
-    const dispatch = createEventDispatcher()
     const act = eventHandler$(
         (evt, id, props) => {
             delay.trigger(id)
-            dispatch(
-                "action",
-                { value: evt.detail, props }
-            )
+            evt.props = props
+            onaction?.(evt)
+            // dispatch(
+            //     "action",
+            //     { value: evt.detail, props }
+            // )
         }
     )
 
@@ -68,27 +85,24 @@
     }
     export const clear = () => items = []
 
-
-    $: wind = {
+    const wind = $derived({
         gap: "8px",
         pos: "absolute",
-        x: "50%",
         z: "50",
-        tf: "translateX(-50%)",
         ...macros[position],
-        ...$$restProps,
-    }
+        ...rest,
+    })
+    const Message = $derived(component)
 </script>
 
 <zephyr-element-toaster ws-x="[disp inline-grid] [pos relative]">
-    <slot {show} />
+    {@render content?.(show)}
     <zephyr-element-toast-messages use:wsx={wind}>
         {#each items as {props, id} (id)}
             <zephyr-toast-wrapper ws-x="[grid]" transition:fade={{duration: 200}}>
-                <svelte:component
-                this={component}
+                <Message
                 {...props}
-                on:action={act(id, props)}
+                onaction={act(id, props)}
                 />
             </zephyr-toast-wrapper>
         {/each}

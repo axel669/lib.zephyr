@@ -1,49 +1,60 @@
-<svelte:options immutable />
-
 <script>
-    import wsx from "../wsx.mjs"
+    import wsx from "../wsx.js"
 
-    export let label = ""
-    export let color = "@default"
-    export let checked = false
-    export let flat = false
-    export let value
-    export let group = []
-    export let checkbox = false
-    export let reverse = false
+    let {
+        color = "@default",
+        checkbox = false,
+        checked = $bindable(),
+        flat = false,
+        group = $bindable(),
+        label = "",
+        reverse = false,
+        value,
+        children,
+        ...rest
+    } = $props()
 
-    $: container = {
+    const container = $derived({
         "@@toggle": true,
         "$flat": flat,
         "$color": color,
         "fl.dir": reverse ? "row-reverse" : false,
-        ...$$restProps,
-    }
-    $: input = {
+        ...rest,
+    })
+    const input = $derived({
         "@@switch": checkbox === false
-    }
+    })
 
     const updateGroup = (checked) => {
+        if (Array.isArray(group) === false) {
+            return
+        }
         if (checked === true) {
             if (group.includes(value) === true) {
                 return
             }
-            group = [...group, value]
+            group.push(value)
             return
         }
         if (group.includes(value) === false) {
             return
         }
-        group = group.filter(item => item !== value)
+        group.splice(group.indexOf(value), 1)
     }
-    $: updateGroup(checked)
+    const get = () => checked
+    const set = (next) => {
+        checked = next
+        updateGroup(next)
+    }
 </script>
 
 <label use:wsx={container}>
     <div>
-        <slot>
+        {#if children}
+            {@render children()}
+        {:else}
             {label}
-        </slot>
+        {/if}
     </div>
-    <input type="checkbox" bind:checked use:wsx={input} />
+    <input type="checkbox" bind:checked={get,set} use:wsx={input} />
 </label>

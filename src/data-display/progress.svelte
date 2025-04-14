@@ -1,21 +1,25 @@
-<svelte:options immutable />
-
 <script>
-    import wsx from "../wsx.mjs"
+    import wsx from "../wsx.js"
 
-    export let value = 0
-    export let min = 0
-    export let max = 1
-    export let buffer = 0
-    export let busy = false
-    export let color = "@default"
+    const {
+        buffer = 0,
+        busy = false,
+        color = "@default",
+        max = 1,
+        min = 0,
+        value = 0,
+        ...rest
+    } = $props()
 
-    $: wind = {
+    const wind = $derived({
         "$color": color,
-        ...$$restProps,
-    }
+        ...rest,
+    })
 
-    $: busyStatus = (busy === true) ? { busy: true } : {}
+    const busyStatus = $derived(
+        (busy === true) ? { busy: true } : {}
+    )
 </script>
 
+<!-- svelte-ignore element_invalid_self_closing_tag -->
 <ws-progress use:wsx={wind} {...busyStatus} {min} {max} {value} {buffer} />

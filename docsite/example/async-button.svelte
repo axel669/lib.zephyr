@@ -15,6 +15,6 @@
     Run Async Function
 </AsyncButton>
 
-<AsyncButton handler={load} color="@primary" spincolor="@secondary" fill>
+<AsyncButton handler={load} color="@primary" sp!color="@secondary" fill>
     Run Async Function
 </AsyncButton>

@@ -1,7 +1,7 @@
 import { onMount, getContext } from "svelte"
 import { writable, derived } from "svelte/store"
 
-import { hash } from "../hash.js"
+import { hash } from "../hash.svelte.js"
 
 export const route = derived(
     hash,
@@ -12,6 +12,15 @@ export const route = derived(
         return hash
     }
 )
+route.set = (path) => {
+    hash.set(path)
+}
+// export const route = $derived(
+//     hash.startsWith("/") === false ? `/${hash}` : hash
+// )
+// $effect(
+//     () => hash = route
+// )
 
 export const ctx = {
     router: Symbol("Router Context"),

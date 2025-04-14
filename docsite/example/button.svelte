@@ -11,10 +11,10 @@
     ]
 </script>
 
-<Button on:click={() => alert("clicked!")}>
+<Button onclick={() => alert("clicked!")}>
     JS Alert!
 </Button>
-<Button color="@primary" outline on:click={console.log}>
+<Button color="@primary" outline onclick={console.log}>
     Console Log
 </Button>
 
