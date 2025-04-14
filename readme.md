@@ -4,6 +4,12 @@ library, with some additional parts to make it look nice in the markup.
 
 [Docs Here](https://zephyr.axel669.net)
 
+## Todo
+These are things that I plan to do, but didn't want to hold up the 0.5.x major
+changes for svelte 5/runes/improvements.
+- Add filter/sort back into data table
+- Form element
+
 ## Installation
 Zephyr can be installed through npm (or the variants like yarn, pnpm, etc).
 
