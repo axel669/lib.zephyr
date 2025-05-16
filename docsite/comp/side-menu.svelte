@@ -13,15 +13,14 @@
 
         route,
         trackChanges,
+
+        modalContext,
     } from "#lib"
 
     import examples from "$examples"
     import { theme } from "#state/theme"
 
-    // export let close
-    const { close } = $props()
-
-    export const cancel = () => close()
+    const { close } = modalContext()
 
     const routeChanged = trackChanges($route)
     const bg = (id, route) => {
@@ -59,7 +58,7 @@
         <Link href="https://github.com/axel669/lib.zephyr" button ground r="0px" target="_blank">
             <Icon name="brand-github" t.sz="20px" />
         </Link>
-        <Paper $ground r="0px">
+        <Paper r="0px">
             {#snippet header()}
             <Titlebar color="@accent">
                 {#snippet title()}

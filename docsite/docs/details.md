@@ -10,7 +10,7 @@ Sets the $color macro.
 ### label _string_
 The text for the content that is always shown.
 
-### open _bool_
+### open _bool, bindable_
 Controls whether the Details is showing the extended content. Can be bound to.
 
 ### outline _bool_

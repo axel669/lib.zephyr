@@ -37,8 +37,11 @@
             {/snippet}
 
             {#snippet menu()}
-            <ze.EntryButton component={SideMenu} ground w!props={{animTime: "100ms"}}>
+            <ze.EntryButton ground w!props={{animTime: "100ms"}} m!cancelable>
                 <ze.Icon name="menu-2" />
+                {#snippet modal()}
+                <SideMenu />
+                {/snippet}
             </ze.EntryButton>
             {/snippet}
         </ze.Titlebar>

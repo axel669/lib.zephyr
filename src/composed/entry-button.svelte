@@ -2,27 +2,28 @@
     import Button from "../control/button.svelte"
     import Modal from "../layout/modal.svelte"
     import { handler$ } from "../handler$.js"
+    import { splitProps } from "../props.js"
 
     const {
-        component,
-        props,
-        this:Wrapper = Modal,
-        "w!props":wrapperProps = {},
         children,
+        modal,
         onentry,
+        onopen,
         ...rest
     } = $props()
 
+    const prop = splitProps(rest, "m!")
+
     let element = null
-    const open = handler$(
-        async (props) => {
-            const elemProps = (typeof props === "function") ? props() : props
-            const result = await element.show(elemProps)
-            onentry?.(result)
-        }
-    )
+    const open = async (props) => {
+        onopen?.()
+        const result = await element.show()
+        onentry?.(result)
+    }
 </script>
 
-<Button {...rest} onclick={open(props)} {children} />
+<Button {...prop.rest} onclick={open} {children} />
 
-<Wrapper bind:this={element} {...rest} {component} />
+<Modal bind:this={element} {...prop["m!"]}>
+    {@render modal()}
+</Modal>

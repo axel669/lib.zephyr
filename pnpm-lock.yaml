@@ -9,11 +9,11 @@ importers:
   .:
     dependencies:
       '@axel669/windstorm':
-        specifier: 0.5.4
-        version: 0.5.4
+        specifier: 0.5.5
+        version: 0.5.5
       svelte:
-        specifier: ^5.9.0
-        version: 5.9.0
+        specifier: ^5.30.1
+        version: 5.30.1
     devDependencies:
       '@axel669/asuid':
         specifier: ^0.2.1
@@ -50,7 +50,7 @@ importers:
         version: 2.0.0
       rollup-plugin-svelte:
         specifier: ^7.2.2
-        version: 7.2.2(rollup@3.20.2)(svelte@5.9.0)
+        version: 7.2.2(rollup@3.20.2)(svelte@5.30.1)
 
 packages:
 
@@ -72,8 +72,8 @@ packages:
   '@axel669/rollup-html-input@0.1.2':
     resolution: {integrity: sha512-oecFl6axi6nZaIebi6vo0igA9FZnisxP4SZOEo4i24J9lQuaTyuMrPbcN7WFYzR9TGBOvuMpmCcti1ePmWu5Fg==}
 
-  '@axel669/windstorm@0.5.4':
-    resolution: {integrity: sha512-tR8j4Mi5CmsmFEPo48wwGRI+1qdPRta/K11UWSusGiXg8vDp1yqp5iHdnTXOhZVnlN1F5AMp0LYshymS34ZqIQ==}
+  '@axel669/windstorm@0.5.5':
+    resolution: {integrity: sha512-cEQFsUPQCodUxnGx2pTarps5l/U/po3AGxwSpgHIyuu1ZV33DoXcswUnbuG7fn0ADjj5oYS6CWClLjb9hwkvow==}
 
   '@jridgewell/gen-mapping@0.3.2':
     resolution: {integrity: sha512-mh65xKQAzI6iBcFzwv28KVWSmCkdRBWoOh+bYQGW3+6OZvbbN3TqMGo5hqYxQniRcH9F2VZIoJCm4pa3BPDK/A==}
@@ -153,6 +153,11 @@ packages:
       rollup:
         optional: true
 
+  '@sveltejs/acorn-typescript@1.0.5':
+    resolution: {integrity: sha512-IwQk4yfwLdibDlrXVE04jTZYlLnwsTT2PIOQQGNLWfjavGifnk1JD1LcZjZaBTRcxZu2FfPfNLOE04DSu9lqtQ==}
+    peerDependencies:
+      acorn: ^8.9.0
+
   '@types/estree@1.0.0':
     resolution: {integrity: sha512-WulqXMDUTYAXCjZnk6JtIHPigp55cVtDgDrO2gHRwhyJto21+1zbVCtOYB2L1F9w4qCQ0rOGWBnBe0FNTiEJIQ==}
 
@@ -173,11 +178,6 @@ packages:
 
   '@types/resolve@1.20.2':
     resolution: {integrity: sha512-60BCwRFOZCQhDncwQdxxeOEEkbc5dIMccYLwbxsS4TUNeVECQ/pBJ0j09mrHOl/JJvpRPGwO9SvE4nR2Nb/a4Q==}
-
-  acorn-typescript@1.4.13:
-    resolution: {integrity: sha512-xsc9Xv0xlVfwp2o7sQ+GCQ1PgbkdcpWdTzrwXxO3xDMTAywVS3oXVOcOHuRjAPkS4P9b+yc/qNF15460v+jp4Q==}
-    peerDependencies:
-      acorn: '>=8.9.0'
 
   acorn@8.14.0:
     resolution: {integrity: sha512-cl669nCJTZBsL97OF4kUQm5g5hC2uihk0NxY3WENAC0TYdILVkAyHymAntgxGkl7K+t0cXIrH5siy5S4XkFycA==}
@@ -238,6 +238,10 @@ packages:
     resolution: {integrity: sha512-4diC9HaTE+KRAMWhDhrGOECgWZxoevMc5TlkObMqNSsVU62PYzXZ/SMTjzyGAFF1YusgxGcSWTEXBhp0CPwQ1A==}
     engines: {node: '>=6'}
 
+  clsx@2.1.1:
+    resolution: {integrity: sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA==}
+    engines: {node: '>=6'}
+
   commander@2.20.3:
     resolution: {integrity: sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==}
 
@@ -291,8 +295,8 @@ packages:
     engines: {node: '>=4'}
     hasBin: true
 
-  esrap@1.2.3:
-    resolution: {integrity: sha512-ZlQmCCK+n7SGoqo7DnfKaP1sJZa49P01/dXzmjCASSo04p72w8EksT2NMK8CEX8DhKsfJXANioIw8VyHNsBfvQ==}
+  esrap@1.4.6:
+    resolution: {integrity: sha512-F/D2mADJ9SHY3IwksD4DAXjTt7qt7GWUf3/8RhCNWmC/67tyb55dpimHmy7EplakFaflV0R/PC+fdSPqrRHAQw==}
 
   estree-walker@2.0.2:
     resolution: {integrity: sha512-Rfkk/Mp/DL7JVje3u18FxFujQlTNR2q6QfMSMB7AvCBx91NGj/ba3kCfza0f6dVDbw7YlRf/nDrn7pQrCCyQ/w==}
@@ -537,8 +541,8 @@ packages:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
 
-  svelte@5.9.0:
-    resolution: {integrity: sha512-ZcC3BtjIDa4yfhAyAr94MxDQLD97zbpXmaUldFv2F5AkdZwYgQYB3BZVNRU5zEVaeeHoAns8ADiRMnre3QmpxQ==}
+  svelte@5.30.1:
+    resolution: {integrity: sha512-QIYtKnJGkubWXtNkrUBKVCvyo9gjcccdbnvXfwsGNhvbeNNdQjRDTa/BiQcJ2kWXbXPQbWKyT7CUu53KIj1rfw==}
     engines: {node: '>=18'}
 
   terser@5.16.8:
@@ -593,7 +597,7 @@ snapshots:
     dependencies:
       node-html-parser: 5.4.2
 
-  '@axel669/windstorm@0.5.4': {}
+  '@axel669/windstorm@0.5.5': {}
 
   '@jridgewell/gen-mapping@0.3.2':
     dependencies:
@@ -676,6 +680,10 @@ snapshots:
     optionalDependencies:
       rollup: 3.20.2
 
+  '@sveltejs/acorn-typescript@1.0.5(acorn@8.14.0)':
+    dependencies:
+      acorn: 8.14.0
+
   '@types/estree@1.0.0': {}
 
   '@types/estree@1.0.5': {}
@@ -694,10 +702,6 @@ snapshots:
       undici-types: 5.26.5
 
   '@types/resolve@1.20.2': {}
-
-  acorn-typescript@1.4.13(acorn@8.14.0):
-    dependencies:
-      acorn: 8.14.0
 
   acorn@8.14.0: {}
 
@@ -742,6 +746,8 @@ snapshots:
   builtin-modules@3.3.0: {}
 
   clean-stack@2.2.0: {}
+
+  clsx@2.1.1: {}
 
   commander@2.20.3: {}
 
@@ -800,10 +806,9 @@ snapshots:
 
   esprima@4.0.1: {}
 
-  esrap@1.2.3:
+  esrap@1.4.6:
     dependencies:
       '@jridgewell/sourcemap-codec': 1.5.0
-      '@types/estree': 1.0.5
 
   estree-walker@2.0.2: {}
 
@@ -992,12 +997,12 @@ snapshots:
     dependencies:
       del: 5.1.0
 
-  rollup-plugin-svelte@7.2.2(rollup@3.20.2)(svelte@5.9.0):
+  rollup-plugin-svelte@7.2.2(rollup@3.20.2)(svelte@5.30.1):
     dependencies:
       '@rollup/pluginutils': 4.2.1
       resolve.exports: 2.0.3
       rollup: 3.20.2
-      svelte: 5.9.0
+      svelte: 5.30.1
 
   rollup@3.20.2:
     optionalDependencies:
@@ -1028,17 +1033,18 @@ snapshots:
 
   supports-preserve-symlinks-flag@1.0.0: {}
 
-  svelte@5.9.0:
+  svelte@5.30.1:
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@jridgewell/sourcemap-codec': 1.5.0
+      '@sveltejs/acorn-typescript': 1.0.5(acorn@8.14.0)
       '@types/estree': 1.0.5
       acorn: 8.14.0
-      acorn-typescript: 1.4.13(acorn@8.14.0)
       aria-query: 5.3.2
       axobject-query: 4.1.0
+      clsx: 2.1.1
       esm-env: 1.2.1
-      esrap: 1.2.3
+      esrap: 1.4.6
       is-reference: 3.0.3
       locate-character: 3.0.0
       magic-string: 0.30.14

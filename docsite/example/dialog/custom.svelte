@@ -1,7 +1,7 @@
 <script>
-    import { Button, Dialog, Titlebar, Text } from "@axel669/zephyr"
+    import { Button, Dialog, Titlebar, Text, modalContext } from "@axel669/zephyr"
 
-    const { close } = $props()
+    const { close } = modalContext()
 </script>
 
 <Dialog>

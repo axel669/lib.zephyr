@@ -4,15 +4,16 @@
     import Icon from "../info/icon.svelte"
     import Text from "../text.svelte"
     import Titlebar from "../info/titlebar.svelte"
+    import { modalContext } from "../layout/modal.svelte"
 
     const {
-        close,
-        color = "@primary",
+        color = "@default",
         icon,
         message,
         okText = "OK",
-        titleText = "Alert",
+        title: titleText = "Alert",
     } = $props()
+    const { close } = modalContext()
 </script>
 
 <Dialog card {color}>
@@ -33,7 +34,7 @@
     </Text>
 
     {#snippet footer()}
-    <Button onclick={close} {color} ground>
+    <Button onclick={() => close(true)} {color} ground>
         {okText}
     </Button>
     {/snippet}
