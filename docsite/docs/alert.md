@@ -1,9 +1,7 @@
-# Alert Dialog
+# Alert
 A nicer alert dialog to use with [Modal](#/modal).
 
 ## Props
-The props for Alert are passed in as an object on whatever element is handling
-the opening/closing of the Alert.
 
 ### color
 Sets the $color macro.

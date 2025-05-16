@@ -16,15 +16,18 @@ drawers which default to full height of the window.
 ### type _string_
 The type of drawer. Default is "menu"
 
-#### "menu"
-Makes a drawer that slides in on the left side of the screen
+> `"menu"`
+>
+> Makes a drawer that slides in on the left side of the screen
 
-#### "action"
-Makes a drawer that slides in on the right side of the screen
+> `"action"`
+>
+> Makes a drawer that slides in on the right side of the screen
 
-#### "select"
-Makes a drawer that is centered horizontally and slides in from
-the top of the screen
+> `"select"`
+>
+> Makes a drawer that is centered horizontally and slides in from
+> the top of the screen
 
 ## Snippets
 The drawer uses a [Paper](#/paper) to display the drawer contents, so the

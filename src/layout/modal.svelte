@@ -1,28 +1,34 @@
 <script module>
+    import { getContext } from "svelte"
+
     let topClose = null
-    export const modalContext = Symbol("modal context")
+    const modalAnimTimeSymbol = Symbol("modal animation time")
+    const modalContextSymbol = Symbol("modal context")
+
+    export const modalAnimTime = () => getContext(modalAnimTimeSymbol)
+    export const modalContext = () => getContext(modalContextSymbol)
 </script>
 
 <script>
-    import { tick, setContext } from "svelte"
+    import { setContext } from "svelte"
     import { writable } from "svelte/store"
 
     import wsx from "../wsx.js"
+    import { frameDelay } from "../internals.js"
 
     const {
-        component,
+        children,
+        cancelable = false,
         animTime = "200ms"
     } = $props()
 
-    let modalProps = $state(null)
     let resolver = $state(null)
-    let displayed = $state(null)
+    let shown = $state(false)
 
     const close = (value) => {
         resolver(value)
         resolver = null
-        modalProps = null
-        Component = null
+        shown = false
         if (topClose !== close) {
             return
         }
@@ -31,38 +37,35 @@
     const closeToTop = (value) => {
         topClose(value)
     }
-    const cancel = () => displayed.cancel?.()
+    const cancel = () => {
+        if (cancelable === false) {
+            return
+        }
+        close(null)
+    }
 
     export const show = (props) => new Promise(
-        async (resolve) => {
-            modalProps = props ?? {}
+        (resolve) => {
             topClose = topClose ?? close
-            Component = component
-            await tick()
-            setTimeout(
-                () => resolver = resolve,
-                0
-            )
+            resolver = resolve
+            frameDelay(1, () => shown = true)
         }
     )
 
     const animationTime = writable(animTime)
     const wind = $derived({
         "@anim-time": $animationTime,
-        $show: resolver !== null,
+        $show: shown === true,
     })
-    let Component = $state(null)
-    setContext(modalContext, animationTime)
+    setContext(modalAnimTimeSymbol, animationTime)
+    setContext(modalContextSymbol, { close, closeToTop })
 </script>
 
 <!-- svelte-ignore a11y_click_events_have_key_events -->
 <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
+<!-- svelte-ignore a11y_interactive_supports_focus -->
 <ws-modal onclick={cancel} role="dialog" use:wsx={wind}>
-    <Component
-    bind:this={displayed}
-    this={component}
-    {...modalProps}
-    {close}
-    {closeToTop}
-    />
+    {#if resolver !== null}
+        {@render children()}
+    {/if}
 </ws-modal>

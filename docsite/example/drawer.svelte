@@ -3,12 +3,21 @@
     import Drawer from "./drawer/custom.svelte"
 </script>
 
-<EntryButton component={Drawer} outline>
+<EntryButton m!cancelable outline>
     Open Menu Drawer
+    {#snippet modal()}
+        <Drawer />
+    {/snippet}
 </EntryButton>
-<EntryButton component={Drawer} outline props={{ type: "action" }}>
+<EntryButton m!cancelable outline>
     Open Action Drawer
+    {#snippet modal()}
+        <Drawer type="action" />
+    {/snippet}
 </EntryButton>
-<EntryButton component={Drawer} outline props={{ type: "select" }}>
+<EntryButton m!cancelable outline>
     Open Select Drawer
+    {#snippet modal()}
+        <Drawer type="select" />
+    {/snippet}
 </EntryButton>

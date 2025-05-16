@@ -1,12 +1,11 @@
 <script>
-    import { Drawer, Titlebar, Text } from "@axel669/zephyr"
+    import { Drawer, Titlebar, Text, modalContext } from "@axel669/zephyr"
 
     const {
-        close,
         type,
     } = $props()
 
-    export const cancel = () => close()
+    const { close } = modalContext()
 </script>
 
 <Drawer {type}>

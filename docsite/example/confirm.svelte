@@ -2,12 +2,8 @@
     import { Confirm, Button, EntryButton, Modal } from "@axel669/zephyr"
 
     let confirmModal = $state(null)
-    const confirmProps = {
-        title: "Confirm Example",
-        message: "This is an confirm!"
-    }
     const show = async () => {
-        const result = await confirmModal.show(confirmProps)
+        const result = await confirmModal.show()
         if (result === true) {
             console.log("confirmed!")
             return
@@ -16,11 +12,16 @@
     }
 </script>
 
-<Modal component={Confirm} bind:this={confirmModal} />
+<Modal bind:this={confirmModal}>
+    <Confirm title="Confirm Example" message="This is a confirm!" />
+</Modal>
 <Button onclick={show} color="@primary" outline>
     Show Confirm
 </Button>
 
-<EntryButton props={confirmProps} component={Confirm} color="@secondary" outline>
+<EntryButton color="@secondary" outline m!cancelable>
     Show Confirm
+    {#snippet modal()}
+        <Confirm title="Confirm Example" message="This is a confirm!" />
+    {/snippet}
 </EntryButton>

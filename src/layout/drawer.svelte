@@ -31,24 +31,18 @@
 </script>
 
 <script>
-    import { getContext } from "svelte"
-
     import wsx from "../wsx.js"
 
     import Paper from "./paper.svelte"
-    import { modalContext } from "./modal.svelte"
+    import { modalAnimTime } from "./modal.svelte"
 
     const {
         height,
         type = "menu",
-        children,
-        header,
-        footer,
-        content,
         ...rest
     } = $props()
 
-    const animTime = getContext(modalContext)
+    const animTime = modalAnimTime()
 
     // When Svelte removes things from the DOM they are removed immediately
     // unless Svelte has a transition running. Adding this prevents the drawer
@@ -72,5 +66,5 @@
 <!-- svelte-ignore a11y_click_events_have_key_events -->
 <wind-drawer-container use:wsx={container} {onclick} role="menubar"
 transition:trick>
-    <Paper r="0px" {...rest} {header} {footer} {content} {children} />
+    <Paper r="0px" {...rest} />
 </wind-drawer-container>

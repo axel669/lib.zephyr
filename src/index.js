@@ -27,7 +27,7 @@ export { default as Dialog } from "./layout/dialog.svelte"
 export { default as Drawer } from "./layout/drawer.svelte"
 export { default as Flex } from "./layout/flex.svelte"
 export { default as Grid } from "./layout/grid.svelte"
-export { default as Modal } from "./layout/modal.svelte"
+export { default as Modal, modalAnimTime, modalContext } from "./layout/modal.svelte"
 export { default as Paper } from "./layout/paper.svelte"
 export { default as Screen } from "./layout/screen.svelte"
 
@@ -38,6 +38,7 @@ export { default as HexagonSpinner } from "./spinner/hexagon-spinner.svelte"
 
 export { default as Alert } from "./dialogs/alert.svelte"
 export { default as Confirm } from "./dialogs/confirm.svelte"
+export { default as Prompt } from "./dialogs/prompt.svelte"
 
 export { default as DataTable } from "./composed/data-table.svelte"
 // export { default as TH } from "./composed/data-table/th.svelte"
@@ -52,7 +53,7 @@ export { default as Title } from "./routing/title.svelte"
 
 export { default as wsx } from "./wsx.js"
 
-export { hash } from "./hash.svelte.js"
+export { hash } from "./hash.js"
 
 export {
     route,

@@ -7,22 +7,22 @@ addition to the buttons that show them.
 Any props passed that are not listed for the `EntryButton` are passed to the
 `Button` component that is wrapped by this component.
 
-### component _Component_
-The component to show when clicked
-
-### props _object_
-The props to pass to the component when it is shown, or a function that
-generates the props when called.
-
-### this _Component_
-The wrapper for the component. Default is [Modal](#/modal) but any
-component that has the same interface as Modal will work.
-
-### w!props _object_
-Props to pass to the wrapper component.
+### m!&lt;prop> _any_
+Props starting with "m!" will be passed to the modal being managed by the
+EntryButton (without the m! in the passed prop name).
 
 ## Events
+
+### open
+Just before the component is shown this event is fired so if there are any
+props that need to be set at that time, they can be without weird or complex
+methods on the components.
 
 ### entry
 When the component is closed the entry event is fired. The detail
 property of the event will have the value from closing it.
+
+## Snippets
+
+### modal _Component_
+The modal component to show when the button is clicked.
