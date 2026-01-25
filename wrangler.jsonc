@@ -1,0 +1,32 @@
+{
+    "name": "zephyr",
+    "compatibility_date": "2025-07-05",
+    "main": "site.js",
+    "assets": {
+        "directory": "./site",
+        "binding": "assets",
+        "not_found_handling": "single-page-application",
+        // "run_worker_first": true
+    },
+    "dev": {
+        "port": 45067
+    },
+    // "env": {
+    //     "dev": {
+    //         "routes": [
+    //             {
+    //                 "pattern": "ws-beta.axel669.net",
+    //                 "custom_domain": true,
+    //             }
+    //         ]
+    //     },
+    //     "prod": {
+    //         "routes": [
+    //             {
+    //                 "pattern": "windstorm.axel669.net",
+    //                 "custom_domain": true,
+    //             }
+    //         ]
+    //     }
+    // }
+}
