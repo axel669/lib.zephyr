@@ -8,7 +8,7 @@
 
     const close = (evt) => {
         open = false
-        onclose(evt)
+        onclose?.(evt)
     }
 </script>
 
