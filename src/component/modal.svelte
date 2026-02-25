@@ -4,7 +4,16 @@
         children,
         ws = "",
         onclose,
+        animTime,
     } = $props()
+
+    const vis = (node, opts) => {
+        const { duration } = opts
+        return {
+            duration,
+            css: (t, u) => "visibility: visible;"
+        }
+    }
 
     const close = (evt) => {
         open = false
@@ -12,6 +21,8 @@
     }
 </script>
 
-<ws-modal {open} data-ws={ws} onclose={close}>
-    {@render children?.()}
-</ws-modal>
+{#if open === true}
+    <ws-modal open data-ws={ws} onclose={close} transition:vis={{ duration: animTime }}>
+        {@render children?.()}
+    </ws-modal>
+{/if}
