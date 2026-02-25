@@ -1,5 +1,6 @@
 export { ws, wsAttr } from "./ws.js"
 
+export { default as Adorn } from "./component/adorn.svelte"
 export { default as Avatar } from "./component/avatar.svelte"
 export { default as Badge } from "./component/badge.svelte"
 export { default as Button } from "./component/button.svelte"
