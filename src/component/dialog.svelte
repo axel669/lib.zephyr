@@ -4,7 +4,7 @@
     import DialogElement from "./dialog-element.svelte"
     let stack = $state([])
 
-    const defTs = {
+    const defTf = {
         duration: 250,
         func: fade
     }
@@ -13,7 +13,7 @@
         (resolve) => {
             const {
                 dialog = null,
-                transition = defTs,
+                transition = defTf,
                 transitionIn = transition,
                 transitionOut = transition,
                 ...opts

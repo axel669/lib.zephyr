@@ -1,5 +1,6 @@
 <script>
     import Button from "./button.svelte"
+    import Grid from "./grid.svelte"
     import Paper from "./paper.svelte"
     import Text from "./text.svelte"
     import Titlebar from "./titlebar.svelte"
@@ -8,6 +9,8 @@
         message,
         close,
         color = "@primary",
+        okText = "OK",
+        cancelText = "Cancel",
     } = $props()
 </script>
 
@@ -15,7 +18,7 @@
     {#snippet header()}
         <Titlebar ws="@color: {color};">
             <Text header>
-                Alert
+                Confirm
             </Text>
         </Titlebar>
     {/snippet}
@@ -25,8 +28,13 @@
     </Text>
 
     {#snippet footer()}
-        <Button ws="@color: @success;" onclick={() => close(true)}>
-            OK
-        </Button>
+        <Grid ws="gr.cols: 1fr 1fr; p: 0px;">
+            <Button ws="@color: @error;" onclick={() => close(false)}>
+                {cancelText}
+            </Button>
+            <Button ws="@color: @success;" onclick={() => close(true)}>
+                {okText}
+            </Button>
+        </Grid>
     {/snippet}
 </Paper>

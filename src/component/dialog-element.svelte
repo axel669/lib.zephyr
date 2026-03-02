@@ -29,7 +29,7 @@
 </script>
 
 <Modal bind:open inTime={0} outTime={tOut.duration} onclose={() => dialogClose(null)} {persistent}>
-    <ws-dialog in:tIn.func={tIn} out:tOut.func={tOut} data-ws={ws}>
+    <ws-dialog in:tIn.func={tIn} out:tOut.func={tOut} data-ws={ws} tabindex="-1">
         {@render dialog({ ...opts, close: dialogClose })}
     </ws-dialog>
 </Modal>
