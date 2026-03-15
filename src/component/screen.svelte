@@ -9,6 +9,7 @@
         content,
         screenContent,
         paperWS = "",
+        layoutWS = "",
         ...rest
     } = $props()
 </script>
@@ -17,6 +18,13 @@
     {#if screenContent}
         {@render screenContent()}
     {:else}
-        <Paper {header} {footer} {children} {content} ws={paperWS} />
+        <Paper
+            {header}
+            {footer}
+            {children}
+            {content}
+            {layoutWS}
+            ws={paperWS}
+        />
     {/if}
 </ws-screen>
