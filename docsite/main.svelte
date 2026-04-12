@@ -1,7 +1,12 @@
 <svelte:options runes />
 <script>
     import { fly, fade } from "svelte/transition"
-    import * as ze from "#lib"
+    import * as ze from "@axel669/zephyr"
+    import { hash } from "@axel669/zephyr"
+
+    import sidebar from "$sidebar"
+
+    console.log(sidebar)
 
     let {
         theme = $bindable("tron")
@@ -19,6 +24,7 @@
     // const page = ze.stackStore("Home")
 
     let open = $state(false)
+    $effect(() => ($hash, open = false))
 
     const test = () => "testing?"
     const toasty = () => ze.showToast({
@@ -35,7 +41,25 @@
             color: "@accent",
         })
         console.log("result", result)
+        return "dialog hit"
     }
+    const wait =  (time) => new Promise(
+        resolve => setTimeout(resolve, time)
+    )
+
+    const tableData = Array.from(
+        { length: 80 },
+        (_, i) => ({
+            Name: `Item ${i}`,
+            Mod: i % 3,
+            Power: Math.log2(i)
+        })
+    )
+
+    const flattenRoutes = (list) => list.map(
+        item => [item, flattenRoutes(item.children ?? [])]
+    ).flat(Number.POSITIVE_INFINITY)
+    const flatRoutes = flattenRoutes(sidebar)
 </script>
 
 <!-- <ze.Title format={data => `Zephyr - ${data}`} data="Home" /> -->
@@ -52,7 +76,13 @@
 {#snippet dialogin(opts)}
     <ze.Prompt {...opts} />
 {/snippet}
-<ze.Screen ws="@pad-left: 0px;" paperWS="@color: @primary; variant.outline;">
+
+{#snippet testing(args)}
+    <pre>{JSON.stringify(args, null, 4)}</pre>
+{/snippet}
+<ze.Screen ws="@pad-left: 0px;"
+paperWS="@color: @primary; variant.outline;"
+>
     {#snippet header()}
         <ze.Titlebar ws="variant.fill;">
             <ze.Text title>
@@ -81,26 +111,64 @@
         </ze.Titlebar>
     {/snippet}
 
-    <ze.Button ws="variant.fill;" onclick={toasty}>
-        Toast?
-    </ze.Button>
-    <ze.Button ws="variant.fill;" onclick={dia}>
-        Dialog?
-    </ze.Button>
-    <ze.ControlLabel>
-        <input type="text" />
-    </ze.ControlLabel>
+    {#each flatRoutes as route}
+        {#if route.url !== undefined}
+            <ze.Route path={route.url} exact>
+                <!-- <div>
+                    {@html route.content}
+                </div> -->
+                {#if route.example}
+                    <div>
+                        <route.example />
+                    </div>
+                {/if}
+            </ze.Route>
+        {/if}
+    {/each}
+
+    <!-- <ze.DataTable data={tableData} rowSize={40}>
+        {#snippet header()}
+            <tr>
+                <th>A</th>
+                <th>B</th>
+                <th>C</th>
+            </tr>
+        {/snippet}
+
+        {#snippet row(item)}
+            <tr>
+                <td>{item.Name}</td>
+                <td>{item.Mod}</td>
+                <td>{item.Power}</td>
+            </tr>
+        {/snippet}
+    </ze.DataTable> -->
 
     <ze.Drawer ws="w: min(80vw, 280px);" bind:open>
         <ze.Paper ws="variant.outline; @color: @info;">
             {#snippet header()}
-                <div>header</div>
+                <ze.Text title>Components</ze.Text>
             {/snippet}
-            <div>some text</div>
-            <div>some text</div>
+            {@render sidebarItems(sidebar)}
         </ze.Paper>
     </ze.Drawer>
 </ze.Screen>
+
+{#snippet sidebarItems(items)}
+    {#each items as item}
+        {#if item.url}
+            <ze.Link button href="#{item.url}" ws="fl.main: start;">
+                {item.label}
+            </ze.Link>
+        {:else}
+            <ze.Details label={item.label} ws="@color: @accent;">
+                <ze.Flex>
+                    {@render sidebarItems(item.children)}
+                </ze.Flex>
+            </ze.Details>
+        {/if}
+    {/each}
+{/snippet}
 
 
 <!-- <ze.Screen alignLeft width="100%">

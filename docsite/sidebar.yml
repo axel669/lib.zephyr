@@ -1,0 +1,41 @@
+links:
+  github: ""
+sidebar:
+  - label: Home
+    url: /
+    target: "@docs:home.md"
+  - label: Adorn
+    url: /adorn
+    target: "@docs:adorn.md"
+  - label: AsyncButton
+    url: /async-button
+    target: "@docs:async-button.md"
+    example: "@example:async-button.svelte"
+  - label: Button
+    url: /button
+    target: "@docs:button.md"
+    example: "@example:button.svelte"
+  - label: Chip
+    url: /chip
+    target: "@docs:chip.md"
+    example: "@example:chip.svelte"
+  - label: Details
+    url: /details
+    target: "@docs:details.md"
+    example: "@example:details.svelte"
+  - label: Dialogs
+    children:
+    - label: Dialog
+      url: /dialog
+      target: "@docs:dialog.md"
+      example: "@example:dialog.svelte"
+  - label: Flex
+    url: /flex
+    target: "@docs:flex.md"
+    example: "@example:flex.svelte"
+    # - label: Alert
+    #   target: "@docs:alert.yml"
+    # - label: Confirm
+    #   target: "@docs:confirm.yml"
+    # - label: Prompt
+    #   target: "@docs:prompt.yml"

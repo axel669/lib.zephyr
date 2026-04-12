@@ -4,7 +4,7 @@ pre-header {
     transition: opacity 150ms linear;
 }
 
-code-area:hover>pre-header {
+code-area:hover > pre-header {
     visibility: visible;
     opacity: 1;
 }
@@ -22,7 +22,7 @@ blockquote {
 
 blockquote > p {
     margin: 0px;
-    border-left: 4px solid var(--primary);
+    border-left: 4px solid hsl(var(--info), var(--layer-element));
     padding: 2px;
     padding-left: 4px;
 }
@@ -48,13 +48,13 @@ pre {
 }
 
 h1 {
-    border-bottom: 2px solid var(--primary);
+    border-bottom: 2px solid hsl(var(--primary), var(--layer-element));
 }
 
 h2 {
-    border-bottom: 1px solid var(--secondary);
+    border-bottom: 1px solid hsl(var(--secondary), var(--layer-element));
 }
 
 h3 {
-    border-bottom: 1px solid var(--text-color-secondary);
+    border-bottom: 1px solid hsl(var(--text-color-secondary), var(--layer-element));
 }
