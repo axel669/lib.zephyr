@@ -7,10 +7,17 @@ sidebar:
   - label: Adorn
     url: /adorn
     target: "@docs:adorn.md"
+  - label: Application
+    url: /application
+    target: "@docs:application.md"
   - label: AsyncButton
     url: /async-button
     target: "@docs:async-button.md"
     example: "@example:async-button.svelte"
+  - label: Avatar
+    url: /avatar
+    target: "@docs:avatar.md"
+    example: "@example:avatar.svelte"
   - label: Button
     url: /button
     target: "@docs:button.md"
