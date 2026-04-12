@@ -82,6 +82,7 @@
 {/snippet}
 <ze.Screen ws="@pad-left: 0px;"
 paperWS="@color: @primary; variant.outline;"
+layoutWS="over: auto;"
 >
     {#snippet header()}
         <ze.Titlebar ws="variant.fill;">
@@ -114,10 +115,11 @@ paperWS="@color: @primary; variant.outline;"
     {#each flatRoutes as route}
         {#if route.url !== undefined}
             <ze.Route path={route.url} exact>
-                <!-- <div>
+                <div>
                     {@html route.content}
-                </div> -->
+                </div>
                 {#if route.example}
+                    <h2>Example</h2>
                     <div>
                         <route.example />
                     </div>
