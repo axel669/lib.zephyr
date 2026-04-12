@@ -29,6 +29,15 @@ const resolve = (file) => {
 const sitemap = yaml.parse(
     await readfile("@docsite:sidebar.yml")
 )
+const fsvar = fs.cwd("docsite/docs/vars")
+const mdvars = Object.fromEntries(
+    fsvar.list().map(
+        file => [
+            file.slice(0, -3),
+            fsvar.read(file)
+        ]
+    )
+)
 
 // log.deep(sitemap)
 
@@ -59,7 +68,13 @@ const renderContent = async (target) => {
         return ""
     }
     const content = await readfile(target)
-    const markdown = md.render(content)
+    // console.log(content)
+    const markdown = md.render(
+        content.replace(
+            /\{\{var:([^\}]+)\}\}/g,
+            (_, name) => mdvars[name]
+        )
+    )
     return renderString("content", markdown)
 }
 const loadChildren = async (list) => {
