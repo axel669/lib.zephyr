@@ -2,31 +2,31 @@
     import { Button, Grid } from "@axel669/zephyr"
 
     const colors = [
-        ["Default", "@default"],
         ["Primary", "@primary"],
-        ["Secondary", "@secondary"],
+        ["Success", "@success"],
         ["Accent", "@accent"],
+        ["Info", "@info"],
         ["Warning", "@warning"],
-        ["Danger", "@danger"],
+        ["Error", "@error"],
     ]
 </script>
 
 <Button onclick={() => alert("clicked!")}>
     JS Alert!
 </Button>
-<Button color="@primary" outline onclick={console.log}>
+<Button ws="@color: @primary;" onclick={console.log}>
     Console Log
 </Button>
 
 <h3>Button Variants</h3>
-<Grid cols="1fr 1fr 1fr">
+<Grid ws="gr.cols: 1fr 1fr 1fr;">
     {#each colors as [name, color]}
-        <Button {color} flat>{name}</Button>
-        <Button {color} outline>{name}</Button>
-        <Button {color} fill>{name}</Button>
+        <Button ws="@color: {color};">{name}</Button>
+        <Button ws="@color: {color}; variant.outline;">{name}</Button>
+        <Button ws="@color: {color}; variant.fill;">{name}</Button>
 
-        <Button {color} ground flat>{name}</Button>
-        <Button {color} ground outline>{name}</Button>
-        <Button {color} ground fill>{name}</Button>
+        <Button ws="@color: {color}; elevate;">{name}</Button>
+        <Button ws="@color: {color}; elevate; variant.outline;">{name}</Button>
+        <Button ws="@color: {color}; elevate; variant.fill;">{name}</Button>
     {/each}
 </Grid>

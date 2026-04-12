@@ -8,13 +8,14 @@
         console.log("started")
         await wait(2500)
         console.log("done")
+        return "return value"
     }
 </script>
 
-<AsyncButton handler={load} color="@primary" fill>
+<AsyncButton onclick={load} onresolve={console.log} ws="@color: @primary; variant.fill;">
     Run Async Function
 </AsyncButton>
 
-<AsyncButton handler={load} color="@primary" sp!color="@secondary" fill>
+<AsyncButton onclick={load} onresolve={console.log} ws="@color: @primary;" spinnerWS="@color: @success;">
     Run Async Function
 </AsyncButton>
