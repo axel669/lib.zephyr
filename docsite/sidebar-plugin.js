@@ -96,10 +96,19 @@ const loadFiles = async (list) => {
     }
     const mapped = []
     for (const entry of list) {
-        const content = await renderContent(entry.target)
+        const content = await renderContent(
+            (entry.docs === true)
+                ? `@docs:${entry.url.slice(1)}.md`
+                : entry.docs
+        )
         const url = renderString("url", entry.url)
         const label = renderString("label", entry.label)
-        const example = loadExample(entry.label, entry.example)
+        const example = loadExample(
+            entry.label,
+            (entry.example === true)
+                ? `@example:${entry.url.slice(1)}.svelte`
+                : entry.example
+        )
         const children = await loadChildren(entry.children)
 
         const item = `{\n${label}${url}${content}${example}${children}}`
@@ -112,7 +121,7 @@ const sidebar = await loadFiles(sitemap.sidebar)
 const code = `${imports.join("\n")}\nexport default [\n${sidebar.join(",\n")}\n]`
 
 log.info("Examples Loaded")
-// log.info(code)
+log.info(code)
 
 export default {
     resolveId(id) {

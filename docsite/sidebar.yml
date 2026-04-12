@@ -1,49 +1,21 @@
 links:
   github: ""
 sidebar:
-  - label: Home
-    url: /
-    target: "@docs:home.md"
-  - label: Adorn
-    url: /adorn
-    target: "@docs:adorn.md"
-  - label: Application
-    url: /application
-    target: "@docs:application.md"
-  - label: AsyncButton
-    url: /async-button
-    target: "@docs:async-button.md"
-    example: "@example:async-button.svelte"
-  - label: Avatar
-    url: /avatar
-    target: "@docs:avatar.md"
-    example: "@example:avatar.svelte"
-  - label: Badge
-    url: /badge
-    target: "@docs:badge.md"
-    example: "@example:badge.svelte"
-  - label: Button
-    url: /button
-    target: "@docs:button.md"
-    example: "@example:button.svelte"
-  - label: Chip
-    url: /chip
-    target: "@docs:chip.md"
-    example: "@example:chip.svelte"
-  - label: Details
-    url: /details
-    target: "@docs:details.md"
-    example: "@example:details.svelte"
+  - { label: Home, url: /, docs: "@docs:home.md" }
+  - { label: Adorn, url: /adorn, docs: true }
+  - { label: Application, url: /application, docs: true }
+  - { label: AsyncButton, url: /async-button, docs: true, example: true }
+  - { label: Avatar, url: /avatar, docs: true, example: true }
+  - { label: Badge, url: /badge, docs: true, example: true }
+  - { label: Button, url: /button, docs: true, example: true }
+  - { label: Chip, url: /chip, docs: true, example: true }
   - label: Dialogs
     children:
-    - label: Dialog
-      url: /dialog
-      target: "@docs:dialog.md"
-      example: "@example:dialog.svelte"
-  - label: Flex
-    url: /flex
-    target: "@docs:flex.md"
-    example: "@example:flex.svelte"
+    - { label: Dialog, url: /dialog, docs: true, example: true }
+  # - label: Spinners
+  #   children:
+  #   - { label: Circle Spinner, url: /circle-spinner, target: true, example: true }
+  #   - { label: Hexagon Spinner, url: /hexagon-spinner, target: true, example: true }
     # - label: Alert
     #   target: "@docs:alert.yml"
     # - label: Confirm
