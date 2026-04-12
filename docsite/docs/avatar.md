@@ -3,14 +3,12 @@ Displays an image or text in a circular container.
 
 ## Props
 
-### alt _string_
-Alt text for the image. Has no effect if image prop is not used.
-
-### color _string_
-Sets `$color`
-
 ### image _string_
-An image url. If no url is provided the text property is displayed.
+URL for an image to display. If no url is provided then text is displayed.
 
 ### text _string_
-Text to show in the avatar area if image is not used.
+Text to show in the avatar area if image is not used. If text is provided as the
+child to the component, it will be rendered instead of whatever is passed via
+this prop.
+
+{{var:ws}}
