@@ -1,14 +1,22 @@
 # AsyncButton
-A button that makes it simpler to fire off async functions in response to button
-clicks. In addition to calling the function, the button will disable itself
-during the function duration and show a load spinner inside the button.
+A button that makes it simpler to fire off async functions
+in response to button clicks. In addition to calling the
+function, the button will disable itself during the
+function duration and show a load spinner inside the
+button.
 
 ## Props
-The AsyncButton supports all of the [Button](#/button) props.
+> AsyncButton supports all of the [Button](#/button) props.
 
-### handler _Function_
-The async function to call when the button is clicked.
+### hideSpinner _bool_
+If true, hides the load spinner while the button is
+waiting (the button will still be disabled). Default
+is `false`
 
-### sp!<prop>
-Any props starting with `"sp!"` will be passed to the spinner directly (without
-the "sp!" in the name).
+### onresolve _function_
+A function that fires once the promise from onclick
+is resolved, with the value of the result as its
+only argument.
+
+### spinnerWS _string_
+Windstorm text to pass to the load spinner.

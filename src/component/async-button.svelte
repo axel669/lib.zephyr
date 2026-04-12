@@ -1,3 +1,21 @@
+<script module>
+    import { ws } from "../ws.js"
+
+    ws.component("ze-async-button")`
+        disp: inline-grid;
+        pos.rel;
+    `
+
+    ws.macro("async.button.spinner")`
+        @size: 100%;
+        pos.abs;
+        x: 50%;
+        y: 0px;
+        tf: translateX(-50%);
+        h: 100%;
+    `
+</script>
+
 <script>
     import Button from "./button.svelte"
     import CircleSpinner from "./circle-spinner.svelte"
@@ -25,9 +43,11 @@
     )
 </script>
 
-<Button {...props} onclick={handler} disabled={dis}>
-    {@render children?.()}
+<ze-async-button>
+    <Button {...props} onclick={handler} disabled={dis}>
+        {@render children?.()}
+    </Button>
     {#if waiting === true && hideSpinner === false}
-        <CircleSpinner ws="@size: 16px; {spinnerWS}" />
+        <CircleSpinner ws="async.button.spinner; {spinnerWS}" />
     {/if}
-</Button>
+</ze-async-button>
