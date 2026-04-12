@@ -8,6 +8,6 @@
 <Badge text={count}>
     Unread Messages
 </Badge>
-<Badge text="1k+" color="@warning">
-    <Button onclick={inc} color="@primary">Clickable Content</Button>
+<Badge text="1k+" ws="@color: @warning;">
+    <Button onclick={inc} ws="@color: @success;">Clickable Content</Button>
 </Badge>

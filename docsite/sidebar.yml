@@ -18,6 +18,10 @@ sidebar:
     url: /avatar
     target: "@docs:avatar.md"
     example: "@example:avatar.svelte"
+  - label: Badge
+    url: /badge
+    target: "@docs:badge.md"
+    example: "@example:badge.svelte"
   - label: Button
     url: /button
     target: "@docs:button.md"
