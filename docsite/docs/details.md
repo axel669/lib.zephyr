@@ -8,6 +8,10 @@ more content (like the html details element).
 
 The text to display in the summary of the details.
 
+### open _bool, bindable_
+
+Controls the open state of the details.
+
 ### summaryWS _string_
 
 Windstorm string to apaply to the summary element of the details.
