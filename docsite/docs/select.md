@@ -7,6 +7,10 @@ A highly customizable select built on top of the
 
 ## Props
 
+### blank _string_
+
+The content to show in the selected label when no option is currently selected.
+
 {{var:children}}
 
 ### options _Array_

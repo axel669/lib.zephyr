@@ -25,7 +25,8 @@
     <Select {options} bind:value ws="" />
     <Select {options} bind:value ws="@color: @success; variant.outline;" />
 
-    <Select {options} bind:value ws="variant.outline;">
+    <!-- Make the custom label only show when a value is selected with WS + blank -->
+    <Select {options} bind:value ws="variant.outline;" blank="">
         {#snippet selected()}
             <!-- svelte-ignore element_invalid_self_closing_tag -->
             Custom Label<ws-selected data-ws={"! &:empty { disp: none; } ! &::before { *content: ': '; }"} />
