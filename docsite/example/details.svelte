@@ -1,20 +1,22 @@
 <script>
-    import { Details, Icon } from "@axel669/zephyr"
+    import { Details, Icon, Grid } from "@axel669/zephyr"
 
     let open = $state(false)
 </script>
 
 <div>Open: {open}</div>
-<Details label="Info" bind:open>
-    Look, more info could go here!
-</Details>
+<Grid ws="gr.cols: 1fr 1fr;">
+    <Details label="Info" bind:open>
+        Look, more info could go here!
+    </Details>
 
-<Details bind:open outline color="@primary">
-    {#snippet label()}
-    <div>
-        Slotted labels allowed! <Icon name="hexagon" />
-    </div>
-    {/snippet}
+    <Details bind:open ws="@color: @accent; variant.outline;">
+        {#snippet summary()}
+        <div>
+            Slotted labels allowed! <Icon name="hexagon" />
+        </div>
+        {/snippet}
 
-    Another one!
-</Details>
+        Another one!
+    </Details>
+</Grid>

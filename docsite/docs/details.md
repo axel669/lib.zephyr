@@ -4,24 +4,20 @@ more content (like the html details element).
 
 ## Props
 
-### color _string_
-Sets the $color macro.
-
 ### label _string_
-The text for the content that is always shown.
 
-### open _bool, bindable_
-Controls whether the Details is showing the extended content. Can be bound to.
+The text to display in the summary of the details.
 
-### outline _bool_
-If true, will put an outline around the component, including the extended
-content.
+### summaryWS _string_
+
+Windstorm string to apaply to the summary element of the details.
+
+{{var:ws}}
 
 ## Snippets
 
-### default()
-The content to show when the Details is open.
+{{var:children}}
 
-### label()
+### summary()
 Can be used for more complex labels (things that need nested elements). If used,
 the label prop will be ignored.

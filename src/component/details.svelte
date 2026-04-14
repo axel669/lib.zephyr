@@ -11,12 +11,12 @@
 </script>
 
 <details data-ws={ws ?? ""} bind:open {...rest}>
-    {#if summary !== undefined}
-        {@render summary()}
-    {:else}
-        <summary data-ws={summaryWS}>
+    <summary data-ws={summaryWS}>
+        {#if summary !== undefined}
+            {@render summary()}
+        {:else}
             {label}
-        </summary>
-    {/if}
+        {/if}
+    </summary>
     {@render children()}
 </details>
