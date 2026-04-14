@@ -147,7 +147,7 @@ layoutWS="over: auto;"
     </ze.DataTable> -->
 
     <ze.Drawer ws="w: min(80vw, 280px);" bind:open>
-        <ze.Paper ws="variant.outline; @color: @info;">
+        <ze.Paper ws="variant.outline; @color: @info;" layoutWS="over: auto;">
             {#snippet header()}
                 <ze.Text title>Components</ze.Text>
             {/snippet}
