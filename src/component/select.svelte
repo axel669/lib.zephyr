@@ -1,9 +1,11 @@
+<svelte:options runes />
 <script>
     let {
         value = $bindable(null),
         ws,
         options,
         children,
+        selected,
         ...rest
     } = $props()
 
@@ -25,6 +27,11 @@
 {/snippet}
 
 <ws-select data-ws={ws} onchange={update} {...rest} {value}>
+    {#if selected}
+        <div slot="selected">
+            {@render selected()}
+        </div>
+    {/if}
     {#if Array.isArray(options) === true}
         {@render optionList(options)}
     {:else}
