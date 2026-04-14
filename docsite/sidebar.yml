@@ -2,23 +2,58 @@ links:
   github: ""
 sidebar:
   - { label: Home, url: /, docs: "@docs:home.md" }
-  - { label: Adorn, url: /adorn, docs: true }
   - { label: Application, url: /application, docs: true }
-  - { label: AsyncButton, url: /async-button, docs: true, example: true }
-  - { label: Avatar, url: /avatar, docs: true, example: true }
-  - { label: Badge, url: /badge, docs: true, example: true }
-  - { label: Button, url: /button, docs: true, example: true }
-  - { label: Chip, url: /chip, docs: true, example: true }
-  - label: Dialogs
+
+  - label: Controls & Inputs
     children:
-    - { label: Dialog, url: /dialog, docs: true, example: true }
-  # - label: Spinners
-  #   children:
-  #   - { label: Circle Spinner, url: /circle-spinner, target: true, example: true }
-  #   - { label: Hexagon Spinner, url: /hexagon-spinner, target: true, example: true }
-    # - label: Alert
-    #   target: "@docs:alert.yml"
-    # - label: Confirm
-    #   target: "@docs:confirm.yml"
-    # - label: Prompt
-    #   target: "@docs:prompt.yml"
+    - { label: AsyncButton, url: /async-button, docs: true, example: true }
+    - { label: Button, url: /button, docs: true, example: true }
+    - { label: Details, url: /details, docs: true, example: true }
+    - { label: Input / Control Label, url: /control-label }
+    - { label: Select, url: /select, docs: true, example: true }
+    - { label: Toggle Label, url: /toggle-label }
+
+  - label: Content Display
+    children:
+    - { label: Adorn, url: /adorn, docs: true }
+    - { label: Avatar, url: /avatar, docs: true, example: true }
+    - { label: Badge, url: /badge, docs: true, example: true }
+    - { label: Chip, url: /chip, docs: true, example: true }
+    - { label: DataTable, url: /data-table }
+    - { label: Icon, url: /icon, docs: true, example: true }
+    - { label: Progress, url: /progress }
+    - { label: Suspend, url: /suspend }
+    - { label: Table, url: /table }
+    - { label: Text, url: /text }
+    - { label: Tooltip, url: /tooltip }
+
+  - label: Layout
+    children:
+    - { label: Flex, url: /flex }
+    - { label: Grid, url: /grid }
+    - { label: Paper, url: /paper }
+    - { label: Screen, url: /screen }
+    - { label: Titlebar, url: /titlebar }
+
+  - label: Navigation
+    children:
+    - { label: Link, url: /link }
+    - { label: Route, url: /route }
+    - { label: Tabs, url: /tabs }
+    - { label: Title, url: /title }
+
+  - label: Modal Content
+    children:
+    - { label: Dialog Base, url: /dialog }
+    - { label: Modal Base, url: /modal }
+    - { label: Alert, url: /alert }
+    - { label: Confirm, url: /confirm }
+    - { label: Drawer, url: /drawer }
+    - { label: Popover, url: /popover }
+    - { label: Prompt, url: /prompt }
+    - { label: Toast, url: /toast }
+    - { label: Toaster, url: /toaster }
+  - label: Spinners
+    children:
+    - { label: Circle Spinner, url: /circle-spinner }
+    - { label: Hexagon Spinner, url: /hexagon-spinner }
