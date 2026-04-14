@@ -22,3 +22,5 @@ Sets the min value for the progress bar. Default is 0
 ### value _number_
 Sets the value of the progress bar. Combined with min and max to determine how
 filled the bar is.
+
+{{var:ws}}

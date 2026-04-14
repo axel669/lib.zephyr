@@ -21,7 +21,7 @@ sidebar:
     - { label: Chip, url: /chip, docs: true, example: true }
     - { label: DataTable, url: /data-table }
     - { label: Icon, url: /icon, docs: true, example: true }
-    - { label: Progress, url: /progress }
+    - { label: Progress, url: /progress, docs: true, example: true }
     - { label: Suspend, url: /suspend }
     - { label: Table, url: /table }
     - { label: Text, url: /text }
