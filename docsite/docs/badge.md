@@ -7,3 +7,7 @@ Adds a small badge over the upper-right corner of some content.
 The badge text.
 
 {{var:ws}}
+
+## Snippets
+
+{{var:children}}
