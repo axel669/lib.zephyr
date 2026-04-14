@@ -1,5 +1,5 @@
 <script>
-    import { Select } from "@axel669/zephyr"
+    import { Select, Grid } from "@axel669/zephyr"
 
     // Results in:
     // <option>first</option>
@@ -8,17 +8,28 @@
     //     <option>third</option>
     // </optgroup>
     const options = [
-        { label: "first", value: 1 },
-        { group: "Not numbers" },
-        { label: "second", value: "two" },
-        { label: "third", value: [3] },
+        { label: "first", value: "1" },
+        {
+            group: "Grouped",
+            items: [
+                { label: "second", value: "two" },
+                { label: "third", value: "3" },
+            ]
+        },
     ]
     let value = $state(1)
 </script>
 
 <pre>Value: {JSON.stringify(value)}</pre>
-<Select {options} bind:value label="Blep" />
-<Select {options} bind:value color="@warning" label="Why" />
+<Grid ws="gr.cols: 1fr 1fr;">
+    <Select {options} bind:value ws="" />
+    <Select {options} bind:value ws="@color: @success; variant.outline;" />
 
-<Select {options} flat bind:value label="Blep" />
-<Select {options} flat bind:value color="@warning" label="Why" />
+    <Select {options} bind:value ws="variant.outline;">
+        {#snippet selected()}
+            <!-- svelte-ignore element_invalid_self_closing_tag -->
+            Custom Label<ws-selected data-ws={"! &:empty { disp: none; } ! &::before { *content: ': '; }"} />
+        {/snippet}
+    </Select>
+    <Select {options} bind:value ws="variant.lined; @color: @info;" />
+</Grid>
