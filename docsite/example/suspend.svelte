@@ -1,5 +1,5 @@
 <script>
-    import { Suspend, Button } from "@axel669/zephyr"
+    import { Suspend, Button, Grid } from "@axel669/zephyr"
 
     import PretendSync from "./suspend/pretend-sync.svelte"
 
@@ -20,10 +20,24 @@
     }
 </script>
 
-<Button fill color="@primary" onclick={runTasks}>
+<Button ws="variant.fill;" onclick={runTasks}>
     Run Async Task
 </Button>
-{#if asyncOp !== null}
-    <Suspend !component={PretendSync} time={asyncOp} />
-    <Suspend !component={PretendSync} time={asyncOp} other={failedOp} />
-{/if}
+<Grid ws="h: 100px; gr.cols: 1fr 1fr;">
+    {#if asyncOp !== null}
+        <Suspend time={asyncOp}>
+            {#snippet snippet(props)}
+                <div>
+                    Current Time: {new Date(props.time).toLocaleString()}
+                </div>
+            {/snippet}
+        </Suspend>
+        <Suspend component={PretendSync} time={asyncOp} other={failedOp}>
+            {#snippet error(err)}
+                <div>
+                    Error: {err.message}
+                </div>
+            {/snippet}
+        </Suspend>
+    {/if}
+</Grid>

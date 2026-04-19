@@ -22,7 +22,7 @@ sidebarItems:
     - { label: DataTable, url: /data-table }
     - { label: Icon, url: /icon, docs: true, example: true }
     - { label: Progress, url: /progress, docs: true, example: true }
-    - { label: Suspend, url: /suspend }
+    - { label: Suspend, url: /suspend, docs: true, example: true }
     - { label: Table, url: /table }
     - { label: Text, url: /text }
     - { label: Tooltip, url: /tooltip }

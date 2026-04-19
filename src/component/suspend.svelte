@@ -23,7 +23,7 @@
         {@render loading()}
     {:else}
         <Flex ws="fl.cn;">
-            <HexagonSpinner size="56px" />
+            <HexagonSpinner ws="@size: 48px;" />
             <span>Loading</span>
         </Flex>
     {/if}
