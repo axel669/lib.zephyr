@@ -11,17 +11,6 @@
     let {
         theme = $bindable("tron")
     } = $props()
-    // import * as ze from "#lib"
-
-    // import Docs from "#comp/docs"
-    // import SideMenu from "#comp/side-menu"
-    // import { theme } from "#state/theme"
-
-    // import README from "#README"
-
-    // import examples from "$examples"
-
-    // const page = ze.stackStore("Home")
 
     let open = $state(false)
     $effect(() => ($hash, open = false))
@@ -59,10 +48,26 @@
     const flattenRoutes = (list) => list.map(
         item => [item, flattenRoutes(item.children ?? [])]
     ).flat(Number.POSITIVE_INFINITY)
-    const flatRoutes = flattenRoutes(sidebar)
+    const flatRoutes = flattenRoutes(sidebar.items)
+    const titles = flatRoutes.reduce(
+        (map, route) => {
+            if (route.url === undefined) {
+                return map
+            }
+            map[route.url] = route.label
+            return map
+        },
+        { "": "Home" }
+    )
+    let pageLabel = $state("")
+    $effect(() => {
+        pageLabel = titles[$hash]
+    })
 </script>
 
-<!-- <ze.Title format={data => `Zephyr - ${data}`} data="Home" /> -->
+<svelte:head>
+    <title>Zephyr Docs - {pageLabel}</title>
+</svelte:head>
 
 {#snippet toastin(opts)}
     <div transition:fly={{ x: "-100%" }}>
@@ -121,6 +126,18 @@ layoutWS="over: auto;"
                 {#if route.example}
                     <h2>Example</h2>
                     <div>
+                        <ze.Link
+                        button
+                        href="{sidebar.config.links.github}{route.exampleFile}"
+                        target="_blank"
+                        ws="variant.outline; @color: @info;"
+                        >
+                            <ze.Icon name="brand-github" />
+                            {@html "&nbsp;"}
+                            Example Source
+                        </ze.Link>
+                    </div>
+                    <div>
                         <route.example />
                     </div>
                 {/if}
@@ -128,30 +145,12 @@ layoutWS="over: auto;"
         {/if}
     {/each}
 
-    <!-- <ze.DataTable data={tableData} rowSize={40}>
-        {#snippet header()}
-            <tr>
-                <th>A</th>
-                <th>B</th>
-                <th>C</th>
-            </tr>
-        {/snippet}
-
-        {#snippet row(item)}
-            <tr>
-                <td>{item.Name}</td>
-                <td>{item.Mod}</td>
-                <td>{item.Power}</td>
-            </tr>
-        {/snippet}
-    </ze.DataTable> -->
-
     <ze.Drawer ws="w: min(80vw, 280px);" bind:open>
         <ze.Paper ws="variant.outline; @color: @info;" layoutWS="over: auto;">
             {#snippet header()}
                 <ze.Text title>Components</ze.Text>
             {/snippet}
-            {@render sidebarItems(sidebar)}
+            {@render sidebarItems(sidebar.items)}
         </ze.Paper>
     </ze.Drawer>
 </ze.Screen>
@@ -171,38 +170,3 @@ layoutWS="over: auto;"
         {/if}
     {/each}
 {/snippet}
-
-
-<!-- <ze.Screen alignLeft width="100%">
-    <ze.Paper square l!p="0px">
-        {#snippet header()}
-        <ze.Titlebar fill color="@primary">
-            {#snippet title()}
-            <ze.Text title>
-                Zephyr Docs - {$page}
-            </ze.Text>
-            {/snippet}
-
-            {#snippet menu()}
-            <ze.EntryButton ground w!props={{animTime: "100ms"}} m!cancelable>
-                <ze.Icon name="menu-2" />
-                {#snippet modal()}
-                <SideMenu />
-                {/snippet}
-            </ze.EntryButton>
-            {/snippet}
-        </ze.Titlebar>
-        {/snippet}
-
-        <ze.Flex w="min(100%, 720px)">
-            <ze.Route exact path="/">
-                <ze.Text>
-                    {@html README}
-                </ze.Text>
-            </ze.Route>
-            {#each examples as example}
-                <ze.Route path={example.id} component={Docs} props={{...example, page}} />
-            {/each}
-        </ze.Flex>
-    </ze.Paper>
-</ze.Screen> -->

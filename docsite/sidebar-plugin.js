@@ -26,7 +26,7 @@ const resolve = (file) => {
     return filesystems[fsys].path(loc)
 }
 
-const sitemap = yaml.parse(
+const { sidebarItems, ...sidebarConfig } = yaml.parse(
     await readfile("@docsite:sidebar.yml")
 )
 const fsvar = fs.cwd("docsite/docs/vars")
@@ -116,12 +116,16 @@ const loadFiles = async (list) => {
     }
     return mapped
 }
-const sidebar = await loadFiles(sitemap.sidebar)
+const sidebar = await loadFiles(sidebarItems)
 
-const code = `${imports.join("\n")}\nexport default [\n${sidebar.join(",\n")}\n]`
+const sidebarExport = `{
+    config: ${JSON.stringify(sidebarConfig)},
+    items: [\n${sidebar.join(",\n")}\n],
+}`
+
+const code = `${imports.join("\n")}\nexport default ${sidebarExport}`
 
 log.info("Examples Loaded")
-log.info(code)
 
 export default {
     resolveId(id) {

@@ -1,6 +1,6 @@
 links:
-  github: ""
-sidebar:
+  github: "https://github.com/axel669/lib.windstorm"
+sidebarItems:
   - { label: Home, url: /, docs: "@docs:home.md" }
   - { label: Application, url: /application, docs: true }
 
