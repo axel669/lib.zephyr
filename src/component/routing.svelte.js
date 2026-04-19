@@ -22,16 +22,14 @@ export const ctx = {
     layout: Symbol("Layout Context"),
 }
 export const resolve = (base, part) => {
-    if (part === "" || part === "/") {
+    const prt = `/${part}`.replace(/^\/\//, "/")
+    if (prt === "/") {
         return base
     }
     if (base === "/" || base === undefined) {
-        return `/${part}`
+        return prt
     }
-    if (part.startsWith("/") === true) {
-        return `${base}${part}`
-    }
-    return `${base}/${part}`
+    return `${base}${prt}`
 }
 export const relpath = (path) => {
     const base = getContext(ctx.parent)
