@@ -1,8 +1,10 @@
 <script>
-    import { EntryButton } from "@axel669/zephyr"
-    import CustomDialog from "./dialog/custom.svelte"
+    // import { EntryButton } from "@axel669/zephyr"
+    // import CustomDialog from "./dialog/custom.svelte"
 </script>
 
-<EntryButton component={CustomDialog}>
+<div>Dialog Example goes here</div>
+
+<!-- <EntryButton component={CustomDialog}>
     Open Custom Dialog
-</EntryButton>
+</EntryButton> -->

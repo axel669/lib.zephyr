@@ -2,14 +2,28 @@
     import { Flex, Text } from "@axel669/zephyr"
 </script>
 
-<Flex b="1px solid @primary">
-    <Text p="4px" b="1px solid @secondary">Content</Text>
-    <Text p="4px" b="1px solid @secondary">More content</Text>
-    <Text p="4px" b="1px solid @secondary">Event more content</Text>
+<Flex ws="b: 1px solid hsl(@primary, @layer-border);">
+    <Text ws="p: 4px; b: 1px solid hsl(@success, @layer-border);">
+        Content
+    </Text>
+    <Text ws="p: 4px; b: 1px solid hsl(@success, @layer-border);">
+        More content
+    </Text>
+    <Text ws="p: 4px; b: 1px solid hsl(@success, @layer-border);">
+        Event more content
+    </Text>
 </Flex>
 
-<Flex direction="row"b="1px solid @primary">
-    <Text p="4px" b="1px solid @secondary">Content</Text>
-    <Text p="4px" b="1px solid @secondary">More content</Text>
-    <Text p="4px" b="1px solid @secondary">Event more content</Text>
+<br />
+
+<Flex ws="fl.dir: row; b: 1px solid hsl(@primary, @layer-border);">
+    <Text ws="p: 4px; b: 1px solid hsl(@success, @layer-border);">
+        Content
+    </Text>
+    <Text ws="p: 4px; b: 1px solid hsl(@success, @layer-border);">
+        More content
+    </Text>
+    <Text ws="p: 4px; b: 1px solid hsl(@success, @layer-border);">
+        Event more content
+    </Text>
 </Flex>
