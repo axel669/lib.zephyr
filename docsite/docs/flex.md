@@ -3,14 +3,8 @@ Container that uses flex layout by default with some nice default values.
 
 ## Props
 
-### direction _string_
-Sets `fl.dir`.
+{{var:ws}}
 
-### cross _string_
-Sets `fl.cross`, default is `"stretch"`.
+## Snippets
 
-### main _string_
-Sets `fl.main`, default is `"start"`.
-
-### scrollable _bool_
-If true, sets overflow to `"auto"`.
+{{var:children}}

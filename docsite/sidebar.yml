@@ -29,8 +29,8 @@ sidebarItems:
 
   - label: Layout
     children:
-    - { label: Flex, url: /flex }
-    - { label: Grid, url: /grid }
+    - { label: Flex, url: /flex, docs: true, example: true }
+    - { label: Grid, url: /grid, docs: true, example: true }
     - { label: Paper, url: /paper }
     - { label: Screen, url: /screen }
     - { label: Titlebar, url: /titlebar }
