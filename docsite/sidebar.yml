@@ -25,7 +25,7 @@ sidebarItems:
     - { label: Suspend, url: /suspend, docs: true, example: true }
     - { label: Table, url: /table, docs: true, example: true }
     - { label: Text, url: /text, docs: true, example: true }
-    - { label: Tooltip, url: /tooltip }
+    - { label: Tooltip, url: /tooltip, docs: true, example: true }
 
   - label: Layout
     children:
