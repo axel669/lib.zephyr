@@ -38,8 +38,8 @@
         {/if}
     </thead>
     <tbody>
-        {#each data as item}
-            {@render row(item, keys)}
+        {#each data as item, rowNum}
+            {@render row(item, keys, rowNum)}
         {:else}
             <tr>
                 <td>No Items</td>

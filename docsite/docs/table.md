@@ -3,12 +3,6 @@ Wrapper for making tables in a way that is easy to maintain.
 
 ## Props
 
-### cols _string_
-Sets the columns to use in the table, uses the grid template columns syntax.
-
-### color _string_
-Sets the $color macro.
-
 ### data _Array_
 The data to display in the table.
 
@@ -16,16 +10,20 @@ The data to display in the table.
 If true, the header row will have the background filled instead of just the
 colored border.
 
-### stickyHeader _bool_
+### sticky _bool_
 If true, the header row will be sticky.
 
 ## Snippets
 
-### empty-row(rowNum)
-If given, will render when the item in the array is `undefined`.
-
-### header()
+### header(keys)
 Used to render the header for the table. Needs to include the `tr`.
+> `keys` is the list of keys via `Object.keys` on the first item of the data
+> provided (or an empty array if the data has now rows).
 
-### row(rowData, rowNum)
+### row(item, keys, rowNum)
 Used to render an item that is not `undefined`. Needs to include the `tr`.
+> `item` is the item for the row.
+
+> `keys` is the same keys as the header snippet gets.
+
+> `rowNum` is the index of the item.

@@ -1,5 +1,5 @@
 <script>
-    import { Table } from "@axel669/zephyr"
+    import { Table, Flex } from "@axel669/zephyr"
 
     const data = Array.from(
         { length: 10 },
@@ -7,38 +7,40 @@
     )
 </script>
 
-<Table {data} cols="1fr 1fr 1fr">
-    {#snippet header()}
-        <tr>
-            <th>N</th>
-            <th>Squared</th>
-            <th>Cubed</th>
-        </tr>
-    {/snippet}
+<Flex>
+    <Table {data}>
+        {#snippet header()}
+            <tr>
+                <th>N</th>
+                <th>Squared</th>
+                <th>Cubed</th>
+            </tr>
+        {/snippet}
 
-    {#snippet row(row)}
-        <tr>
-            <td>{row[0]}</td>
-            <td>{row[1]}</td>
-            <td>{row[2]}</td>
-        </tr>
-    {/snippet}
-</Table>
+        {#snippet row(row)}
+            <tr>
+                <td>{row[0]}</td>
+                <td>{row[1]}</td>
+                <td>{row[2]}</td>
+            </tr>
+        {/snippet}
+    </Table>
 
-<Table {data} color="@secondary" fillHeader cols="1fr 1fr 1fr">
-    {#snippet header()}
-        <tr slot="header">
-            <th>N</th>
-            <th>Squared</th>
-            <th>Cubed</th>
-        </tr>
-    {/snippet}
+    <Table {data} ws="@color: @success;">
+        {#snippet header()}
+            <tr slot="header">
+                <th>N</th>
+                <th>Squared</th>
+                <th>Cubed</th>
+            </tr>
+        {/snippet}
 
-    {#snippet row(row)}
-        <tr>
-            <td>{row[0]}</td>
-            <td>{row[1]}</td>
-            <td>{row[2]}</td>
-        </tr>
-    {/snippet}
-</Table>
+        {#snippet row(row)}
+            <tr>
+                <td>{row[0]}</td>
+                <td>{row[1]}</td>
+                <td>{row[2]}</td>
+            </tr>
+        {/snippet}
+    </Table>
+</Flex>
