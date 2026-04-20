@@ -3,7 +3,9 @@
 </script>
 
 <Flex>
-    <Text>Some text</Text>
-    <Text title>Bigger text</Text>
-    <Text subtitle>Smaller text</Text>
+    <Text size="info">Info</Text>
+    <Text size="subtitle">Subtitle</Text>
+    <Text>Normal</Text>
+    <Text size="header">Header</Text>
+    <Text size="title">Title</Text>
 </Flex>

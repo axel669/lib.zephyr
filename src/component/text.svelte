@@ -1,24 +1,26 @@
 <script>
+    const sizes = {
+        title: "title",
+        info: "info",
+        header: "header",
+        subtitle: "subtitle",
+    }
     const {
         ws,
         children,
-        title,
+        size,
         notif,
-        info,
-        header,
-        subtitle,
         ...rest
     } = $props()
-    const type = $derived(
-        (title && { title: "" })
-        || (notif && { "notif-text": "" })
-        || (info && { info: "" })
-        || (header && { header: "" })
-        || (subtitle && { subtitle: "" })
-        || {}
+    const sizeProp = $derived(
+        sizes[size]
     )
+    const processed = $derived({
+        [sizeProp]: "",
+        "notif-text": (notif === true) ? "" : undefined,
+    })
 </script>
 
-<ws-text data-ws={ws} {...rest} {...type}>
+<ws-text data-ws={ws} {...rest} {...processed}>
     {@render children?.()}
 </ws-text>
