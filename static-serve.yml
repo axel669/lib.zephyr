@@ -1,5 +1,0 @@
-port: 45067
-sources:
-- dir: test/build
-- route: /docs
-  dir: site
