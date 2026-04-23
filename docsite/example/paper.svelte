@@ -1,16 +1,20 @@
 <script>
-    import { Paper, Tabs, Text, Titlebar, Grid } from "@axel669/zephyr"
+    import {
+        Paper,
+
+        Grid,
+        Text,
+        Titlebar,
+    } from "@axel669/zephyr"
 </script>
 
-<Grid cols="1fr 1fr">
-    <Paper l-gap="12px">
+<Grid ws="gr.cols: 1fr 1fr;">
+    <Paper layoutWS="gap: 12px;">
         {#snippet header()}
         <Titlebar>
-            {#snippet title()}
             <Text title>
                 Some Title
             </Text>
-            {/snippet}
         </Titlebar>
         {/snippet}
 
@@ -19,14 +23,12 @@
         <div>Content 3</div>
     </Paper>
 
-    <Paper card>
+    <Paper ws="variant.outline;">
         {#snippet header()}
         <Titlebar>
-            {#snippet title()}
             <Text title>
                 Some Other Title
             </Text>
-            {/snippet}
         </Titlebar>
         {/snippet}
 
@@ -45,14 +47,12 @@
         {/snippet}
     </Paper>
 
-    <Paper card color="@primary">
+    <Paper ws="variant.outline; @color: @primary;">
         {#snippet header()}
-        <Titlebar fill color="@primary">
-            {#snippet title()}
+        <Titlebar ws="variant.fill; @color: @primary;">
             <Text title>
                 Some Title
             </Text>
-            {/snippet}
         </Titlebar>
         {/snippet}
 
