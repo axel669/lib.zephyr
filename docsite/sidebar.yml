@@ -55,5 +55,5 @@ sidebarItems:
     - { label: Toaster, url: /toaster }
   - label: Spinners
     children:
-    - { label: Circle Spinner, url: /circle-spinner }
-    - { label: Hexagon Spinner, url: /hexagon-spinner }
+    - { label: Circle Spinner, url: /circle-spinner, docs: true, example: true }
+    - { label: Hexagon Spinner, url: /hexagon-spinner, docs: true, example: true }
