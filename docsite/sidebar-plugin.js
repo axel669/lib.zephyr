@@ -67,6 +67,7 @@ const renderContent = async (target) => {
     if (target === undefined) {
         return ""
     }
+    console.log(`Rendering docs: ${target}`)
     const content = await readfile(target)
     // console.log(content)
     const markdown = md.render(
@@ -104,7 +105,7 @@ const loadFiles = async (list) => {
         const url = renderString("url", entry.url)
         const label = renderString("label", entry.label)
         const example = loadExample(
-            entry.label,
+            entry.label.replaceAll(" ", ""),
             (entry.example === true)
                 ? `@example:${entry.url.slice(1)}.svelte`
                 : entry.example
