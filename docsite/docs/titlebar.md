@@ -6,18 +6,13 @@ for Paper components.
 
 ## Props
 
-### color _string_
-Sets `$color`
-
-### fill _bool_
-Sets `$fill`
+{{var:ws}}
 
 ## Snippets
 
-### title()
-The center of the titlebar, where the text usually goes. Elements can be nested
-in different ways within a parent element for different visual effects in this
-slot.
+### chilren()
+Each child dom element that gets rendered will be treated as a title (so use a
+container to make more complex titles).
 
 ### menu()
 The area on the left of the titlebar (where drawer menus tend to open)

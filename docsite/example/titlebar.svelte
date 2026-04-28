@@ -1,6 +1,7 @@
 <script>
     import {
         Titlebar,
+
         Button,
         Paper,
         Text,
@@ -9,31 +10,11 @@
     } from "@axel669/zephyr"
 </script>
 
-<Titlebar>
-    {#snippet title()}
-    <Text title>
-        Some Title
-    </Text>
-    {/snippet}
-
-    {#snippet menu()}
-    <Button>
-        <Icon name="list" />
-    </Button>
-    {/snippet}
-</Titlebar>
-
-<Paper card color="@secondary">
-    {#snippet header()}
-    <Titlebar color="@secondary">
-        {#snippet title()}
-        <Text title>
-            Paper Title
-            <Text subtitle>
-                Indented Subtitle
-            </Text>
+<Flex>
+    <Titlebar>
+        <Text size="title">
+            Some Title
         </Text>
-        {/snippet}
 
         {#snippet menu()}
         <Button>
@@ -41,28 +22,48 @@
         </Button>
         {/snippet}
     </Titlebar>
-    {/snippet}
-</Paper>
 
-<Paper card color="@secondary">
-    {#snippet header()}
-    <Titlebar color="@secondary" fill>
-        {#snippet title()}
-        <Flex p="0px">
-            <Text title>
+    <Paper ws="variant.outline; @color: @success;">
+        {#snippet header()}
+        <Titlebar ws="@color: @success;">
+            <Text size="title">
                 Paper Title
+                <Text subtitle>
+                    Indented Subtitle
+                </Text>
             </Text>
-            <Text subtitle>
-                Aligned Subtitle
-            </Text>
-        </Flex>
+
+            {#snippet menu()}
+            <Button>
+                <Icon name="list" />
+            </Button>
+            {/snippet}
+        </Titlebar>
         {/snippet}
 
-        {#snippet action()}
-        <Button>
-            Save
-        </Button>
+        <Text>Content</Text>
+    </Paper>
+
+    <Paper ws="variant.outline; @color: @info;">
+        {#snippet header()}
+        <Titlebar ws="variant.fill; @color: @info;">
+            <Flex p="0px">
+                <Text size="title">
+                    Paper Title
+                </Text>
+                <Text subtitle>
+                    Aligned Subtitle
+                </Text>
+            </Flex>
+
+            {#snippet action()}
+            <Button>
+                Save
+            </Button>
+            {/snippet}
+        </Titlebar>
         {/snippet}
-    </Titlebar>
-    {/snippet}
-</Paper>
+
+        <Text>Content</Text>
+    </Paper>
+</Flex>

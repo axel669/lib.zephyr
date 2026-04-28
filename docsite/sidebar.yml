@@ -1,5 +1,5 @@
 links:
-  github: "https://github.com/axel669/lib.windstorm"
+  github: "https://github.com/axel669/lib.zephyr"
 sidebarItems:
   - { label: Home, url: /, docs: "@docs:home.md" }
   - { label: Application, url: /application, docs: true }
@@ -33,7 +33,7 @@ sidebarItems:
     - { label: Grid, url: /grid, docs: true, example: true }
     - { label: Paper, url: /paper, docs: true, example: true }
     - { label: Screen, url: /screen }
-    - { label: Titlebar, url: /titlebar }
+    - { label: Titlebar, url: /titlebar, docs: true, example: true }
 
   - label: Navigation
     children:
