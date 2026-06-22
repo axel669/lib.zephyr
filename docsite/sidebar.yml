@@ -37,7 +37,7 @@ sidebarItems:
 
   - label: Navigation
     children:
-    - { label: Link, url: /link }
+    - { label: Link, url: /link, docs: true, example: true }
     - { label: Route, url: /route }
     - { label: Tabs, url: /tabs }
     - { label: Title, url: /title }

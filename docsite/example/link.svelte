@@ -27,10 +27,10 @@
         {/snippet}
     </Titlebar>
 
-    <Link href="#" target="_blank" button fill>Home</Link>
-    <Link href="#" target="_blank" button fill color="@primary">Home</Link>
-    <Link href="#" target="_blank" button fill color="@secondary">Home</Link>
-    <Link href="#" target="_blank" button fill color="@accent">Home</Link>
-    <Link href="#" target="_blank" button fill color="@warning">Home</Link>
-    <Link href="#" target="_blank" button fill color="@danger">Home</Link>
+    <Link href="#" target="_blank" button ws="variant.fill;">Home</Link>
+    <Link href="#" target="_blank" button ws="variant.fill; @color: @primary;">Home</Link>
+    <Link href="#" target="_blank" button ws="variant.fill; @color: @secondary;">Home</Link>
+    <Link href="#" target="_blank" button ws="variant.fill; @color: @accent;">Home</Link>
+    <Link href="#" target="_blank" button ws="variant.fill; @color: @warning;">Home</Link>
+    <Link href="#" target="_blank" button ws="variant.fill; @color: @danger;">Home</Link>
 </Grid>
